@@ -9,6 +9,7 @@ public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
     @ManyToOne
@@ -33,12 +34,13 @@ public class Appointment {
     @Column(name = "available_time", nullable = false)
     private String availableTime;
 
+    @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
 
-    @Column(nullable = false)
+    @Column(name = "language", nullable = false)
     private String language;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
     public Appointment() {

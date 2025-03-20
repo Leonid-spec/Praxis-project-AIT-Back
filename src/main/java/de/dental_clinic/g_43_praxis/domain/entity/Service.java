@@ -10,23 +10,31 @@ public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
+    @Column(name = "title_de", nullable = true)
     private String titleDe;
+
+    @Column(name = "title_en", nullable = true)
     private String titleEn;
+
+    @Column(name = "title_ru", nullable = true)
     private String titleRu;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "description_de", columnDefinition = "TEXT")
     private String descriptionDe;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "description_en", columnDefinition = "TEXT")
     private String descriptionEn;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "description_ru", columnDefinition = "TEXT")
     private String descriptionRu;
 
+    @Column(name = "topimage", nullable = true)
     private String topImage;
 
+    @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -117,19 +125,9 @@ public class Service {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Service service = (Service) o;
-        return isActive == service.isActive &&
-                Objects.equals(id, service.id) &&
-                Objects.equals(titleDe, service.titleDe) &&
-                Objects.equals(titleEn, service.titleEn) &&
-                Objects.equals(titleRu, service.titleRu) &&
-                Objects.equals(descriptionDe, service.descriptionDe) &&
-                Objects.equals(descriptionEn, service.descriptionEn) &&
-                Objects.equals(descriptionRu, service.descriptionRu) &&
-                Objects.equals(topImage, service.topImage) &&
-                Objects.equals(images, service.images);
+        return isActive == service.isActive && Objects.equals(id, service.id) && Objects.equals(titleDe, service.titleDe) && Objects.equals(titleEn, service.titleEn) && Objects.equals(titleRu, service.titleRu) && Objects.equals(descriptionDe, service.descriptionDe) && Objects.equals(descriptionEn, service.descriptionEn) && Objects.equals(descriptionRu, service.descriptionRu) && Objects.equals(topImage, service.topImage) && Objects.equals(images, service.images);
     }
 
     @Override
@@ -137,12 +135,11 @@ public class Service {
         return Objects.hash(id, titleDe, titleEn, titleRu, descriptionDe, descriptionEn, descriptionRu, topImage, isActive, images);
     }
 
-    // toString
     @Override
     public String toString() {
         return String.format(
-                "Service: id = %d, title = '%s', description = '%s', isActive = %b, topImage = '%s'}",
-                id, titleEn, descriptionEn, isActive, topImage
+                "Service: id = %d, title = '%s', description = '%s', isActive = %b",
+                id, titleEn, descriptionEn, isActive
         );
     }
 }
