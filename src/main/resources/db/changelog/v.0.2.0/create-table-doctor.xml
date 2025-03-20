@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-table-doctor" author="IgorSv">
+
+        <createTable tableName="doctor">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="full_name" type="varchar(255)" />
+            <column name="title_de" type="varchar(255)" />
+            <column name="title_en" type="varchar(255)" />
+            <column name="title_ru" type="varchar(255)" />
+            <column name="biography_de" type="text" />
+            <column name="biography_en" type="text" />
+            <column name="biography_ru" type="text" />
+            <column name="specialisation_de" type="varchar(255)" />
+            <column name="specialisation_en" type="varchar(255)" />
+            <column name="specialisation_ru" type="varchar(255)" />
+            <column name="top_image" type="text" />
+            <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1067,3 +1067,168 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (usi
 2025-03-20T08:12:23.535+01:00  INFO 11600 --- [g-43-praxis] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-03-20T08:12:23.537+01:00  INFO 11600 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-03-20T08:12:23.554+01:00  INFO 11600 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-20T09:17:19.974+01:00  INFO 5316 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : Starting G43PraxisApplication using Java 17.0.13 with PID 5316 (C:\Java Projects\Praxis-project-AIT-Back\target\classes started by igore in C:\Java Projects\Praxis-project-AIT-Back)
+2025-03-20T09:17:19.984+01:00  INFO 5316 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : The following 1 profile is active: "dev"
+2025-03-20T09:17:22.138+01:00  INFO 5316 --- [g-43-praxis] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-20T09:17:22.227+01:00  INFO 5316 --- [g-43-praxis] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 0 JPA repository interfaces.
+2025-03-20T09:17:23.484+01:00  INFO 5316 --- [g-43-praxis] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-20T09:17:23.508+01:00  INFO 5316 --- [g-43-praxis] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-20T09:17:23.509+01:00  INFO 5316 --- [g-43-praxis] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-20T09:17:23.624+01:00  INFO 5316 --- [g-43-praxis] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-20T09:17:23.625+01:00  INFO 5316 --- [g-43-praxis] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3469 ms
+2025-03-20T09:17:23.994+01:00  INFO 5316 --- [g-43-praxis] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-20T09:17:25.697+01:00  WARN 5316 --- [g-43-praxis] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'liquibase' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: liquibase.exception.DatabaseException: java.sql.SQLException: Access denied for user '${DB_USERNAME}'@'localhost' (using password: YES)
+2025-03-20T09:17:25.705+01:00  INFO 5316 --- [g-43-praxis] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-03-20T09:17:25.723+01:00  INFO 5316 --- [g-43-praxis] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-20T09:17:25.753+01:00 ERROR 5316 --- [g-43-praxis] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'liquibase' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: liquibase.exception.DatabaseException: java.sql.SQLException: Access denied for user '${DB_USERNAME}'@'localhost' (using password: YES)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:328) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970) ~[spring-context-6.2.3.jar:6.2.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.3.jar:6.2.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.3.jar:3.4.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.4.3.jar:3.4.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.3.jar:3.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.3.jar:3.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.4.3.jar:3.4.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.4.3.jar:3.4.3]
+	at de.dental_clinic.g_43_praxis.G43PraxisApplication.main(G43PraxisApplication.java:10) ~[classes/:na]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: liquibase.exception.DatabaseException: java.sql.SQLException: Access denied for user '${DB_USERNAME}'@'localhost' (using password: YES)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1812) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315) ~[spring-beans-6.2.3.jar:6.2.3]
+	... 10 common frames omitted
+Caused by: liquibase.exception.UnexpectedLiquibaseException: liquibase.exception.DatabaseException: java.sql.SQLException: Access denied for user '${DB_USERNAME}'@'localhost' (using password: YES)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:267) ~[liquibase-core-4.29.2.jar:na]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859) ~[spring-beans-6.2.3.jar:6.2.3]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808) ~[spring-beans-6.2.3.jar:6.2.3]
+	... 17 common frames omitted
+Caused by: liquibase.exception.DatabaseException: java.sql.SQLException: Access denied for user '${DB_USERNAME}'@'localhost' (using password: YES)
+	at liquibase.integration.spring.SpringLiquibase.lambda$afterPropertiesSet$0(SpringLiquibase.java:259) ~[liquibase-core-4.29.2.jar:na]
+	at liquibase.Scope.lambda$child$0(Scope.java:191) ~[liquibase-core-4.29.2.jar:na]
+	at liquibase.Scope.child(Scope.java:200) ~[liquibase-core-4.29.2.jar:na]
+	at liquibase.Scope.child(Scope.java:190) ~[liquibase-core-4.29.2.jar:na]
+	at liquibase.Scope.child(Scope.java:169) ~[liquibase-core-4.29.2.jar:na]
+	at liquibase.Scope.child(Scope.java:257) ~[liquibase-core-4.29.2.jar:na]
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:250) ~[liquibase-core-4.29.2.jar:na]
+	... 19 common frames omitted
+Caused by: java.sql.SQLException: Access denied for user '${DB_USERNAME}'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:837) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:420) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:238) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111) ~[HikariCP-5.1.0.jar:na]
+	at liquibase.integration.spring.SpringLiquibase.lambda$afterPropertiesSet$0(SpringLiquibase.java:254) ~[liquibase-core-4.29.2.jar:na]
+	... 25 common frames omitted
+
+2025-03-20T10:56:38.304+01:00  INFO 25892 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : Starting G43PraxisApplication using Java 17.0.13 with PID 25892 (C:\Java Projects\Praxis-project-AIT-Back\target\classes started by igore in C:\Java Projects\Praxis-project-AIT-Back)
+2025-03-20T10:56:38.311+01:00  INFO 25892 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : The following 1 profile is active: "dev"
+2025-03-20T10:56:39.759+01:00  INFO 25892 --- [g-43-praxis] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-20T10:56:39.825+01:00  INFO 25892 --- [g-43-praxis] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 0 JPA repository interfaces.
+2025-03-20T10:56:41.079+01:00  INFO 25892 --- [g-43-praxis] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-20T10:56:41.120+01:00  INFO 25892 --- [g-43-praxis] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-20T10:56:41.121+01:00  INFO 25892 --- [g-43-praxis] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-20T10:56:41.310+01:00  INFO 25892 --- [g-43-praxis] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-20T10:56:41.312+01:00  INFO 25892 --- [g-43-praxis] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2886 ms
+2025-03-20T10:56:41.750+01:00  INFO 25892 --- [g-43-praxis] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-20T10:56:42.859+01:00  INFO 25892 --- [g-43-praxis] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@599f1b7
+2025-03-20T10:56:42.863+01:00  INFO 25892 --- [g-43-praxis] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-20T10:56:44.302+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.changelog                      : Creating database history table with name: g_43_praxis.databasechangelog
+2025-03-20T10:56:44.662+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.changelog                      : Reading from g_43_praxis.databasechangelog
+2025-03-20T10:56:44.864+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.ui                             : Database is up to date, no changesets to execute
+2025-03-20T10:56:44.872+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.changelog                      : Reading from g_43_praxis.databasechangelog
+2025-03-20T10:56:44.896+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.util                           : UPDATE SUMMARY
+2025-03-20T10:56:44.897+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.util                           : Run:                          0
+2025-03-20T10:56:44.897+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.util                           : Previously run:               0
+2025-03-20T10:56:44.898+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.util                           : Filtered out:                 0
+2025-03-20T10:56:44.898+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.util                           : -------------------------------
+2025-03-20T10:56:44.899+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.util                           : Total change sets:            0
+2025-03-20T10:56:44.906+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.util                           : Update summary generated
+2025-03-20T10:56:44.918+01:00  INFO 25892 --- [g-43-praxis] [main] liquibase.command                        : Command execution complete
+2025-03-20T10:56:45.246+01:00  INFO 25892 --- [g-43-praxis] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-20T10:56:45.454+01:00  INFO 25892 --- [g-43-praxis] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-20T10:56:45.585+01:00  INFO 25892 --- [g-43-praxis] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-20T10:56:46.416+01:00  INFO 25892 --- [g-43-praxis] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-20T10:56:46.579+01:00  WARN 25892 --- [g-43-praxis] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-20T10:56:46.584+01:00  WARN 25892 --- [g-43-praxis] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-20T10:56:46.624+01:00  INFO 25892 --- [g-43-praxis] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-20T10:56:49.030+01:00  INFO 25892 --- [g-43-praxis] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-20T10:56:49.996+01:00  INFO 25892 --- [g-43-praxis] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-20T10:56:50.078+01:00  WARN 25892 --- [g-43-praxis] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-20T10:56:50.962+01:00  INFO 25892 --- [g-43-praxis] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-20T10:56:50.983+01:00  INFO 25892 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : Started G43PraxisApplication in 13.908 seconds (process running for 22.336)
+2025-03-20T11:20:02.206+01:00  INFO 25892 --- [g-43-praxis] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-20T11:20:02.338+01:00  INFO 25892 --- [g-43-praxis] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-20T11:20:02.343+01:00  INFO 25892 --- [g-43-praxis] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-20T11:20:02.352+01:00  INFO 25892 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-20T11:20:02.363+01:00  INFO 25892 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-03-20T12:59:57.777+01:00  INFO 22068 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : Starting G43PraxisApplication using Java 17.0.13 with PID 22068 (C:\Java Projects\Praxis-project-AIT-Back\target\classes started by igore in C:\Java Projects\Praxis-project-AIT-Back)
+2025-03-20T12:59:57.787+01:00  INFO 22068 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : The following 1 profile is active: "dev"
+2025-03-20T13:00:00.188+01:00  INFO 22068 --- [g-43-praxis] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-20T13:00:00.280+01:00  INFO 22068 --- [g-43-praxis] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 0 JPA repository interfaces.
+2025-03-20T13:00:02.195+01:00  INFO 22068 --- [g-43-praxis] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-03-20T13:00:02.236+01:00  INFO 22068 --- [g-43-praxis] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-03-20T13:00:02.239+01:00  INFO 22068 --- [g-43-praxis] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-20T13:00:02.463+01:00  INFO 22068 --- [g-43-praxis] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-03-20T13:00:02.464+01:00  INFO 22068 --- [g-43-praxis] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4539 ms
+2025-03-20T13:00:02.825+01:00  INFO 22068 --- [g-43-praxis] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-03-20T13:00:03.607+01:00  INFO 22068 --- [g-43-praxis] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@193eb1ba
+2025-03-20T13:00:03.613+01:00  INFO 22068 --- [g-43-praxis] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-03-20T13:00:05.057+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.changelog                      : Reading from g_43_praxis.databasechangelog
+2025-03-20T13:00:05.115+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.ui                             : Database is up to date, no changesets to execute
+2025-03-20T13:00:05.121+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.changelog                      : Reading from g_43_praxis.databasechangelog
+2025-03-20T13:00:05.132+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.util                           : UPDATE SUMMARY
+2025-03-20T13:00:05.133+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.util                           : Run:                          0
+2025-03-20T13:00:05.134+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.util                           : Previously run:               0
+2025-03-20T13:00:05.134+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.util                           : Filtered out:                 0
+2025-03-20T13:00:05.134+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.util                           : -------------------------------
+2025-03-20T13:00:05.134+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.util                           : Total change sets:            0
+2025-03-20T13:00:05.136+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.util                           : Update summary generated
+2025-03-20T13:00:05.139+01:00  INFO 22068 --- [g-43-praxis] [main] liquibase.command                        : Command execution complete
+2025-03-20T13:00:05.306+01:00  INFO 22068 --- [g-43-praxis] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-20T13:00:05.430+01:00  INFO 22068 --- [g-43-praxis] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-20T13:00:05.499+01:00  INFO 22068 --- [g-43-praxis] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-03-20T13:00:06.171+01:00  INFO 22068 --- [g-43-praxis] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-20T13:00:06.278+01:00  WARN 22068 --- [g-43-praxis] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-20T13:00:06.280+01:00  WARN 22068 --- [g-43-praxis] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-20T13:00:06.317+01:00  INFO 22068 --- [g-43-praxis] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-20T13:00:08.907+01:00  INFO 22068 --- [g-43-praxis] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-20T13:00:09.139+01:00  INFO 22068 --- [g-43-praxis] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-20T13:00:09.229+01:00  WARN 22068 --- [g-43-praxis] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-20T13:00:10.034+01:00  INFO 22068 --- [g-43-praxis] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-03-20T13:00:10.051+01:00  INFO 22068 --- [g-43-praxis] [main] d.d.g_43_praxis.G43PraxisApplication     : Started G43PraxisApplication in 15.221 seconds (process running for 17.756)
+2025-03-20T13:00:23.260+01:00  INFO 22068 --- [g-43-praxis] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-20T13:00:23.476+01:00  INFO 22068 --- [g-43-praxis] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-20T13:00:23.484+01:00  INFO 22068 --- [g-43-praxis] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-20T13:00:23.487+01:00  INFO 22068 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-20T13:00:23.504+01:00  INFO 22068 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
