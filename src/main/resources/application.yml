@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: g-43-praxis
+  profiles:
+    active: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/g_43_praxis
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.xml
+#    enabled: false
+
+logging:
+  file:
+    name: logs/log.log
+  level:
+    root: info
+
+key:
+  access: ${ACCESS_KEY}
+  refresh: ${REFRESH_KEY}
