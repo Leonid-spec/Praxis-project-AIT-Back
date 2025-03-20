@@ -9,11 +9,12 @@ public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    private Service service; // Связь с таблицей services
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -25,7 +26,7 @@ public class Appointment {
     private String phone;
 
     @Column(name = "phone2")
-    private String phone2;
+    private String phone2; // Необязательное поле
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -33,12 +34,13 @@ public class Appointment {
     @Column(name = "available_time", nullable = false)
     private String availableTime;
 
-    private String comment;
+    @Column(name = "comment", columnDefinition = "TEXT")
+    private String comment; // Комментарий, можно сделать TEXT
 
-    @Column(nullable = false)
+    @Column(name = "language", nullable = false)
     private String language;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
     public Appointment() {
