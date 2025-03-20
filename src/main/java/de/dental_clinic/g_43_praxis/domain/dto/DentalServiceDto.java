@@ -1,46 +1,28 @@
-package de.dental_clinic.g_43_praxis.domain.entity;
+package de.dental_clinic.g_43_praxis.domain.dto;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "service")
-public class Service {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
+public class DentalServiceDto {
     private Long id;
 
-    @Column(name = "title_de", nullable = true)
     private String titleDe;
-
-    @Column(name = "title_en", nullable = true)
     private String titleEn;
-
-    @Column(name = "title_ru", nullable = true)
     private String titleRu;
 
-    @Column(name = "description_de", columnDefinition = "TEXT")
     private String descriptionDe;
-
-    @Column(name = "description_en", columnDefinition = "TEXT")
     private String descriptionEn;
-
-    @Column(name = "description_ru", columnDefinition = "TEXT")
     private String descriptionRu;
 
-    @Column(name = "topimage", nullable = true)
+//    @JsonProperty("top_image")
     private String topImage;
-
-    @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> images;
+    private List<ImageDto> images;
 
-    public Service() {
+    public DentalServiceDto() {
     }
 
     public Long getId() {
@@ -115,19 +97,19 @@ public class Service {
         isActive = active;
     }
 
-    public List<Image> getImages() {
+    public List<ImageDto> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<ImageDto> images) {
         this.images = images;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Service service = (Service) o;
-        return isActive == service.isActive && Objects.equals(id, service.id) && Objects.equals(titleDe, service.titleDe) && Objects.equals(titleEn, service.titleEn) && Objects.equals(titleRu, service.titleRu) && Objects.equals(descriptionDe, service.descriptionDe) && Objects.equals(descriptionEn, service.descriptionEn) && Objects.equals(descriptionRu, service.descriptionRu) && Objects.equals(topImage, service.topImage) && Objects.equals(images, service.images);
+        DentalServiceDto that = (DentalServiceDto) o;
+        return isActive == that.isActive && Objects.equals(id, that.id) && Objects.equals(titleDe, that.titleDe) && Objects.equals(titleEn, that.titleEn) && Objects.equals(titleRu, that.titleRu) && Objects.equals(descriptionDe, that.descriptionDe) && Objects.equals(descriptionEn, that.descriptionEn) && Objects.equals(descriptionRu, that.descriptionRu) && Objects.equals(topImage, that.topImage) && Objects.equals(images, that.images);
     }
 
     @Override
@@ -137,9 +119,7 @@ public class Service {
 
     @Override
     public String toString() {
-        return String.format(
-                "Service: id = %d, title = '%s', description = '%s', isActive = %b",
-                id, titleEn, descriptionEn, isActive
-        );
+        return String.format("DentalServiceDto: id=%d, titleEn='%s', descriptionEn='%s', topImage='%s', isActive=%b, images=%s",
+                id, titleEn, descriptionEn, topImage, isActive, images);
     }
 }

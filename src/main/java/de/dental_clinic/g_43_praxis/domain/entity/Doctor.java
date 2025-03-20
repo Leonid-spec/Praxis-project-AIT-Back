@@ -12,6 +12,9 @@ public class Doctor {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
     @Column(name = "title_de", nullable = true)
     private String titleDe;
 
@@ -20,9 +23,6 @@ public class Doctor {
 
     @Column(name = "title_ru", nullable = true)
     private String titleRu;
-
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
 
     @Column(name = "biography_de", columnDefinition = "TEXT")
     private String biographyDe;
@@ -45,7 +45,7 @@ public class Doctor {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
-    @Column(name = "topimage", nullable = true)
+    @Column(name = "top_image", nullable = true)
     private String topImage;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)

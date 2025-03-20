@@ -14,8 +14,12 @@
             </column>
 
             <column name="path" type="text" />
-            <column name="entity_type" type="varchar(50)" />
-            <column name="entity_id" type="bigint" />
+            <column name="doctor_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_image_doctor" references="doctor(id)"/>
+            </column>
+            <column name="dental_service" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_image_dental_service" references="dental_service(id)"/>
+            </column>
 
         </createTable>
 

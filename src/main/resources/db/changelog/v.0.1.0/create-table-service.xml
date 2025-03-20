@@ -7,7 +7,7 @@
 
     <changeSet id="create-table-service" author="IgorSv">
 
-        <createTable tableName="service">
+        <createTable tableName="dental_service">
 
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
