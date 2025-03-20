@@ -14,7 +14,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private Service service; // Связь с таблицей services
+    private Service service;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -26,7 +26,7 @@ public class Appointment {
     private String phone;
 
     @Column(name = "phone2")
-    private String phone2; // Необязательное поле
+    private String phone2;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -35,7 +35,7 @@ public class Appointment {
     private String availableTime;
 
     @Column(name = "comment", columnDefinition = "TEXT")
-    private String comment; // Комментарий, можно сделать TEXT
+    private String comment;
 
     @Column(name = "language", nullable = false)
     private String language;
