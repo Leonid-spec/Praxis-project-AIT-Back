@@ -1,21 +1,16 @@
-package de.dental_clinic.g_43_praxis.domain.entity;
+package de.dental_clinic.g_43_praxis.domain.dto;
 
-import jakarta.persistence.*;
 import java.util.Objects;
 
-@Entity
-@Table(name = "role")
-public class Role {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
+public class RoleDto {
     private Long id;
-
-    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    public Role() {
+    public RoleDto() {}
+
+    public RoleDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Long getId() {
@@ -37,8 +32,8 @@ public class Role {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) && Objects.equals(name, role.name);
+        RoleDto roleDto = (RoleDto) o;
+        return Objects.equals(id, roleDto.id) && Objects.equals(name, roleDto.name);
     }
 
     @Override
@@ -48,6 +43,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return String.format("Role: id = %d, name = '%s'", id, name);
+        return String.format("RoleDto: id = %d, name = '%s'", id, name);
     }
 }

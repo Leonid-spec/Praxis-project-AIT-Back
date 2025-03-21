@@ -9,18 +9,43 @@ import java.util.Objects;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
-    private String titleDe;
-    private String titleEn;
-    private String titleRu;
+
+    @Column(name = "full_name", nullable = false)
     private String fullName;
+
+    @Column(name = "title_de", nullable = true)
+    private String titleDe;
+
+    @Column(name = "title_en", nullable = true)
+    private String titleEn;
+
+    @Column(name = "title_ru", nullable = true)
+    private String titleRu;
+
+    @Column(name = "biography_de", columnDefinition = "TEXT")
     private String biographyDe;
+
+    @Column(name = "biography_en", columnDefinition = "TEXT")
     private String biographyEn;
+
+    @Column(name = "biography_ru", columnDefinition = "TEXT")
     private String biographyRu;
+
+    @Column(name = "specialisation_de", nullable = true)
     private String specialisationDe;
+
+    @Column(name = "specialisation_en", nullable = true)
     private String specialisationEn;
+
+    @Column(name = "specialisation_ru", nullable = true)
     private String specialisationRu;
+
+    @Column(name = "is_active", nullable = false)
     private boolean isActive;
+
+    @Column(name = "top_image", nullable = true)
     private String topImage;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -143,7 +168,6 @@ public class Doctor {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Doctor doctor = (Doctor) o;
         return isActive == doctor.isActive && Objects.equals(id, doctor.id) && Objects.equals(titleDe, doctor.titleDe) && Objects.equals(titleEn, doctor.titleEn) && Objects.equals(titleRu, doctor.titleRu) && Objects.equals(fullName, doctor.fullName) && Objects.equals(biographyDe, doctor.biographyDe) && Objects.equals(biographyEn, doctor.biographyEn) && Objects.equals(biographyRu, doctor.biographyRu) && Objects.equals(specialisationDe, doctor.specialisationDe) && Objects.equals(specialisationEn, doctor.specialisationEn) && Objects.equals(specialisationRu, doctor.specialisationRu) && Objects.equals(topImage, doctor.topImage) && Objects.equals(images, doctor.images);
@@ -157,13 +181,12 @@ public class Doctor {
     @Override
     public String toString() {
         return String.format(
-                "Doctor: id = %d, fullName = %s, title = %s, specialisation = %s, isActive = %b, topImage = '%s' ",
+                "Doctor: id = %d, fullName = %s, title = %s, specialisation = %s, isActive = %b",
                 id,
                 fullName,
                 titleEn,
                 specialisationEn,
-                isActive,
-                topImage
+                isActive
         );
     }
 

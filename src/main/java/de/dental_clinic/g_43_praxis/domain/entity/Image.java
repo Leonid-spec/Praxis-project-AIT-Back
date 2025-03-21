@@ -9,17 +9,19 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
+    @Column(name = "path", nullable = false)
     private String path;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_id", nullable = false)
-    private Doctor doctor;
+    @JoinColumn(name = "dental_service_id", nullable = true)
+    private DentalService dentalService;
 
     @ManyToOne
-    @JoinColumn(name = "service_id", nullable = true)
-    private Service service;
+    @JoinColumn(name = "doctor_id", nullable = true)
+    private Doctor doctor;
 
     public Image() {
     }
@@ -40,6 +42,14 @@ public class Image {
         this.path = path;
     }
 
+    public DentalService getDentalService() {
+        return dentalService;
+    }
+
+    public void setDentalService(DentalService service) {
+        this.dentalService = service;
+    }
+
     public Doctor getDoctor() {
         return doctor;
     }
@@ -48,29 +58,20 @@ public class Image {
         this.doctor = doctor;
     }
 
-    public Service getService() {
-        return service;
-    }
-
-    public void setService(Service service) {
-        this.service = service;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Image image = (Image) o;
-        return Objects.equals(id, image.id) && Objects.equals(path, image.path) && Objects.equals(doctor, image.doctor) && Objects.equals(service, image.service);
+        return Objects.equals(id, image.id) && Objects.equals(path, image.path) && Objects.equals(dentalService, image.dentalService) && Objects.equals(doctor, image.doctor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, path, doctor, service);
+        return Objects.hash(id, path, dentalService, doctor);
     }
 
     @Override
     public String toString() {
-        return String.format("Image: id = %d, path = '%s', doctorId = %d, serviceId = %d",
-                id, path, doctor != null ? doctor.getId() : null, service != null ? service.getId() : null);
+        return String.format("Image: id = %d, path = '%s'", id, path);
     }
 }

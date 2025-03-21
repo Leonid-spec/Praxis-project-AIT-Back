@@ -9,11 +9,12 @@ public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dental_service_id", nullable = false)
+    private DentalService service;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -21,8 +22,8 @@ public class Appointment {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    @Column(name = "phone1", nullable = false)
+    private String phone1;
 
     @Column(name = "phone2")
     private String phone2;
@@ -30,15 +31,16 @@ public class Appointment {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "available_time", nullable = false)
+    @Column(name = "available_time", columnDefinition = "TEXT")
     private String availableTime;
 
+    @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
 
-    @Column(nullable = false)
+    @Column(name = "language")
     private String language;
 
-    @Column(nullable = false)
+    @Column(name = "status")
     private String status;
 
     public Appointment() {
@@ -52,11 +54,11 @@ public class Appointment {
         this.id = id;
     }
 
-    public Service getService() {
+    public DentalService getService() {
         return service;
     }
 
-    public void setService(Service service) {
+    public void setService(DentalService service) {
         this.service = service;
     }
 
@@ -76,12 +78,12 @@ public class Appointment {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhone1() {
+        return phone1;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone1(String phone) {
+        this.phone1 = phone;
     }
 
     public String getPhone2() {
@@ -136,12 +138,12 @@ public class Appointment {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Appointment that = (Appointment) o;
-        return Objects.equals(id, that.id) && Objects.equals(service, that.service) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phone, that.phone) && Objects.equals(phone2, that.phone2) && Objects.equals(email, that.email) && Objects.equals(availableTime, that.availableTime) && Objects.equals(comment, that.comment) && Objects.equals(language, that.language) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id) && Objects.equals(service, that.service) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(email, that.email) && Objects.equals(availableTime, that.availableTime) && Objects.equals(comment, that.comment) && Objects.equals(language, that.language) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, service, firstName, lastName, phone, phone2, email, availableTime, comment, language, status);
+        return Objects.hash(id, service, firstName, lastName, phone1, phone2, email, availableTime, comment, language, status);
     }
 
     @Override
@@ -152,7 +154,7 @@ public class Appointment {
                 service != null ? service.getId() : null,
                 firstName,
                 lastName,
-                phone,
+                phone1,
                 email,
                 availableTime,
                 language,
