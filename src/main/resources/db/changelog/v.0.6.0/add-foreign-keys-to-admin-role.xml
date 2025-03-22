@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="add-foreign-keys-to-admin-role" author="Tanya">
+
+        <addForeignKeyConstraint
+                baseTableName="admin_roles"
+                baseColumnNames="admin_id"
+                referencedTableName="admin"
+                referencedColumnNames="id"
+                constraintName="fk_admin_roles_admin"
+        />
+
+        <addForeignKeyConstraint
+                baseTableName="admin_roles"
+                baseColumnNames="role_id"
+                referencedTableName="role"
+                referencedColumnNames="id"
+                constraintName="fk_admin_roles_role"
+        />
+
+    </changeSet>
+
+</databaseChangeLog>
