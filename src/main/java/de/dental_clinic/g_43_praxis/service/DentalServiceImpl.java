@@ -35,13 +35,13 @@ public class DentalServiceImpl implements DentalServiceService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<DentalServiceDto> getUnActiveDentalServices() {
-        List<DentalService> activeDentalServices = dentalServiceRepository.findByIsActiveFalse();
-        return activeDentalServices.stream()
-                .map(dentalServiceMappingService::mapEntityToDto)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<DentalServiceDto> getUnActiveDentalServices() {
+//        List<DentalService> activeDentalServices = dentalServiceRepository.findByIsActiveFalse();
+//        return activeDentalServices.stream()
+//                .map(dentalServiceMappingService::mapEntityToDto)
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public List<DentalServiceDto> getAllDentalServices() {
@@ -119,8 +119,6 @@ public class DentalServiceImpl implements DentalServiceService {
 
     @Override
     public void deleteDentalServiceById(Long id) {
-        DentalService dentalService = dentalServiceRepository.findById(id)
-                .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
         dentalServiceRepository.deleteById(id);
     }
 }

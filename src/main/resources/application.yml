@@ -29,3 +29,7 @@ logging:
 key:
   access: ${ACCESS_KEY}
 #  refresh: ${REFRESH_KEY}
+
+gcp:
+  storage:
+    bucket: back_bucket_1
