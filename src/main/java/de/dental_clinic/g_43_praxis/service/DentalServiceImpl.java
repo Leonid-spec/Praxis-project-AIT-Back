@@ -9,11 +9,13 @@ import de.dental_clinic.g_43_praxis.service.mapping.DentalServiceMappingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class DentalServiceImpl implements DentalServiceService {
 
     private final DentalServiceRepository dentalServiceRepository;
@@ -109,7 +111,7 @@ public class DentalServiceImpl implements DentalServiceService {
         dentalService.setDescriptionEn(dentalServiceDto.getDescriptionEn());
         dentalService.setDescriptionRu(dentalServiceDto.getDescriptionRu());
         dentalService.setTopImage(dentalServiceDto.getTopImage());
-        dentalService.setActive(dentalServiceDto.isActive());
+        dentalService.setIsActive(dentalServiceDto.getIsActive());
 
         DentalService updateDentalService = dentalServiceRepository.save(dentalService);
         return dentalServiceMappingService.mapEntityToDto(updateDentalService);
