@@ -5,7 +5,7 @@ import de.dental_clinic.g_43_praxis.domain.entity.Doctor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",  uses = {ImageMappingService.class})
 public interface DoctorMappingService {
 
     DoctorDto mapEntityToDto(Doctor entity);
