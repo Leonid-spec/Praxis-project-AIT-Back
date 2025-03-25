@@ -8,7 +8,7 @@ public interface DentalServiceService {
 
     List<DentalServiceDto> getActiveDentalServices();
 
-    List<DentalServiceDto> getUnActiveDentalServices();
+//    List<DentalServiceDto> getUnActiveDentalServices();
 
     List<DentalServiceDto> getAllDentalServices();
 
