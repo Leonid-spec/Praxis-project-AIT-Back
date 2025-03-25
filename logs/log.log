@@ -2342,3 +2342,8 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2025-03-25T11:02:31.529+01:00  INFO 10824 --- [g-43-praxis] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-03-25T11:02:31.530+01:00  INFO 10824 --- [g-43-praxis] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-03-25T11:02:31.548+01:00  INFO 10824 --- [g-43-praxis] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 17 ms
+2025-03-25T11:06:32.247+01:00  INFO 10824 --- [g-43-praxis] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-25T11:06:32.411+01:00  INFO 10824 --- [g-43-praxis] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-25T11:06:32.852+01:00  INFO 10824 --- [g-43-praxis] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-25T11:06:33.230+01:00  INFO 10824 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-25T11:06:33.994+01:00  INFO 10824 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
