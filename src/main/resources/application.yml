@@ -20,16 +20,9 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 
-logging:
-  file:
-    name: logs/log.log
-  level:
-    root: info
+#logging:
+#  file:
+#    name: logs/log.log
+#  level:
+#    root: info
 
-key:
-  access: ${ACCESS_KEY}
-#  refresh: ${REFRESH_KEY}
-
-gcp:
-  storage:
-    bucket: back_bucket_1
