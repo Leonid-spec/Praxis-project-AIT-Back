@@ -6,6 +6,15 @@
 
     <changeSet id="add-foreign-keys-to-admin-role" author="Tanya">
 
+        <createTable tableName="admin_roles">
+            <column name="admin_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
         <addForeignKeyConstraint
                 baseTableName="admin_roles"
                 baseColumnNames="admin_id"
