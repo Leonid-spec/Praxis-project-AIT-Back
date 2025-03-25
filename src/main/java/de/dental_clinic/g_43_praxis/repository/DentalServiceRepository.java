@@ -11,9 +11,5 @@ public interface DentalServiceRepository extends JpaRepository<DentalService, Lo
 
     List<DentalService> findByIsActiveTrue();
 
-    List<DentalService> findByIsActiveFalse();
-
-    List<DentalService> findByTitleEnContainingIgnoreCase(String title);
-
     boolean existsByTitleEnContainingIgnoreCase(String title);
 }

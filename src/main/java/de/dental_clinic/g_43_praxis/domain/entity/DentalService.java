@@ -42,7 +42,7 @@ public class DentalService {
     @Column(name = "top_image")
     private String topImage;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Boolean isActive;
 
     @OneToMany(mappedBy = "dentalService", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

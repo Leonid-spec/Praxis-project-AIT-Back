@@ -3,29 +3,27 @@ package de.dental_clinic.g_43_praxis.service;
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
 import de.dental_clinic.g_43_praxis.domain.entity.DentalService;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.repository.DentalServiceRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
 import de.dental_clinic.g_43_praxis.service.mapping.DentalServiceMappingService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class DentalServiceImpl implements DentalServiceService {
 
     private final DentalServiceRepository dentalServiceRepository;
     private final DentalServiceMappingService dentalServiceMappingService;
-
-    @Autowired
-    public DentalServiceImpl(DentalServiceRepository dentalServiceRepository, DentalServiceMappingService dentalServiceMappingService) {
-        this.dentalServiceRepository = dentalServiceRepository;
-        this.dentalServiceMappingService = dentalServiceMappingService;
-    }
 
     @Override
     public List<DentalServiceDto> getActiveDentalServices() {
@@ -34,14 +32,6 @@ public class DentalServiceImpl implements DentalServiceService {
                 .map(dentalServiceMappingService::mapEntityToDto)
                 .collect(Collectors.toList());
     }
-
-//    @Override
-//    public List<DentalServiceDto> getUnActiveDentalServices() {
-//        List<DentalService> activeDentalServices = dentalServiceRepository.findByIsActiveFalse();
-//        return activeDentalServices.stream()
-//                .map(dentalServiceMappingService::mapEntityToDto)
-//                .collect(Collectors.toList());
-//    }
 
     @Override
     public List<DentalServiceDto> getAllDentalServices() {
@@ -53,6 +43,7 @@ public class DentalServiceImpl implements DentalServiceService {
 
     @Override
     public DentalServiceDto getDentalServiceById(Long id) {
+        validateId(id);
         DentalService dentalService = dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
         return dentalServiceMappingService.mapEntityToDto(dentalService);
@@ -60,50 +51,23 @@ public class DentalServiceImpl implements DentalServiceService {
 
     @Override
     public DentalServiceDto addDentalService(@Valid DentalServiceDto dentalServiceDto) {
-
-//        Используем валидацию в Dto сущности вместо всех проверок ниже
-//        if (dentalServiceDto.getTitleEn() == null || dentalServiceDto.getTitleEn().length() < 3) {
-//            throw new DentalServiceValidationException("Title in English must be at least 3 characters long");
-//        }
-//        if (dentalServiceDto.getTitleDe() == null || dentalServiceDto.getTitleDe().length() < 3) {
-//            throw new DentalServiceValidationException("Title in German must be at least 3 characters long");
-//        }
-//        if (dentalServiceDto.getTitleRu() == null || dentalServiceDto.getTitleRu().length() < 3) {
-//            throw new DentalServiceValidationException("Title in Russian must be at least 3 characters long");
-//        }
-//
-//        if(dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn())) {
-//            throw new DentalServiceAlreadyExistsException("DentalService with title " + dentalServiceDto.getTitleEn() + " already exists");
-//        }
-//
-//        if (dentalServiceDto.getDescriptionEn() == null || dentalServiceDto.getDescriptionEn().isEmpty()) {
-//            throw new DentalServiceValidationException("Description in English cannot be empty");
-//        }
-//
-//        if (dentalServiceDto.getDescriptionDe() == null || dentalServiceDto.getDescriptionDe().isEmpty()) {
-//            throw new DentalServiceValidationException("Description in German cannot be empty");
-//        }
-//
-//        if (dentalServiceDto.getDescriptionRu() == null || dentalServiceDto.getDescriptionRu().isEmpty()) {
-//            throw new DentalServiceValidationException("Description in Russian cannot be empty");
-//        }
-//
-//        if (dentalServiceDto.getTopImage() == null || dentalServiceDto.getTopImage().isEmpty()) {
-//            throw new DentalServiceValidationException("Top image is required");
-//        }
+        validateDentalServiceDto(dentalServiceDto);
+        if (dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn())) {
+            throw new DoctorAlreadyExistsException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
+        }
 
         DentalService dentalService = dentalServiceMappingService.mapDtoToEntity(dentalServiceDto);
         DentalService savedDentalService = dentalServiceRepository.save(dentalService);
-
         return dentalServiceMappingService.mapEntityToDto(savedDentalService);
     }
 
     @Override
-    public DentalServiceDto updateDentalService(Long id, DentalServiceDto dentalServiceDto) {
+    public DentalServiceDto updateDentalService(Long id, @Valid DentalServiceDto dentalServiceDto) {
+        validateId(id);
+        validateDentalServiceDto(dentalServiceDto);
         DentalService dentalService = dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
 
-        dentalService.setId(id);
         dentalService.setTitleDe(dentalServiceDto.getTitleDe());
         dentalService.setTitleEn(dentalServiceDto.getTitleEn());
         dentalService.setTitleRu(dentalServiceDto.getTitleRu());
@@ -113,12 +77,46 @@ public class DentalServiceImpl implements DentalServiceService {
         dentalService.setTopImage(dentalServiceDto.getTopImage());
         dentalService.setIsActive(dentalServiceDto.getIsActive());
 
-        DentalService updateDentalService = dentalServiceRepository.save(dentalService);
-        return dentalServiceMappingService.mapEntityToDto(updateDentalService);
+        DentalService updatedDentalService = dentalServiceRepository.save(dentalService);
+        return dentalServiceMappingService.mapEntityToDto(updatedDentalService);
     }
 
     @Override
     public void deleteDentalServiceById(Long id) {
+        validateId(id);
+        if (!dentalServiceRepository.existsById(id)) {
+            throw new DentalServiceNotFoundException("DentalService with ID " + id + " not found");
+        }
         dentalServiceRepository.deleteById(id);
+    }
+
+    private void validateId(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid ID: ID must be a positive number.");
+        }
+    }
+
+    private void validateDentalServiceDto(DentalServiceDto dentalServiceDto) {
+        if (dentalServiceDto == null) {
+            throw new IllegalArgumentException("DentalServiceDto cannot be null.");
+        }
+        if (!StringUtils.hasText(dentalServiceDto.getTitleEn())) {
+            throw new IllegalArgumentException("TitleEn cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(dentalServiceDto.getTitleDe())) {
+            throw new IllegalArgumentException("TitleDe cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(dentalServiceDto.getTitleRu())) {
+            throw new IllegalArgumentException("TitleRu cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(dentalServiceDto.getDescriptionEn())) {
+            throw new IllegalArgumentException("DescriptionEn cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(dentalServiceDto.getDescriptionDe())) {
+            throw new IllegalArgumentException("DescriptionDe cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(dentalServiceDto.getDescriptionRu())) {
+            throw new IllegalArgumentException("DescriptionRu cannot be null or empty.");
+        }
     }
 }
