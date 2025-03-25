@@ -26,6 +26,3 @@ spring:
 #  level:
 #    root: info
 
-key:
-  access: ${ACCESS_KEY}
-  refresh: ${REFRESH_KEY}

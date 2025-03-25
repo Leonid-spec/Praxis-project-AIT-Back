@@ -20,6 +20,7 @@
             <column name="description_ru" type="text" />
             <column name="top_image" type="text" />
             <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+<!--            <column name="is_active" type="boolean" />-->
 
         </createTable>
 
