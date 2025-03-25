@@ -1,8 +1,14 @@
 package de.dental_clinic.g_43_praxis.controller;
 
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
+import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
+import de.dental_clinic.g_43_praxis.domain.entity.DentalService;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
+import de.dental_clinic.g_43_praxis.repository.DentalServiceRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
+import de.dental_clinic.g_43_praxis.service.mapping.DentalServiceMappingService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/services")
+@AllArgsConstructor
 public class DentalServiceController {
 
     private final DentalServiceService dentalServiceService;
-
-    public DentalServiceController(DentalServiceService dentalServiceService) {
-        this.dentalServiceService = dentalServiceService;
-    }
 
     // Получить список активных услуг
     @GetMapping("/active")
@@ -28,8 +31,8 @@ public class DentalServiceController {
     // Получить услугу по ID
     @GetMapping("/{id}")
     public ResponseEntity<DentalServiceDto> getDentalServiceById(@PathVariable Long id) {
-        DentalServiceDto dentalService = dentalServiceService.getDentalServiceById(id);
-        return ResponseEntity.ok(dentalService);
+        DentalServiceDto dentalServiceDto = dentalServiceService.getDentalServiceById(id);
+        return ResponseEntity.ok(dentalServiceDto);
     }
 
     // Получить все услуги (для админа)
