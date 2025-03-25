@@ -12,8 +12,8 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @EqualsAndHashCode
+@ToString
 public class DentalService {
 
     @Id

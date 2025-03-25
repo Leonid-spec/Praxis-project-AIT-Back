@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +45,7 @@ public class DentalServiceImpl implements DentalServiceService {
         validateId(id);
         DentalService dentalService = dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
+        System.out.println("Mapping to DTO: " + dentalServiceMappingService.mapEntityToDto(dentalService));
         return dentalServiceMappingService.mapEntityToDto(dentalService);
     }
 
