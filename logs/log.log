@@ -971,3 +971,8 @@ Caused by: java.io.FileNotFoundException: class path resource [de/dental_clinic/
 2025-03-25T11:34:26.994+01:00  INFO 25640 --- [g-43-praxis] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-03-25T11:34:26.995+01:00  INFO 25640 --- [g-43-praxis] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-03-25T11:34:26.997+01:00  INFO 25640 --- [g-43-praxis] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-03-25T11:38:02.855+01:00  INFO 25640 --- [g-43-praxis] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-25T11:38:02.950+01:00  INFO 25640 --- [g-43-praxis] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-25T11:38:03.054+01:00  INFO 25640 --- [g-43-praxis] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-25T11:38:03.152+01:00  INFO 25640 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-03-25T11:38:03.347+01:00  INFO 25640 --- [g-43-praxis] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
