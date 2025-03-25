@@ -45,7 +45,7 @@ public class DentalServiceImpl implements DentalServiceService {
         validateId(id);
         DentalService dentalService = dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
-        System.out.println("Mapping to DTO: " + dentalServiceMappingService.mapEntityToDto(dentalService));
+//        System.out.println("Mapping to DTO: " + dentalServiceMappingService.mapEntityToDto(dentalService));
         return dentalServiceMappingService.mapEntityToDto(dentalService);
     }
 

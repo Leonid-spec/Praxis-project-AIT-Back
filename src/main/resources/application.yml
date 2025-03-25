@@ -24,6 +24,7 @@ spring:
       accept-case-insensitive-enums: true
     serialization:
       fail-on-empty-beans: false
+
 #logging:
 #  file:
 #    name: logs/log.log

@@ -20,3 +20,6 @@ import io.swagger.v3.oas.annotations.servers.Server;
 )
 public class SwaggerConfig {
 }
+
+
+// Start work with swagger, access - http://localhost:8080/swagger-ui/index.html
