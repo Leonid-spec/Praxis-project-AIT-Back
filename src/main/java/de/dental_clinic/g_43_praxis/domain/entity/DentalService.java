@@ -21,28 +21,28 @@ public class DentalService {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "title_de")
+    @Column(name = "title_de", nullable = false)
     private String titleDe;
 
-    @Column(name = "title_en")
+    @Column(name = "title_en", nullable = false)
     private String titleEn;
 
-    @Column(name = "title_ru")
+    @Column(name = "title_ru", nullable = false)
     private String titleRu;
 
-    @Column(name = "description_de", columnDefinition = "TEXT")
+    @Column(name = "description_de", columnDefinition = "TEXT", nullable = false)
     private String descriptionDe;
 
-    @Column(name = "description_en", columnDefinition = "TEXT")
+    @Column(name = "description_en", columnDefinition = "TEXT", nullable = false)
     private String descriptionEn;
 
-    @Column(name = "description_ru", columnDefinition = "TEXT")
+    @Column(name = "description_ru", columnDefinition = "TEXT", nullable = false)
     private String descriptionRu;
 
     @Column(name = "top_image")
     private String topImage;
 
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
     @OneToMany(mappedBy = "dentalService", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdminService {
-    void login(AdminDto adminDto);
     Optional<AdminDto> findByLogin(String login);
     void createAdmin(AdminDto dto);
-    List<Admin> findAllAdmins();
+    void changePassword(AdminDto dto);
+    List<AdminDto> findAllAdmins();
     void deleteAdmin(Long id);
 }

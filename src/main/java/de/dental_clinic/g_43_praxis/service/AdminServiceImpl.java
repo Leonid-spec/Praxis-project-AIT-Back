@@ -2,55 +2,77 @@ package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Admin;
+import de.dental_clinic.g_43_praxis.domain.entity.Role;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AdminAlreadyExistsException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AdminNotFoundException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
+import de.dental_clinic.g_43_praxis.repository.RoleRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
 import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-// All methods except login are in developing
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;
     private final AdminMappingService adminMappingService;
-
-    public AdminServiceImpl(AdminRepository adminRepository, AdminMappingService adminMappingService) {
-        this.adminRepository = adminRepository;
-        this.adminMappingService = adminMappingService;
-    }
-
-    public Optional<AdminDto> findByLogin(String login) {
-        Optional<Admin> admin = adminRepository.findByLogin(login);
-
-        return admin.map(a -> {
-            AdminDto adminDto = new AdminDto();
-            adminDto.setLogin(a.getLogin());
-            adminDto.setPassword(a.getPassword());
-            return adminDto;
-        });
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void login(AdminDto adminDto) {
-        Admin admin = adminMappingService.mapDtoToEntity(adminDto);
+    public Optional<AdminDto> findByLogin(String login) {
+        return adminRepository.findByLogin(login)
+                .map(adminMappingService::mapEntityToDto);
     }
 
     @Override
     public void createAdmin(AdminDto dto) {
-        adminRepository.save(adminMappingService.mapDtoToEntity(dto));
+        if (adminRepository.findByLogin(dto.getLogin()).isPresent()) {
+            throw new AdminAlreadyExistsException("Admin already exists");
+        }
+        Admin admin = adminMappingService.mapDtoToEntity(dto);
+        admin.setPassword(passwordEncoder.encode(dto.getPassword()));
+        adminRepository.save(admin);
+    }
+
+
+    @Override
+    public void changePassword(AdminDto dto) {
+        Optional<Admin> adminOptional = adminRepository.findByLogin(dto.getLogin());
+        if (adminOptional.isEmpty()) {
+            throw new IllegalArgumentException("Admin with login '" + dto.getLogin() + "' does not exist");
+        }
+        Admin admin = adminOptional.get();
+        admin.setPassword(passwordEncoder.encode(dto.getPassword()));
+        adminRepository.save(admin);
     }
 
     @Override
-    public List<Admin> findAllAdmins() {
-        return adminRepository.findAll();
+    public List<AdminDto> findAllAdmins() {
+        return adminRepository.findAll()
+                .stream()
+                .map(adminMappingService::mapEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void deleteAdmin(Long id) {
+        public void deleteAdmin(Long id) {
+        Optional<Admin> adminOptional = adminRepository.findById(id);
+        if (adminOptional.isEmpty()) {
+            throw new AdminNotFoundException("Admin with this ID does not exist");
+        }
+        Admin admin = adminOptional.get();
+        admin.getRoles().clear();
+        adminRepository.save(admin);
         adminRepository.deleteById(id);
     }
 }
