@@ -1,12 +1,14 @@
 package de.dental_clinic.g_43_praxis.controller;
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +58,8 @@ public class DentalServiceController {
     @Operation(summary = "Create a new dental service", description = "Add a new dental service to the database")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Dental service created successfully"),
-            @ApiResponse(responseCode = "400", description = "Bad request")
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "409", description = "Dental service already exists")
     })
     @PostMapping
     public ResponseEntity<DentalServiceDto> addDentalService(@RequestBody DentalServiceDto dentalServiceDto) {

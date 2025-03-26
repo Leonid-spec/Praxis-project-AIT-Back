@@ -45,7 +45,6 @@ public class DentalServiceImpl implements DentalServiceService {
         validateId(id);
         DentalService dentalService = dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
-//        System.out.println("Mapping to DTO: " + dentalServiceMappingService.mapEntityToDto(dentalService));
         return dentalServiceMappingService.mapEntityToDto(dentalService);
     }
 
@@ -55,7 +54,12 @@ public class DentalServiceImpl implements DentalServiceService {
         if (dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn())) {
             throw new DoctorAlreadyExistsException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
         }
-
+        if (dentalServiceDto.getId() != null && dentalServiceRepository.existsById(dentalServiceDto.getId())) {
+            throw new DoctorAlreadyExistsException("DentalService with ID " + dentalServiceDto.getId() + " already exists. Please do not add ID field");
+        }
+        if (dentalServiceDto.getId() != null && !dentalServiceRepository.existsById(dentalServiceDto.getId())) {
+            throw new DoctorAlreadyExistsException("DentalService with ID " + dentalServiceDto.getId() + " not exists. Please do not add ID field");
+        }
         DentalService dentalService = dentalServiceMappingService.mapDtoToEntity(dentalServiceDto);
         DentalService savedDentalService = dentalServiceRepository.save(dentalService);
         return dentalServiceMappingService.mapEntityToDto(savedDentalService);
