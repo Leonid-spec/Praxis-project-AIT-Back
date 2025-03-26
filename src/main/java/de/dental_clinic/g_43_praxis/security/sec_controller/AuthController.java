@@ -15,9 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 @AllArgsConstructor
-@Tag(name = "Authentication", description = "Controller responsible for user authentication") // Swagger grouping
+@Tag(name = "Authentication", description = "Controller responsible for user authentication")
 public class AuthController {
 
     private final AuthService authService;

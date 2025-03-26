@@ -4,6 +4,7 @@ package de.dental_clinic.g_43_praxis.controller;
 import de.dental_clinic.g_43_praxis.domain.dto.AppointmentDto;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AppointmentNotFoundException;
 import de.dental_clinic.g_43_praxis.service.interfaces.AppointmentService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/appointment")
+@Transactional
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
