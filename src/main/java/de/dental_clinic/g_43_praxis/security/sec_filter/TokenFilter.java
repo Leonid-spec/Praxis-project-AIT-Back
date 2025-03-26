@@ -30,7 +30,6 @@ public class TokenFilter extends GenericFilterBean {
             AuthInfo authInfo = service.mapClaimsToAuthInfo(claims);
             authInfo.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(authInfo);
-            System.out.println("Authenticated user: " + SecurityContextHolder.getContext().getAuthentication());
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

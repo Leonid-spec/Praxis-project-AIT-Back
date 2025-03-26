@@ -38,8 +38,6 @@ public class Admin implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-    private String authorities;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return (Collection<? extends GrantedAuthority>) roles;

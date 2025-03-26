@@ -113,13 +113,14 @@ public class TokenService {
         String authoritiesStr = claims.get("authorities", String.class);
         Set<Role> roles = new HashSet<>();
 
-        for (String roleName : authoritiesStr.split(",")) {
-            Role role = roleRepository.findByName(roleName)
-                    .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
-            roles.add(role);
+        if (authoritiesStr != null && !authoritiesStr.isEmpty()) {
+            for (String roleName : authoritiesStr.split(",")) {
+                Role role = roleRepository.findByName(roleName)
+                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
+                roles.add(role);
+            }
         }
 
         return new AuthInfo(username, roles);
     }
-
 }
