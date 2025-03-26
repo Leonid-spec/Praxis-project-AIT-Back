@@ -2,6 +2,7 @@ package de.dental_clinic.g_43_praxis.controller;
 
 import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
 import de.dental_clinic.g_43_praxis.service.interfaces.DoctorService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctors")
+@Transactional
 public class DoctorController {
 
     private final DoctorService doctorService;
