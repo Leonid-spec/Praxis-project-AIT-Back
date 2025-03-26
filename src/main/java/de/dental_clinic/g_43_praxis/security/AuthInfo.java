@@ -24,7 +24,7 @@ public class AuthInfo implements Authentication {
     public AuthInfo(String username, Set<Role> roles) {
         this.username = username;
         this.roles = roles;
-        this.authenticated = true;
+//        this.authenticated = true;
     }
 
     @Override
