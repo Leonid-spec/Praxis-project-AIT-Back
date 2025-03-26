@@ -4,11 +4,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-   <changeSet id="add-roles" author="Tanya">
+   <changeSet id="add-role" author="Tanya">
 
-<!--       <insert tableName="role">-->
-<!--           <column name="title">ROLE_ADMIN</column>-->
-<!--       </insert>-->
+       <insert tableName="role">
+           <column name="name">ROLE_ADMIN</column>
+       </insert>
 
    </changeSet>
 

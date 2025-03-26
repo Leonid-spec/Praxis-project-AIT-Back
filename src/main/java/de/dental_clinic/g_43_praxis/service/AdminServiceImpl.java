@@ -6,10 +6,12 @@ import de.dental_clinic.g_43_praxis.repository.AdminRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
 import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;

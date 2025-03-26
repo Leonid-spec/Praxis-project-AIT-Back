@@ -10,6 +10,5 @@
     </changeSet>
 
     <include file="create-table-admin.xml" relativeToChangelogFile="true"/>
-    <include file="add-foreign-keys-to-admin-role.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

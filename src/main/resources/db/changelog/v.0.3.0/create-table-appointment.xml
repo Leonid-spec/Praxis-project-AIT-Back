@@ -14,7 +14,7 @@
             </column>
 
             <column name="dental_service_id" type="bigint">
-                <constraints foreignKeyName="fk_appointments_service" references="Services(id)"/>
+                <constraints foreignKeyName="fk_appointments_service" references="dental_service(id)"/>
             </column>
             <column name="first_name" type="varchar(100)" />
             <column name="last_name" type="varchar(100)" />

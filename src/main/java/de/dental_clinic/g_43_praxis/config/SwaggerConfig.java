@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 description = "API documentation for the dental clinic application",
                 contact = @Contact(
                         name = "Praxis project team",
-                        email = "andrey@ait-tr.de",
+                        email = "team@ait-tr.de",
                         url = "https://github.com/Leonid-spec/Praxis-project-AIT-Back/tree/dev"
                 )
         ),
