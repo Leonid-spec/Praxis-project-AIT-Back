@@ -47,11 +47,5 @@ public class Admin implements UserDetails {
     public String getUsername() {
         return login;
     }
-
-    // Это временный метод, который служит для создания
-    // тестового зашифрованного пароля
-//    public static void main(String[] args) {
-//        System.out.println(new BCryptPasswordEncoder().encode("admin"));
-//    }
 }
 

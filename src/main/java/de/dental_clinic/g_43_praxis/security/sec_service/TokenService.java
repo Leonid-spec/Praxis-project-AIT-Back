@@ -109,28 +109,16 @@ public class TokenService {
     }
 
     public AuthInfo mapClaimsToAuthInfo(Claims claims) {
-//        String username = claims.getSubject();
-//        String authoritiesStr = claims.get("authorities", String.class);
-//        Set<Role> roles = new HashSet<>();
-//
-//        if (authoritiesStr != null && !authoritiesStr.isEmpty()) {
-//            for (String roleName : authoritiesStr.split(",")) {
-//                Role role = roleRepository.findByName(roleName)
-//                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
-//                roles.add(role);
-//            }
-//        }
-//
-//        return new AuthInfo(username, roles);
         String username = claims.getSubject();
-        List<LinkedHashMap<String, String>> rolesList =
-                (List<LinkedHashMap<String, String>>) claims.get("roles");
+        String authoritiesStr = claims.get("authorities", String.class);
         Set<Role> roles = new HashSet<>();
 
-        for (LinkedHashMap<String, String> roleEntry : rolesList) {
-            String roleName = roleEntry.get("authority");
-
-            roleRepository.findByName(roleName);
+        if (authoritiesStr != null && !authoritiesStr.isEmpty()) {
+            for (String roleName : authoritiesStr.split(",")) {
+                Role role = roleRepository.findByName(roleName)
+                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleName));
+                roles.add(role);
+            }
         }
 
         return new AuthInfo(username, roles);
