@@ -6,10 +6,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
+@Builder
 public class ImageDto {
 
     private Long id;
     private String path;
+
+    private Long dentalServiceId;
+    private Long doctorId;
 }

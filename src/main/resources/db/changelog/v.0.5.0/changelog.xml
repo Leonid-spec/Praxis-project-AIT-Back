@@ -10,5 +10,6 @@
     </changeSet>
 
     <include file="create-table-role.xml" relativeToChangelogFile="true"/>
+    <include file="add-role.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
