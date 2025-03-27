@@ -1,11 +1,8 @@
 package de.dental_clinic.g_43_praxis.domain.dto;
 
-import lombok.Builder;
-
 import java.util.List;
 import java.util.Objects;
 
-@Builder
 public class DoctorDto {
     private Long id;
     private String fullName;

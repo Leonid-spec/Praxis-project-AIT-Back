@@ -54,9 +54,6 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(Long id) {
-    }
-
     public Long getId() {
         return id;
     }

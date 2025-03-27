@@ -5,14 +5,11 @@ import de.dental_clinic.g_43_praxis.domain.entity.Admin;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
 import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
-// All methods except login are in developing
-
-@Service
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;
@@ -37,20 +34,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void login(AdminDto adminDto) {
         Admin admin = adminMappingService.mapDtoToEntity(adminDto);
+
     }
 
     @Override
-    public void createAdmin(AdminDto dto) {
-        adminRepository.save(adminMappingService.mapDtoToEntity(dto));
-    }
-
-    @Override
-    public List<Admin> findAllAdmins() {
-        return adminRepository.findAll();
+    public List<AdminDto> getAllAdmins() {
+        return List.of();
     }
 
     @Override
     public void deleteAdmin(Long id) {
-        adminRepository.deleteById(id);
+
     }
 }

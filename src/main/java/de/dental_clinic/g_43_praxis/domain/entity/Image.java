@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @ToString
 public class Image {
@@ -22,10 +21,13 @@ public class Image {
     private String path;
 
     @ManyToOne
-    @JoinColumn(name = "dental_service_id", referencedColumnName = "id")
+    @JoinColumn(name = "dental_service_id", nullable = true)
     private DentalService dentalService;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
+    @JoinColumn(name = "doctor_id", nullable = true)
     private Doctor doctor;
+
+    public Image() {
+    }
 }

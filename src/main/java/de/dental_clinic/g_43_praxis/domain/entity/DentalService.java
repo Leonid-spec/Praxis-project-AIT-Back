@@ -12,8 +12,8 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @ToString
+@EqualsAndHashCode
 public class DentalService {
 
     @Id
@@ -45,6 +45,8 @@ public class DentalService {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(mappedBy = "dentalService", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dentalService", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Image> images;
+
 }

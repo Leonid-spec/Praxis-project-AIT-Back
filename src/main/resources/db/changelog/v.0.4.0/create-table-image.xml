@@ -8,16 +8,19 @@
     <changeSet id="create-table-image" author="IgorSv">
 
         <createTable tableName="image">
+
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
+
             <column name="path" type="text" />
             <column name="doctor_id" type="bigint">
                 <constraints nullable="true" foreignKeyName="fk_image_doctor" references="doctor(id)"/>
             </column>
-            <column name="dental_service_id" type="bigint">
+            <column name="dental_service" type="bigint">
                 <constraints nullable="true" foreignKeyName="fk_image_dental_service" references="dental_service(id)"/>
             </column>
+
         </createTable>
 
     </changeSet>
