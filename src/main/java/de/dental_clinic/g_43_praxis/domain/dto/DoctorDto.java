@@ -1,10 +1,33 @@
 package de.dental_clinic.g_43_praxis.domain.dto;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
 
+@JsonPropertyOrder({
+        "id",
+        "title_de",
+        "title_en",
+        "title_ru",
+        "full_name",
+        "description_de",
+        "description_en",
+        "description_ru",
+        "specialisation_de",
+        "specialisation_en",
+        "specialisation_ru",
+        "top_image",
+        "is_active",
+        "images"
+})
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Builder
 public class DoctorDto {
     private Long id;
@@ -26,140 +49,4 @@ public class DoctorDto {
     private boolean isActive;
 
     private List<ImageDto> images;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getTitleDe() {
-        return titleDe;
-    }
-
-    public void setTitleDe(String titleDe) {
-        this.titleDe = titleDe;
-    }
-
-    public String getTitleEn() {
-        return titleEn;
-    }
-
-    public void setTitleEn(String titleEn) {
-        this.titleEn = titleEn;
-    }
-
-    public String getTitleRu() {
-        return titleRu;
-    }
-
-    public void setTitleRu(String titleRu) {
-        this.titleRu = titleRu;
-    }
-
-    public String getBiographyDe() {
-        return biographyDe;
-    }
-
-    public void setBiographyDe(String biographyDe) {
-        this.biographyDe = biographyDe;
-    }
-
-    public String getBiographyEn() {
-        return biographyEn;
-    }
-
-    public void setBiographyEn(String biographyEn) {
-        this.biographyEn = biographyEn;
-    }
-
-    public String getBiographyRu() {
-        return biographyRu;
-    }
-
-    public void setBiographyRu(String biographyRu) {
-        this.biographyRu = biographyRu;
-    }
-
-    public String getSpecialisationDe() {
-        return specialisationDe;
-    }
-
-    public void setSpecialisationDe(String specialisationDe) {
-        this.specialisationDe = specialisationDe;
-    }
-
-    public String getSpecialisationEn() {
-        return specialisationEn;
-    }
-
-    public void setSpecialisationEn(String specialisationEn) {
-        this.specialisationEn = specialisationEn;
-    }
-
-    public String getSpecialisationRu() {
-        return specialisationRu;
-    }
-
-    public void setSpecialisationRu(String specialisationRu) {
-        this.specialisationRu = specialisationRu;
-    }
-
-    public String getTopImage() {
-        return topImage;
-    }
-
-    public void setTopImage(String topImage) {
-        this.topImage = topImage;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public List<ImageDto> getImages() {
-        return images;
-    }
-
-    public void setImages(List<ImageDto> images) {
-        this.images = images;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        DoctorDto doctorDto = (DoctorDto) o;
-        return isActive == doctorDto.isActive && Objects.equals(id, doctorDto.id) && Objects.equals(fullName, doctorDto.fullName) && Objects.equals(titleDe, doctorDto.titleDe) && Objects.equals(titleEn, doctorDto.titleEn) && Objects.equals(titleRu, doctorDto.titleRu) && Objects.equals(biographyDe, doctorDto.biographyDe) && Objects.equals(biographyEn, doctorDto.biographyEn) && Objects.equals(biographyRu, doctorDto.biographyRu) && Objects.equals(specialisationDe, doctorDto.specialisationDe) && Objects.equals(specialisationEn, doctorDto.specialisationEn) && Objects.equals(specialisationRu, doctorDto.specialisationRu) && Objects.equals(topImage, doctorDto.topImage) && Objects.equals(images, doctorDto.images);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, fullName, titleDe, titleEn, titleRu, biographyDe, biographyEn, biographyRu, specialisationDe, specialisationEn, specialisationRu, topImage, isActive, images);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Doctor: id = %d, fullName = %s, title = %s, specialisation = %s, isActive = %b",
-                id,
-                fullName,
-                titleEn,
-                specialisationEn,
-                isActive
-        );
-    }
 }

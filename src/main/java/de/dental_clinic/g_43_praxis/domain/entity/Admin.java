@@ -30,7 +30,7 @@ public class Admin implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "admin_roles",
             joinColumns = @JoinColumn(name = "admin_id"),
@@ -47,11 +47,5 @@ public class Admin implements UserDetails {
     public String getUsername() {
         return login;
     }
-
-    // Это временный метод, который служит для создания
-    // тестового зашифрованного пароля
-//    public static void main(String[] args) {
-//        System.out.println(new BCryptPasswordEncoder().encode("admin"));
-//    }
 }
 

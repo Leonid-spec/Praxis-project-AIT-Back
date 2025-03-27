@@ -1,14 +1,12 @@
 package de.dental_clinic.g_43_praxis.controller;
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,7 +89,7 @@ public class DentalServiceController {
             @ApiResponse(responseCode = "404", description = "Dental service not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDentalService(@PathVariable Long id) {
         dentalServiceService.deleteDentalServiceById(id);
         return ResponseEntity.noContent().build();
     }
