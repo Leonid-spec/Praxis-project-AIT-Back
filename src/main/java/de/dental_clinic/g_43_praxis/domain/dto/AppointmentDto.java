@@ -1,10 +1,21 @@
 package de.dental_clinic.g_43_praxis.domain.dto;
 
-import jdk.jshell.Snippet;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
-import java.util.Objects;
-
+@JsonPropertyOrder({
+        "id",
+        "dental_service_id",
+        "first_name",
+        "last_name",
+        "phone1",
+        "phone2",
+        "email",
+        "available_time",
+        "comment",
+        "language",
+        "status"
+})
 @Getter
 @Setter
 @NoArgsConstructor

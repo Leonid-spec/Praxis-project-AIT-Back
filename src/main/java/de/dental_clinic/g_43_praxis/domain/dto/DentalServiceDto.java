@@ -18,8 +18,8 @@ import java.util.List;
         "description_en",
         "description_ru",
         "top_image",
-        "images",
-        "is_active"
+        "is_active",
+        "images"
 })
 @Getter
 @Setter
