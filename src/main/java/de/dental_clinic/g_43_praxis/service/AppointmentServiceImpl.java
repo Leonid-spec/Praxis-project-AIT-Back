@@ -33,12 +33,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public AppointmentDto createAppointment(AppointmentDto appointmentDto) {
         Appointment appointment = new Appointment();
-        appointmentMappingService.mapDtoToEntity(appointmentDto, appointment); // Маппинг DTO в сущность
+        appointmentMappingService.mapDtoToEntity(appointmentDto, appointment);
         appointment.setService(dentalServiceRepository.findById(appointmentDto.getDentalServiceId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid dental service ID")));
 
         appointment = appointmentRepository.save(appointment);
-        return appointmentMappingService.mapToDto(appointment); // Маппинг сущности в DTO
+        return appointmentMappingService.mapToDto(appointment);
     }
 
     @Override
@@ -59,15 +59,32 @@ public class AppointmentServiceImpl implements AppointmentService {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with id: " + id));
 
-        appointmentMappingService.mapDtoToEntity(appointmentDto, appointment); // Маппинг DTO в сущность
+        appointmentMappingService.mapDtoToEntity(appointmentDto, appointment);
         appointment.setService(dentalServiceRepository.findById(appointmentDto.getDentalServiceId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid dental service ID")));
 
         appointment = appointmentRepository.save(appointment);
-        return appointmentMappingService.mapToDto(appointment); // Маппинг сущности в DTO
+        return appointmentMappingService.mapToDto(appointment);
     }
 
     @Override
+    public boolean changeAppointmentStatus(Long id, boolean isActive) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with id: " + id));
+
+        appointment.setIsActive(isActive);
+        appointmentRepository.save(appointment);
+        return isActive;
+    }
+
+    @Override
+    public List<AppointmentDto> getActiveAppointments() {
+        return appointmentRepository.findByIsActive(true).stream()
+                .map(appointmentMappingService::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+//    @Override
     public boolean deleteAppointment(Long id) {
         if (!appointmentRepository.existsById(id)) {
             throw new AppointmentNotFoundException("Appointment not found with id: " + id);

@@ -13,4 +13,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     List<Appointment> findAllByService_Id(Long dentalServiceId);
 
+    List<Appointment> findByIsActive(Boolean isActive);
+
 }
