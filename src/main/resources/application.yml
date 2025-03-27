@@ -19,6 +19,15 @@ spring:
 
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+    serialization:
+      fail-on-empty-beans: false
+
+key:
+  access: $2a$10$yjJ8LqqnTP6Mvn8LxOTwT.3X40CFPH9wWWllTAo6eayxzs9EGfhGS
+  refresh: $2a$10$2VJwj2meuY9H6Baszy/H..n5YIHb3Ll5EtMRw0ZYcqZyS0q3BlbTG
 
 #logging:
 #  file:

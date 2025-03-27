@@ -2,6 +2,7 @@ package de.dental_clinic.g_43_praxis.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +28,8 @@ public class Role {
         this.name = name;
     }
 
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

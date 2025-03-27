@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +54,12 @@ public class DentalServiceImpl implements DentalServiceService {
         if (dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn())) {
             throw new DoctorAlreadyExistsException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
         }
-
+        if (dentalServiceDto.getId() != null && dentalServiceRepository.existsById(dentalServiceDto.getId())) {
+            throw new DoctorAlreadyExistsException("DentalService with ID " + dentalServiceDto.getId() + " already exists. Please do not add ID field");
+        }
+        if (dentalServiceDto.getId() != null && !dentalServiceRepository.existsById(dentalServiceDto.getId())) {
+            throw new DoctorAlreadyExistsException("DentalService with ID " + dentalServiceDto.getId() + " not exists. Please do not add ID field");
+        }
         DentalService dentalService = dentalServiceMappingService.mapDtoToEntity(dentalServiceDto);
         DentalService savedDentalService = dentalServiceRepository.save(dentalService);
         return dentalServiceMappingService.mapEntityToDto(savedDentalService);
