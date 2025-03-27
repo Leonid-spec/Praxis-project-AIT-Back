@@ -20,6 +20,7 @@ public class AppointmentMappingService {
         appointmentDto.setComment(appointment.getComment());
         appointmentDto.setLanguage(appointment.getLanguage());
         appointmentDto.setStatus(appointment.getStatus());
+        appointmentDto.setIsActive(appointment.getIsActive());
         return appointmentDto;
     }
 
@@ -33,6 +34,7 @@ public class AppointmentMappingService {
         appointment.setComment(appointmentDto.getComment());
         appointment.setLanguage(appointmentDto.getLanguage());
         appointment.setStatus(appointmentDto.getStatus());
+        appointment.setIsActive(appointmentDto.getIsActive());
     }
 
 }

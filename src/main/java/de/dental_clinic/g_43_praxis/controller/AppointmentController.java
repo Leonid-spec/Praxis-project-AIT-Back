@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/appointment")
@@ -49,6 +50,26 @@ public class AppointmentController {
     public ResponseEntity<AppointmentDto> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDto appointmentDto) {
         AppointmentDto updatedAppointment = appointmentService.updateAppointment(id, appointmentDto);
         return new ResponseEntity<>(updatedAppointment, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<String> changeAppointmentStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, Boolean> request) {
+
+        // Проверяем, есть ли ключ isActive в запросе
+        if (!request.containsKey("isActive")) {
+            return ResponseEntity.badRequest().body("Ошибка: Параметр 'isActive' обязателен.");
+        }
+
+        boolean isActive = request.get("isActive");
+        appointmentService.changeAppointmentStatus(id, isActive);
+        return ResponseEntity.ok("Статус обновлен: " + isActive);
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<AppointmentDto>> getActiveAppointments() {
+        return ResponseEntity.ok(appointmentService.getActiveAppointments());
     }
 
     // Удалить Аппоинтмент

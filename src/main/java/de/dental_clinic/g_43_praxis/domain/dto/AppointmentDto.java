@@ -1,5 +1,6 @@
 package de.dental_clinic.g_43_praxis.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jdk.jshell.Snippet;
 import lombok.*;
 
@@ -24,5 +25,6 @@ public class AppointmentDto {
     private String comment;
     private String language;
     private String status;
-
+    @JsonProperty("is_active")
+    private Boolean isActive;
 }

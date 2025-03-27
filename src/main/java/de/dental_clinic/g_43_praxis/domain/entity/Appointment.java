@@ -50,4 +50,7 @@ public class Appointment {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 }
