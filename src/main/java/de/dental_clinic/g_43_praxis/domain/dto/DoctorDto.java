@@ -1,5 +1,6 @@
 package de.dental_clinic.g_43_praxis.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
@@ -8,18 +9,18 @@ import java.util.Objects;
 
 @JsonPropertyOrder({
         "id",
-        "title_de",
-        "title_en",
-        "title_ru",
-        "full_name",
-        "description_de",
-        "description_en",
-        "description_ru",
-        "specialisation_de",
-        "specialisation_en",
-        "specialisation_ru",
-        "top_image",
-        "is_active",
+        "titleDe",
+        "titleEn",
+        "titleRu",
+        "fullName",
+        "biographyDe",
+        "biographyEn",
+        "biographyRu",
+        "specialisationDe",
+        "specialisationEn",
+        "specialisationRu",
+        "topImage",
+        "isActive",
         "images"
 })
 @Getter
@@ -30,23 +31,45 @@ import java.util.Objects;
 @ToString
 @Builder
 public class DoctorDto {
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("fullName")
     private String fullName;
 
+    @JsonProperty("titleDe")
     private String titleDe;
+
+    @JsonProperty("titleEn")
     private String titleEn;
+
+    @JsonProperty("titleRu")
     private String titleRu;
 
+    @JsonProperty("biographyDe")
     private String biographyDe;
+
+    @JsonProperty("biographyEn")
     private String biographyEn;
+
+    @JsonProperty("biographyRu")
     private String biographyRu;
 
+    @JsonProperty("specialisationDe")
     private String specialisationDe;
+
+    @JsonProperty("specialisationEn")
     private String specialisationEn;
+
+    @JsonProperty("specialisationRu")
     private String specialisationRu;
 
+    @JsonProperty("topImage")
     private String topImage;
+
+    @JsonProperty("isActive")
     private boolean isActive;
 
+    @JsonProperty("images")
     private List<ImageDto> images;
 }
