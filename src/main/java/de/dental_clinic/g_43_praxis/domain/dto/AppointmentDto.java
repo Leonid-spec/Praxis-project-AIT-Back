@@ -2,23 +2,22 @@ package de.dental_clinic.g_43_praxis.domain.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.jshell.Snippet;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
 @JsonPropertyOrder({
         "id",
-        "dental_service_id",
-        "first_name",
-        "last_name",
+        "dentalServiceSectionId",
+        "firstName",
+        "lastName",
         "phone1",
         "phone2",
         "email",
-        "available_time",
+        "availableTime",
         "comment",
         "language",
-        "status"
+        "isNew"
 })
 @Getter
 @Setter
@@ -28,17 +27,37 @@ import lombok.*;
 @ToString
 public class AppointmentDto {
 
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("dentalServiceSectionId")
     private Long dentalServiceId;
+
+    @JsonProperty("firstName")
     private String firstName;
+
+    @JsonProperty("lastName")
     private String lastName;
+
+    @JsonProperty("phone1")
     private String phone1;
+
+    @JsonProperty("phone2")
     private String phone2;
+
+    @JsonProperty("email")
     private String email;
+
+    @JsonProperty("availableTime")
     private String availableTime;
+
+    @JsonProperty("comment")
     private String comment;
+
+    @JsonProperty("language")
     private String language;
+
+    @JsonProperty("isNew")
     private String status;
-    @JsonProperty("is_active")
-    private Boolean isActive;
+//    private Boolean isActive;
 }

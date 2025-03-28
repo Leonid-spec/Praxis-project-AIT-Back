@@ -49,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
     public void changePassword(AdminDto dto) {
         Optional<Admin> adminOptional = adminRepository.findByLogin(dto.getLogin());
         if (adminOptional.isEmpty()) {
-            throw new IllegalArgumentException("Admin with login '" + dto.getLogin() + "' does not exist");
+            throw new AdminNotFoundException("Admin with login '" + dto.getLogin() + "' does not exist");
         }
         Admin admin = adminOptional.get();
         admin.setPassword(passwordEncoder.encode(dto.getPassword()));
