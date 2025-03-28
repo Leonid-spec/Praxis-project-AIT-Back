@@ -18,7 +18,7 @@
             <column name="password" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="role_id" type="bigint">
+            <column name="role_id" type="bigint" defaultValue="1">
                 <constraints foreignKeyName="fk_admins_roles" references="role(id)" nullable="false"/>
             </column>
 

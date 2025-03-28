@@ -10,8 +10,7 @@ import java.util.Objects;
 @Table(name = "role")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class Role implements GrantedAuthority {
@@ -23,10 +22,6 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
-
-    public Role(String name) {
-        this.name = name;
-    }
 
     @Override
     public String getAuthority() {

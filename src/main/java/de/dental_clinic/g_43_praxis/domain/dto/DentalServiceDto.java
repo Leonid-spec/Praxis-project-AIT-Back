@@ -18,8 +18,8 @@ import java.util.List;
         "description_en",
         "description_ru",
         "top_image",
-        "images",
-        "is_active"
+        "is_active",
+        "images"
 })
 @Getter
 @Setter
@@ -75,7 +75,7 @@ public class DentalServiceDto {
     @NotNull(message = "Top image is required")
     private String topImage;
 
-    @Schema(description = "Status indicating if the service is active", example = "true")
+//    @Schema(description = "Status indicating if the service is active", example = "true")
     @JsonProperty("is_active")
     @NotNull(message = "Is Active is required")
     private Boolean isActive;
