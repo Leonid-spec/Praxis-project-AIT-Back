@@ -37,8 +37,8 @@ public class ImageController {
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.PUT)
-    public ImageDto updateImage(@RequestParam("file") MultipartFile file, @RequestParam("image_id") Long image_id, @RequestParam("product_id") Long product_id) {
-        return imageService.updateImage(file, image_id, product_id);
+    public ImageDto updateImage(@RequestParam("file") MultipartFile file, @RequestParam("image_id") Long image_id) {
+        return imageService.updateImage(file, image_id);
     }
 
     @RequestMapping(value = "/image/file", method = RequestMethod.POST)
