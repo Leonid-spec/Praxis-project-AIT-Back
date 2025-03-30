@@ -81,11 +81,11 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMappingService.mapEntityToDto(updatedDoctor);
     }
 
-    @Override
-    public void deleteDoctorById(Long id) {
-        Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + id + " not found"));
-        doctorRepository.deleteById(id);
-
-    }
+//    @Override
+//    public void deleteDoctorById(Long id) {
+//        Doctor doctor = doctorRepository.findById(id)
+//                .orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + id + " not found"));
+//        doctorRepository.deleteById(id);
+//
+//    }
 }

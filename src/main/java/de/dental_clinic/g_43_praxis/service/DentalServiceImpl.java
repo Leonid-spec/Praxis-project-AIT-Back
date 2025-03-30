@@ -85,14 +85,14 @@ public class DentalServiceImpl implements DentalServiceService {
         return dentalServiceMappingService.mapEntityToDto(updatedDentalService);
     }
 
-    @Override
-    public void deleteDentalServiceById(Long id) {
-        validateId(id);
-        if (!dentalServiceRepository.existsById(id)) {
-            throw new DentalServiceNotFoundException("DentalService with ID " + id + " not found");
-        }
-        dentalServiceRepository.deleteById(id);
-    }
+//    @Override
+//    public void deleteDentalServiceById(Long id) {
+//        validateId(id);
+//        if (!dentalServiceRepository.existsById(id)) {
+//            throw new DentalServiceNotFoundException("DentalService with ID " + id + " not found");
+//        }
+//        dentalServiceRepository.deleteById(id);
+//    }
 
     private void validateId(Long id) {
         if (id == null || id <= 0) {

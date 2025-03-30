@@ -20,7 +20,7 @@ public class Appointment {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dental_service_id", nullable = false)
     private DentalService service;
 

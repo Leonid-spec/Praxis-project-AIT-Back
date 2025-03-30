@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/appointment")
+@RequestMapping("/api")
 @Transactional
 public class AppointmentController {
 
@@ -26,21 +26,21 @@ public class AppointmentController {
     }
 
     // Создать Аппоинтмент
-    @PostMapping
+    @PostMapping("/appointment")
     public ResponseEntity<AppointmentDto> createAppointment(@RequestBody AppointmentDto appointmentDto) {
         AppointmentDto createdAppointment = appointmentService.createAppointment(appointmentDto);
         return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
     }
 
     // Показать все Аппоинтменты (для админа)
-    @GetMapping
+    @GetMapping("/appointments")
     public ResponseEntity<List<AppointmentDto>> getAllAppointments() {
         List<AppointmentDto> appointments = appointmentService.getAllAppointments();
         return ResponseEntity.ok(appointments);
     }
 
-    // Показать Аппоинтменты по ID
-    @GetMapping("/{id}")
+    // Показать Аппоинтмент по ID
+    @GetMapping("/appointment/{id}")
     public ResponseEntity<AppointmentDto> getAppointmentById(@PathVariable Long id) {
         return appointmentService.getAppointmentById(id)
                 .map(appointmentDto -> new ResponseEntity<>(appointmentDto, HttpStatus.OK))

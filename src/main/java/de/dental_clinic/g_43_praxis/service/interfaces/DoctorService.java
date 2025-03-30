@@ -16,5 +16,5 @@ public interface DoctorService {
 
     DoctorDto updateDoctor(Long id, DoctorDto doctorDto);
 
-    void deleteDoctorById(Long id);
+//    void deleteDoctorById(Long id);
 }

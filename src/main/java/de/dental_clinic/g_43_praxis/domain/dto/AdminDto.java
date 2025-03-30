@@ -1,11 +1,11 @@
 package de.dental_clinic.g_43_praxis.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
 @JsonPropertyOrder({
-        "id",
         "login",
         "password"
 })
@@ -15,7 +15,7 @@ import lombok.*;
 @RequiredArgsConstructor
 @ToString
 public class AdminDto {
-    @JsonProperty("id")
+    @JsonIgnore
     private Long id;
     @JsonProperty("login")
     private String login;
