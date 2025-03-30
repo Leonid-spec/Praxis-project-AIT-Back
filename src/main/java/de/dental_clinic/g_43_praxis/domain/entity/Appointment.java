@@ -20,7 +20,7 @@ public class Appointment {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dental_service_id", nullable = false)
     private DentalService service;
 
@@ -48,10 +48,13 @@ public class Appointment {
     @Column(name = "language")
     private String language;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "is_new", nullable = false)
+    private Boolean isNew = true;
 
-    @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true;
+//    @Column(name = "status")
+//    private String status;
+//
+//    @Column(name = "is_active", nullable = false)
+//    private Boolean isActive = true;
 
 }

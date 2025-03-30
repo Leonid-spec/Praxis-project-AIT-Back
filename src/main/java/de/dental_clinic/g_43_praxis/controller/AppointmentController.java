@@ -48,34 +48,34 @@ public class AppointmentController {
     }
 
     // Обновить данные Аппоинтмента
-    @PutMapping("/{id}")
+    @PutMapping("/appointment/{id}")
     public ResponseEntity<AppointmentDto> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDto appointmentDto) {
         AppointmentDto updatedAppointment = appointmentService.updateAppointment(id, appointmentDto);
         return new ResponseEntity<>(updatedAppointment, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/status")
-    public ResponseEntity<String> changeAppointmentStatus(
-            @PathVariable Long id,
-            @RequestBody Map<String, Boolean> request) {
-
-        // Проверяем, есть ли ключ isActive в запросе
-        if (!request.containsKey("isActive")) {
-            return ResponseEntity.badRequest().body("Ошибка: Параметр 'isActive' обязателен.");
-        }
-
-        boolean isActive = request.get("isActive");
-        appointmentService.changeAppointmentStatus(id, isActive);
-        return ResponseEntity.ok("Статус обновлен: " + isActive);
-    }
-
-    @GetMapping("/active")
-    public ResponseEntity<List<AppointmentDto>> getActiveAppointments() {
-        return ResponseEntity.ok(appointmentService.getActiveAppointments());
-    }
+//    @PutMapping("/{id}/status")
+//    public ResponseEntity<String> changeAppointmentStatus(
+//            @PathVariable Long id,
+//            @RequestBody Map<String, Boolean> request) {
+//
+//        // Проверяем, есть ли ключ isActive в запросе
+//        if (!request.containsKey("isActive")) {
+//            return ResponseEntity.badRequest().body("Ошибка: Параметр 'isActive' обязателен.");
+//        }
+//
+//        boolean isActive = request.get("isActive");
+//        appointmentService.changeAppointmentStatus(id, isActive);
+//        return ResponseEntity.ok("Статус обновлен: " + isActive);
+//    }
+//
+//    @GetMapping("/active")
+//    public ResponseEntity<List<AppointmentDto>> getActiveAppointments() {
+//        return ResponseEntity.ok(appointmentService.getActiveAppointments());
+//    }
 
     // Удалить Аппоинтмент
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/appointment/{id}")
     public ResponseEntity<AppointmentDto> deleteAppointment(@PathVariable Long id) {
         appointmentService.deleteAppointment(id);
         return ResponseEntity.noContent().build();

@@ -67,22 +67,22 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentMappingService.mapToDto(appointment);
     }
 
-    @Override
-    public boolean changeAppointmentStatus(Long id, boolean isActive) {
-        Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with id: " + id));
+//    @Override
+//    public boolean changeAppointmentStatus(Long id, boolean isActive) {
+//        Appointment appointment = appointmentRepository.findById(id)
+//                .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with id: " + id));
+//
+//        appointment.setIsActive(isActive);
+//        appointmentRepository.save(appointment);
+//        return isActive;
+//    }
 
-        appointment.setIsActive(isActive);
-        appointmentRepository.save(appointment);
-        return isActive;
-    }
-
-    @Override
-    public List<AppointmentDto> getActiveAppointments() {
-        return appointmentRepository.findByIsActive(true).stream()
-                .map(appointmentMappingService::mapToDto)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<AppointmentDto> getActiveAppointments() {
+//        return appointmentRepository.findByIsActive(true).stream()
+//                .map(appointmentMappingService::mapToDto)
+//                .collect(Collectors.toList());
+//    }
 
 //    @Override
     public boolean deleteAppointment(Long id) {

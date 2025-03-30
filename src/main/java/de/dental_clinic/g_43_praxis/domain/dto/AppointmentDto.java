@@ -58,6 +58,8 @@ public class AppointmentDto {
     private String language;
 
     @JsonProperty("isNew")
-    private String status;
+    private Boolean isNew;
+//    @JsonProperty("isNew")
+//    private String status;
 //    private Boolean isActive;
 }

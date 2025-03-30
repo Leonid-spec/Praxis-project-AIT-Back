@@ -20,8 +20,8 @@ public class AppointmentMappingService {
         appointmentDto.setAvailableTime(appointment.getAvailableTime());
         appointmentDto.setComment(appointment.getComment());
         appointmentDto.setLanguage(appointment.getLanguage());
-        appointmentDto.setStatus(appointment.getStatus());
-        appointmentDto.setStatus(appointment.getStatus());
+        appointmentDto.setIsNew(appointment.getIsNew());
+//        appointmentDto.setStatus(appointment.getStatus());
         return appointmentDto;
     }
 
@@ -34,7 +34,8 @@ public class AppointmentMappingService {
         appointment.setAvailableTime(appointmentDto.getAvailableTime());
         appointment.setComment(appointmentDto.getComment());
         appointment.setLanguage(appointmentDto.getLanguage());
-        appointment.setStatus(appointmentDto.getStatus());
+        appointment.setIsNew(appointmentDto.getIsNew());
+//        appointment.setStatus(appointmentDto.getStatus());
     }
 
 }
