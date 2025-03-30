@@ -109,11 +109,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Transactional
     @Override
-    public ImageDto updateImage(MultipartFile file, Long image_id, Long product_id) {
+    public ImageDto updateImage(MultipartFile file, Long image_id) {
         Image image = imageRepository.findById(image_id).orElseThrow(() -> new ImageNotFoundException( image_id  ));
-        if (product_id != 0) {
-            //image.setProduct(productRepository.findById(product_id).orElseThrow(() -> new ProductNotFoundException( product_id  )));
-        }
         if(!(file.isEmpty())){
             String temp = image.getPath();
             image.setPath(pushImageFile(file));

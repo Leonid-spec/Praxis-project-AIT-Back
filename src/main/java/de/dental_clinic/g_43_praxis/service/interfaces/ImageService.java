@@ -14,7 +14,7 @@ public interface ImageService {
     //*
     ImageDto findImageById(Long imageId);
     ImageDto deleteImage(Long id);
-    ImageDto updateImage(MultipartFile file, Long image_id, Long product_id);
+    ImageDto updateImage(MultipartFile file, Long image_id);
     Image store(Image image);
     Boolean updateImageFile(MultipartFile file, String name);
 
