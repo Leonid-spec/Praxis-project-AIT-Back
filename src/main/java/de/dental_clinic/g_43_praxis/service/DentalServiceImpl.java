@@ -102,25 +102,25 @@ public class DentalServiceImpl implements DentalServiceService {
 
     private void validateDentalServiceDto(DentalServiceDto dentalServiceDto) {
         if (dentalServiceDto == null) {
-            throw new IllegalArgumentException("DentalServiceDto cannot be null.");
+            throw new IllegalArgumentException("Field for dentalServiceDto cannot be null.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleEn())) {
-            throw new IllegalArgumentException("TitleEn cannot be null or empty.");
+            throw new IllegalArgumentException("Field titleEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleDe())) {
-            throw new IllegalArgumentException("TitleDe cannot be null or empty.");
+            throw new IllegalArgumentException("Field titleDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleRu())) {
-            throw new IllegalArgumentException("TitleRu cannot be null or empty.");
+            throw new IllegalArgumentException("Field titleRu cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionEn())) {
-            throw new IllegalArgumentException("DescriptionEn cannot be null or empty.");
+            throw new IllegalArgumentException("Field descriptionEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionDe())) {
-            throw new IllegalArgumentException("DescriptionDe cannot be null or empty.");
+            throw new IllegalArgumentException("Field descriptionDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionRu())) {
-            throw new IllegalArgumentException("DescriptionRu cannot be null or empty.");
+            throw new IllegalArgumentException("Field descriptionRu cannot be null or empty.");
         }
     }
 }

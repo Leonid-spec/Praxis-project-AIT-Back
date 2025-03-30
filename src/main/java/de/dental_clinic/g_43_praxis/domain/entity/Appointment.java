@@ -3,8 +3,6 @@ package de.dental_clinic.g_43_praxis.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "appointment")
 @Getter

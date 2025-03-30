@@ -1,14 +1,17 @@
 package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AppointmentDto;
+import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Appointment;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AppointmentNotFoundException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
 import de.dental_clinic.g_43_praxis.repository.AppointmentRepository;
 import de.dental_clinic.g_43_praxis.repository.DentalServiceRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.AppointmentService;
 import de.dental_clinic.g_43_praxis.service.mapping.AppointmentMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +35,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public AppointmentDto createAppointment(AppointmentDto appointmentDto) {
+        validateAppointmentDto(appointmentDto);
         Appointment appointment = new Appointment();
         appointmentMappingService.mapDtoToEntity(appointmentDto, appointment);
         appointment.setService(dentalServiceRepository.findById(appointmentDto.getDentalServiceId())
@@ -50,12 +54,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Optional<AppointmentDto> getAppointmentById(Long id) {
+        validateId(id);
+        AppointmentService appointmentService = (AppointmentService) appointmentRepository.findById(id)
+                .orElseThrow(() -> new DentalServiceNotFoundException("Appointment with ID " + id + " not found"));
         return appointmentRepository.findById(id)
                 .map(appointmentMappingService::mapToDto);
     }
 
     @Override
     public AppointmentDto updateAppointment(Long id, AppointmentDto appointmentDto) {
+        validateId(id);
+        validateAppointmentDto(appointmentDto);
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new AppointmentNotFoundException("Appointment not found with id: " + id));
 
@@ -91,5 +100,32 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         appointmentRepository.deleteById(id);
         return true;
+    }
+
+    private void validateId(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid ID: ID must be a positive number.");
+        }
+    }
+
+    private void validateAppointmentDto(AppointmentDto appointmentDto) {
+        if (appointmentDto == null) {
+            throw new IllegalArgumentException("Field for appointmentDto cannot be null.");
+        }
+        if (!StringUtils.hasText(appointmentDto.getFirstName())) {
+            throw new IllegalArgumentException("Field firstName cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(appointmentDto.getLastName())) {
+            throw new IllegalArgumentException("Field lastName cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(appointmentDto.getPhone1())) {
+            throw new IllegalArgumentException("Field phone1 cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(appointmentDto.getEmail())) {
+            throw new IllegalArgumentException("Field email cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(String.valueOf(appointmentDto.getIsNew()))) {
+            throw new IllegalArgumentException("Field isNew cannot be null or empty.");
+        }
     }
 }

@@ -4,7 +4,11 @@ package de.dental_clinic.g_43_praxis.domain.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @JsonPropertyOrder({
         "id",

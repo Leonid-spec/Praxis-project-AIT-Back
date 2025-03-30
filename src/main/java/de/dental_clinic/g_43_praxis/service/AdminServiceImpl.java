@@ -1,6 +1,7 @@
 package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
+import de.dental_clinic.g_43_praxis.domain.dto.AppointmentDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Admin;
 import de.dental_clinic.g_43_praxis.domain.entity.Role;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AdminAlreadyExistsException;
@@ -13,6 +14,7 @@ import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void createAdmin(AdminDto dto) {
+        validateAdminDto(dto);
         if (adminRepository.findByLogin(dto.getLogin()).isPresent()) {
             throw new AdminAlreadyExistsException("Admin already exists");
         }
@@ -47,6 +50,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void changePassword(AdminDto dto) {
+        validateAdminDto(dto);
         Optional<Admin> adminOptional = adminRepository.findByLogin(dto.getLogin());
         if (adminOptional.isEmpty()) {
             throw new AdminNotFoundException("Admin with login '" + dto.getLogin() + "' does not exist");
@@ -66,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
         public void deleteAdmin(Long id) {
+        validateId(id);
         Optional<Admin> adminOptional = adminRepository.findById(id);
         if (adminOptional.isEmpty()) {
             throw new AdminNotFoundException("Admin with this ID does not exist");
@@ -75,4 +80,23 @@ public class AdminServiceImpl implements AdminService {
         adminRepository.save(admin);
         adminRepository.deleteById(id);
     }
+
+    private void validateId(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid ID: ID must be a positive number.");
+        }
+    }
+
+    private void validateAdminDto(AdminDto adminDto) {
+        if (adminDto == null) {
+            throw new IllegalArgumentException("Field for adminDto cannot be null.");
+        }
+        if (!StringUtils.hasText(adminDto.getLogin())) {
+            throw new IllegalArgumentException("Field login cannot be null or empty.");
+        }
+        if (!StringUtils.hasText(adminDto.getPassword())) {
+            throw new IllegalArgumentException("Field password cannot be null or empty.");
+        }
+    }
+
 }

@@ -75,7 +75,7 @@ public class DentalServiceDto {
     @NotNull(message = "Top image is required")
     private String topImage;
 
-//    @Schema(description = "Status indicating if the service is active", example = "true")
+    @Schema(description = "Status indicating if the service is active", example = "true")
     @JsonProperty("isActive")
 //    @NotNull(message = "Is Active is required")
     private Boolean isActive;
