@@ -24,8 +24,11 @@
             <column name="language" type="varchar(10)" />
             <column name="comment" type="text" />
             <column name="available_time" type="text" />
-            <column name="status" type="varchar(50)" defaultValue="new" />
-            <column name="is_active" type="boolean" defaultValueBoolean="true"/>
+            <column name="is_new" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+<!--            <column name="status" type="varchar(50)" defaultValue="new" />-->
+<!--            <column name="is_active" type="boolean" defaultValueBoolean="true"/>-->
         </createTable>
 
     </changeSet>

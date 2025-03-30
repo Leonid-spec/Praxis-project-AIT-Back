@@ -3,8 +3,6 @@ package de.dental_clinic.g_43_praxis.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "appointment")
 @Getter
@@ -48,10 +46,13 @@ public class Appointment {
     @Column(name = "language")
     private String language;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "is_new", nullable = false)
+    private Boolean isNew = true;
 
-    @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true;
+//    @Column(name = "status")
+//    private String status;
+//
+//    @Column(name = "is_active", nullable = false)
+//    private Boolean isActive = true;
 
 }

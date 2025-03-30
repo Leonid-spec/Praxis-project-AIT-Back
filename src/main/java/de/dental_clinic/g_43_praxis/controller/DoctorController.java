@@ -55,9 +55,9 @@ public class DoctorController {
     }
 
     // Удалить врача по ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
-        doctorService.deleteDoctorById(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
+//        doctorService.deleteDoctorById(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }
