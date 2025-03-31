@@ -55,8 +55,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Optional<AppointmentDto> getAppointmentById(Long id) {
         validateId(id);
-        AppointmentService appointmentService = (AppointmentService) appointmentRepository.findById(id)
-                .orElseThrow(() -> new DentalServiceNotFoundException("Appointment with ID " + id + " not found"));
         return appointmentRepository.findById(id)
                 .map(appointmentMappingService::mapToDto);
     }
