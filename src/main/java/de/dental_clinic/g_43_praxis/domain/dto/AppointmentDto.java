@@ -37,6 +37,8 @@ public class AppointmentDto {
     @JsonProperty("dentalServiceSectionId")
     private Long dentalServiceId;
 
+    @NotNull(message = "First name cannot be null")
+    @Size(min = 1, message = "First name cannot be empty")
     @JsonProperty("firstName")
     private String firstName;
 
@@ -62,7 +64,7 @@ public class AppointmentDto {
     private String language;
 
     @JsonProperty("isNew")
-    private Boolean isNew;
+    private Boolean isNew = true;
 //    @JsonProperty("isNew")
 //    private String status;
 //    private Boolean isActive;

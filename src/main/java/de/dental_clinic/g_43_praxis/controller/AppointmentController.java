@@ -5,6 +5,7 @@ import de.dental_clinic.g_43_praxis.domain.dto.AppointmentDto;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AppointmentNotFoundException;
 import de.dental_clinic.g_43_praxis.service.interfaces.AppointmentService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,8 @@ public class AppointmentController {
 
     // Создать Аппоинтмент
     @PostMapping("/appointment")
-    public ResponseEntity<AppointmentDto> createAppointment(@RequestBody AppointmentDto appointmentDto) {
+    public ResponseEntity<AppointmentDto> createAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
+//        System.out.println("Received Appointment: " + appointmentDto);
         AppointmentDto createdAppointment = appointmentService.createAppointment(appointmentDto);
         return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
     }
