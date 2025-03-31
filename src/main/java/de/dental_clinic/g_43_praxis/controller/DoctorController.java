@@ -3,6 +3,7 @@ package de.dental_clinic.g_43_praxis.controller;
 import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
 import de.dental_clinic.g_43_praxis.service.interfaces.DoctorService;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,7 @@ public class DoctorController {
     @PostMapping
     public ResponseEntity<DoctorDto> addDoctor(@RequestBody DoctorDto doctorDto) {
         DoctorDto newDoctor = doctorService.addDoctor(doctorDto);
-        return ResponseEntity.ok(newDoctor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newDoctor);
     }
 
     // Обновить данные врача

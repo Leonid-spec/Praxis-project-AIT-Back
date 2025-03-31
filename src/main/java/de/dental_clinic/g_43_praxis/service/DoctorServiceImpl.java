@@ -10,6 +10,7 @@ import de.dental_clinic.g_43_praxis.service.interfaces.DoctorService;
 import de.dental_clinic.g_43_praxis.service.mapping.DoctorMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class DoctorServiceImpl implements DoctorService {
         this.doctorMappingService = doctorMappingService;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<DoctorDto> getActiveDoctors() {
         List<Doctor> activeDoctors = doctorRepository.findAllByIsActiveTrue();
@@ -35,6 +37,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<DoctorDto> getAllDoctors() {
         return doctorRepository.findAll()
@@ -51,6 +54,7 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMappingService.mapEntityToDto(doctor);
     }
 
+    @Transactional
     @Override
     public DoctorDto addDoctor(DoctorDto doctorDto) {
         validateAppointmentDto(doctorDto);
@@ -63,6 +67,7 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMappingService.mapEntityToDto(savedDoctor);
     }
 
+    @Transactional
     @Override
     public DoctorDto updateDoctor(Long id, DoctorDto doctorDto) {
         validateId(id);
@@ -81,7 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setSpecialisationEn(doctorDto.getSpecialisationEn());
         doctor.setSpecialisationRu(doctorDto.getSpecialisationRu());
         doctor.setTopImage(doctorDto.getTopImage());
-        doctor.setActive(doctorDto.isActive());
+//        doctor.setActive(doctorDto.isActive());
 
         Doctor updatedDoctor = doctorRepository.save(doctor);
         return doctorMappingService.mapEntityToDto(updatedDoctor);

@@ -2,6 +2,7 @@ package de.dental_clinic.g_43_praxis.exception_handling;
 
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -46,5 +47,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGenericException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(DoctorNotFoundException.class)
+    public ResponseEntity<String> handleDoctorNotFound(DoctorNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

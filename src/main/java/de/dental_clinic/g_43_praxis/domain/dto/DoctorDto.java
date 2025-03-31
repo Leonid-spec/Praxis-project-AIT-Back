@@ -68,7 +68,7 @@ public class DoctorDto {
     private String topImage;
 
     @JsonProperty("isActive")
-    private boolean isActive;
+    private Boolean isActive = true;
 
     @JsonProperty("images")
     private List<ImageDto> images;
