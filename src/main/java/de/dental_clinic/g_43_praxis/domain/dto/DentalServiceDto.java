@@ -11,14 +11,14 @@ import java.util.List;
 
 @JsonPropertyOrder({
         "id",
-        "title_de",
-        "title_en",
-        "title_ru",
-        "description_de",
-        "description_en",
-        "description_ru",
-        "top_image",
-        "is_active",
+        "titleDe",
+        "titleEn",
+        "titleRu",
+        "descriptionDe",
+        "descriptionEn",
+        "descriptionRu",
+        "topImage",
+        "isActive",
         "images"
 })
 @Getter
@@ -35,49 +35,49 @@ public class DentalServiceDto {
     private Long id;
 
     @Schema(description = "Title of the dental service in German", example = "Zahnpflege")
-    @JsonProperty("title_de")
+    @JsonProperty("titleDe")
     @NotNull(message = "Title in German is required")
     @Size(min = 3, message = "Title in German must be at least 3 characters long")
     private String titleDe;
 
     @Schema(description = "Title of the dental service in English", example = "Dental Care")
-    @JsonProperty("title_en")
+    @JsonProperty("titleEn")
     @NotNull(message = "Title in English is required")
     @Size(min = 3, message = "Title in English must be at least 3 characters long")
     private String titleEn;
 
     @Schema(description = "Title of the dental service in Russian", example = "Стоматологическая помощь")
-    @JsonProperty("title_ru")
+    @JsonProperty("titleRu")
     @NotNull(message = "Title in Russian is required")
     @Size(min = 3, message = "Title in Russian must be at least 3 characters long")
     private String titleRu;
 
     @Schema(description = "Description of the dental service in German", example = "Komplette Zahnpflege für die Familie")
-    @JsonProperty("description_de")
+    @JsonProperty("descriptionDe")
     @NotNull(message = "Description in German is required")
     @Size(min = 10, message = "Description in German must be at least 10 characters long")
     private String descriptionDe;
 
     @Schema(description = "Description of the dental service in English", example = "Comprehensive dental care for the whole family")
-    @JsonProperty("description_en")
+    @JsonProperty("descriptionEn")
     @NotNull(message = "Description in English is required")
     @Size(min = 10, message = "Description in English must be at least 10 characters long")
     private String descriptionEn;
 
     @Schema(description = "Description of the dental service in Russian", example = "Комплексный уход за зубами для всей семьи")
-    @JsonProperty("description_ru")
+    @JsonProperty("descriptionRu")
     @NotNull(message = "Description in Russian is required")
     @Size(min = 10, message = "Description in Russian must be at least 10 characters long")
     private String descriptionRu;
 
     @Schema(description = "URL to the top image representing the dental service", example = "/images/dental/top-image.jpg")
-    @JsonProperty("top_image")
+    @JsonProperty("topImage")
     @NotNull(message = "Top image is required")
     private String topImage;
 
-//    @Schema(description = "Status indicating if the service is active", example = "true")
-    @JsonProperty("is_active")
-    @NotNull(message = "Is Active is required")
+    @Schema(description = "Status indicating if the service is active", example = "true")
+    @JsonProperty("isActive")
+//    @NotNull(message = "Is Active is required")
     private Boolean isActive;
 
     @Schema(description = "List of associated images")
