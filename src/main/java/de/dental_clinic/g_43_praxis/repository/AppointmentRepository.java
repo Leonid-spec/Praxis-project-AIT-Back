@@ -9,10 +9,10 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-//    List<Appointment> findByStatus(String status);
+    List<Appointment> findByStatus(String status);
 
     List<Appointment> findAllByService_Id(Long dentalServiceId);
 
-//    List<Appointment> findByIsActive(Boolean isActive);
+    List<Appointment> findByIsActive(Boolean isActive);
 
 }

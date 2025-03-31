@@ -10,7 +10,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,6 @@ public class TokenService {
     private final RoleRepository roleRepository;
     private final AdminMappingService adminMappingService;
 
-    @Autowired
     public TokenService(
             @Value("${key.access}") String accessPhrase,
             @Value("${key.refresh}") String refreshPhrase,

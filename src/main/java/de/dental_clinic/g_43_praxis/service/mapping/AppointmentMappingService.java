@@ -9,7 +9,6 @@ public class AppointmentMappingService {
 
     public AppointmentDto mapToDto(Appointment appointment) {
         AppointmentDto appointmentDto = new AppointmentDto();
-
         appointmentDto.setId(appointment.getId());
         appointmentDto.setDentalServiceId(appointment.getService().getId());
         appointmentDto.setFirstName(appointment.getFirstName());
@@ -20,8 +19,8 @@ public class AppointmentMappingService {
         appointmentDto.setAvailableTime(appointment.getAvailableTime());
         appointmentDto.setComment(appointment.getComment());
         appointmentDto.setLanguage(appointment.getLanguage());
-        appointmentDto.setIsNew(appointment.getIsNew());
-//        appointmentDto.setStatus(appointment.getStatus());
+        appointmentDto.setStatus(appointment.getStatus());
+        appointmentDto.setIsActive(appointment.getIsActive());
         return appointmentDto;
     }
 
@@ -34,8 +33,8 @@ public class AppointmentMappingService {
         appointment.setAvailableTime(appointmentDto.getAvailableTime());
         appointment.setComment(appointmentDto.getComment());
         appointment.setLanguage(appointmentDto.getLanguage());
-        appointment.setIsNew(appointmentDto.getIsNew());
-//        appointment.setStatus(appointmentDto.getStatus());
+        appointment.setStatus(appointmentDto.getStatus());
+        appointment.setIsActive(appointmentDto.getIsActive());
     }
 
 }

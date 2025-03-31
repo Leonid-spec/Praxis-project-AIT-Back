@@ -85,14 +85,14 @@ public class DentalServiceImpl implements DentalServiceService {
         return dentalServiceMappingService.mapEntityToDto(updatedDentalService);
     }
 
-//    @Override
-//    public void deleteDentalServiceById(Long id) {
-//        validateId(id);
-//        if (!dentalServiceRepository.existsById(id)) {
-//            throw new DentalServiceNotFoundException("DentalService with ID " + id + " not found");
-//        }
-//        dentalServiceRepository.deleteById(id);
-//    }
+    @Override
+    public void deleteDentalServiceById(Long id) {
+        validateId(id);
+        if (!dentalServiceRepository.existsById(id)) {
+            throw new DentalServiceNotFoundException("DentalService with ID " + id + " not found");
+        }
+        dentalServiceRepository.deleteById(id);
+    }
 
     private void validateId(Long id) {
         if (id == null || id <= 0) {
@@ -102,25 +102,25 @@ public class DentalServiceImpl implements DentalServiceService {
 
     private void validateDentalServiceDto(DentalServiceDto dentalServiceDto) {
         if (dentalServiceDto == null) {
-            throw new IllegalArgumentException("Field for dentalServiceDto cannot be null.");
+            throw new IllegalArgumentException("DentalServiceDto cannot be null.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleEn())) {
-            throw new IllegalArgumentException("Field titleEn cannot be null or empty.");
+            throw new IllegalArgumentException("TitleEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleDe())) {
-            throw new IllegalArgumentException("Field titleDe cannot be null or empty.");
+            throw new IllegalArgumentException("TitleDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleRu())) {
-            throw new IllegalArgumentException("Field titleRu cannot be null or empty.");
+            throw new IllegalArgumentException("TitleRu cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionEn())) {
-            throw new IllegalArgumentException("Field descriptionEn cannot be null or empty.");
+            throw new IllegalArgumentException("DescriptionEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionDe())) {
-            throw new IllegalArgumentException("Field descriptionDe cannot be null or empty.");
+            throw new IllegalArgumentException("DescriptionDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionRu())) {
-            throw new IllegalArgumentException("Field descriptionRu cannot be null or empty.");
+            throw new IllegalArgumentException("DescriptionRu cannot be null or empty.");
         }
     }
 }

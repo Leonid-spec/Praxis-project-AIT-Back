@@ -16,5 +16,5 @@ public interface DentalServiceService {
 
     DentalServiceDto updateDentalService(Long id, DentalServiceDto dentalServiceDto);
 
-//    void deleteDentalServiceById(Long id);
+    void deleteDentalServiceById(Long id);
 }

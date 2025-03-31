@@ -35,7 +35,7 @@ public class AdminInitializer implements CommandLineRunner {
     public void run(String... args) {
         if (adminRepository.count() == 0) {
             if (!isValidAdminInfo(adminUsername, adminPassword)) {
-                logger.warn("Administrator is not created. Incorrect configuration data.");
+                logger.warn("Адміністратор не створений. Неправильні конфігураційні дані.");
                 return;
             }
 
@@ -55,8 +55,8 @@ public class AdminInitializer implements CommandLineRunner {
             return false;
         }
 
-        if (username.length() < 3 || password.length() > 32) {
-            logger.info("The username must be longer than 4 characters, the password must be shorter than 20 characters.");
+        if (username.length() < 2 || password.length() < 20) {
+            logger.info("The username must be longer than 2 characters, the password must be longer than 20 characters.");
             return false;
         }
 

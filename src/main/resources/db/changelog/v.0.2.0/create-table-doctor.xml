@@ -24,7 +24,6 @@
             <column name="specialisation_ru" type="varchar(255)" />
             <column name="top_image" type="text" />
             <column name="is_active" type="boolean" defaultValueBoolean="true"/>
-            <column name="images" type="boolean" defaultValueBoolean="true"/>
 
         </createTable>
 

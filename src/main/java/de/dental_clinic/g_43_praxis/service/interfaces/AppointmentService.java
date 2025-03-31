@@ -17,7 +17,7 @@ public interface AppointmentService {
 
     boolean deleteAppointment(Long id);
 
-//    boolean changeAppointmentStatus(Long id, boolean isActive);
+    boolean changeAppointmentStatus(Long id, boolean isActive);
 
-//    List<AppointmentDto> getActiveAppointments();
+    List<AppointmentDto> getActiveAppointments();
 }

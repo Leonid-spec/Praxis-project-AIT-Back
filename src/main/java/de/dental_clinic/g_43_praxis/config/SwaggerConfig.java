@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         url = "https://github.com/Leonid-spec/Praxis-project-AIT-Back/tree/dev"
                 )
         ),
-        servers = @Server(url = "http://localhost:8081", description = "Local Server")
+        servers = @Server(url = "http://localhost:8080", description = "Local Server")
 )
 public class SwaggerConfig {
 }
