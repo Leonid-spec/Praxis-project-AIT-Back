@@ -9,37 +9,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/services")
+@RequestMapping("/api")
 @AllArgsConstructor
 public class DentalServiceController {
 
     private final DentalServiceService dentalServiceService;
 
-    @GetMapping("/active")
+    @GetMapping("/services/active")
     public ResponseEntity<List<DentalServiceDto>> getActiveDentalServices() {
         List<DentalServiceDto> activeDentalServices = dentalServiceService.getActiveDentalServices();
         return ResponseEntity.ok(activeDentalServices);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/service/{id}")
     public ResponseEntity<DentalServiceDto> getDentalServiceById(@PathVariable Long id) {
         DentalServiceDto dentalServiceDto = dentalServiceService.getDentalServiceById(id);
         return ResponseEntity.ok(dentalServiceDto);
     }
 
-    @GetMapping
+    @GetMapping("/services")
     public ResponseEntity<List<DentalServiceDto>> getAllDentalServices() {
         List<DentalServiceDto> dentalServices = dentalServiceService.getAllDentalServices();
         return ResponseEntity.ok(dentalServices);
     }
 
-    @PostMapping
+    @PostMapping("/service")
     public ResponseEntity<DentalServiceDto> addDentalService(@RequestBody DentalServiceDto dentalServiceDto) {
         DentalServiceDto newDentalService = dentalServiceService.addDentalService(dentalServiceDto);
         return ResponseEntity.ok(newDentalService);
     }
 
-    @PutMapping()
+    @PutMapping("/service")
     public ResponseEntity<DentalServiceDto> updateDentalService(@RequestBody DentalServiceDto dentalServiceDto) {
         Long id = dentalServiceDto.getId();
 

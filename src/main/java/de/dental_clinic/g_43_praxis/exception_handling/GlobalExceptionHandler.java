@@ -41,6 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DentalServiceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> handleDentalServiceNotFoundException(DentalServiceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
