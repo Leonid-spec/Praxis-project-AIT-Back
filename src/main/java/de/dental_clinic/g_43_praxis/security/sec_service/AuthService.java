@@ -33,19 +33,24 @@ public class AuthService {
 
     public TokenResponseDto login(AdminDto inboundUser) throws AuthException {
         Admin admin = adminMappingService.mapDtoToEntity(inboundUser);
+        String requestedUsername = admin.getUsername();
 
-        String username = admin.getUsername();
-        Optional<AdminDto> foundUser = adminService.findByLogin(username);
+        Optional<AdminDto> foundUser = adminService.findByLogin(requestedUsername);
 
         if (foundUser.isEmpty()) {
             throw new AuthException("Admin not found");
         }
 
-        if (passwordEncoder.matches(inboundUser.getPassword(), foundUser.get().getPassword())) {
-            String accessToken = tokenService.generateAccessToken(foundUser);
-            String refreshToken = tokenService.generateRefreshToken(foundUser);
-            refreshStorage.put(username, refreshToken);
-            return new TokenResponseDto(username, accessToken, refreshToken);
+        AdminDto userFromDb = foundUser.get();
+        if (!userFromDb.getLogin().equals(requestedUsername)) {
+            throw new AuthException("Admin not found");
+        }
+
+        if (passwordEncoder.matches(inboundUser.getPassword(), userFromDb.getPassword())) {
+            String accessToken = tokenService.generateAccessToken(Optional.of(userFromDb));
+            String refreshToken = tokenService.generateRefreshToken(Optional.of(userFromDb));
+            refreshStorage.put(userFromDb.getLogin(), refreshToken);
+            return new TokenResponseDto(userFromDb.getLogin(), accessToken, refreshToken);
         } else {
             throw new AuthException("Password is incorrect");
         }

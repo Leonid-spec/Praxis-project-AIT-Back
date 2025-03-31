@@ -1,22 +1,18 @@
 package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
-import de.dental_clinic.g_43_praxis.domain.dto.AppointmentDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Admin;
-import de.dental_clinic.g_43_praxis.domain.entity.Role;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AdminAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AdminNotFoundException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
-import de.dental_clinic.g_43_praxis.repository.RoleRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
 import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,6 +27,7 @@ public class AdminServiceImpl implements AdminService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<AdminDto> findByLogin(String login) {
         return adminRepository.findByLogin(login)
                 .map(adminMappingService::mapEntityToDto);
@@ -61,6 +58,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AdminDto> findAllAdmins() {
         return adminRepository.findAll()
                 .stream()

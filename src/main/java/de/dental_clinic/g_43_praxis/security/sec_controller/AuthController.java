@@ -1,14 +1,11 @@
 package de.dental_clinic.g_43_praxis.security.sec_controller;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AuthException;
 import de.dental_clinic.g_43_praxis.security.sec_dto.RefreshRequestDto;
 import de.dental_clinic.g_43_praxis.security.sec_dto.TokenResponseDto;
 import de.dental_clinic.g_43_praxis.security.sec_service.AuthService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.security.auth.message.AuthException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +26,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponseDto> login(@RequestBody AdminDto adminDto) {
-        TokenResponseDto tokenResponse = authService.login(adminDto);
-        return ResponseEntity.ok(tokenResponse);
+    public ResponseEntity<TokenResponseDto> login(@RequestBody(required = false) AdminDto adminDto) {
+        if (adminDto == null || adminDto.getLogin() == null || adminDto.getPassword() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        try {
+            TokenResponseDto tokenResponse = authService.login(adminDto);
+            return ResponseEntity.ok(tokenResponse);
+        } catch (AuthException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 
     @PostMapping("/refresh")
