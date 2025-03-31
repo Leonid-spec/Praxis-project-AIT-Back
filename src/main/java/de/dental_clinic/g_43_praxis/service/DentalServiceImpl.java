@@ -25,6 +25,7 @@ public class DentalServiceImpl implements DentalServiceService {
     private final DentalServiceMappingService dentalServiceMappingService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<DentalServiceDto> getActiveDentalServices() {
         List<DentalService> activeDentalServices = dentalServiceRepository.findByIsActiveTrue();
         return activeDentalServices.stream()
@@ -33,6 +34,7 @@ public class DentalServiceImpl implements DentalServiceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DentalServiceDto> getAllDentalServices() {
         return dentalServiceRepository.findAll()
                 .stream()
@@ -41,6 +43,7 @@ public class DentalServiceImpl implements DentalServiceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DentalServiceDto getDentalServiceById(Long id) {
         validateId(id);
         DentalService dentalService = dentalServiceRepository.findById(id)
