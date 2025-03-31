@@ -54,21 +54,20 @@ public class DentalServiceImpl implements DentalServiceService {
     @Override
     public DentalServiceDto addDentalService(@Valid DentalServiceDto dentalServiceDto) {
         validateDentalServiceDto(dentalServiceDto);
+
         if (dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn())) {
             throw new DoctorAlreadyExistsException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
         }
-        if (dentalServiceDto.getId() != null && dentalServiceRepository.existsById(dentalServiceDto.getId())) {
-            throw new DoctorAlreadyExistsException("DentalService with ID " + dentalServiceDto.getId() + " already exists. Please do not add ID field");
-        }
-        if (dentalServiceDto.getId() != null && !dentalServiceRepository.existsById(dentalServiceDto.getId())) {
-            throw new DoctorAlreadyExistsException("DentalService with ID " + dentalServiceDto.getId() + " not exists. Please do not add ID field");
-        }
+
         DentalService dentalService = dentalServiceMappingService.mapDtoToEntity(dentalServiceDto);
+        dentalService.setId(null);
+        dentalService.setIsActive(true);
         DentalService savedDentalService = dentalServiceRepository.save(dentalService);
         return dentalServiceMappingService.mapEntityToDto(savedDentalService);
     }
 
     @Override
+    @Transactional
     public DentalServiceDto updateDentalService(Long id, @Valid DentalServiceDto dentalServiceDto) {
         validateId(id);
         validateDentalServiceDto(dentalServiceDto);
@@ -89,6 +88,7 @@ public class DentalServiceImpl implements DentalServiceService {
     }
 
 //    @Override
+//    @Transactional
 //    public void deleteDentalServiceById(Long id) {
 //        validateId(id);
 //        if (!dentalServiceRepository.existsById(id)) {
