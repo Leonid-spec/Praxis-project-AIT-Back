@@ -43,7 +43,7 @@ public class Doctor {
     private String specialisationRu;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private Boolean isActive = true;
 
     @Column(name = "top_image", nullable = true)
     private String topImage;
