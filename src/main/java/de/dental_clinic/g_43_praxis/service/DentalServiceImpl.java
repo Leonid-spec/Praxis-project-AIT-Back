@@ -2,7 +2,9 @@ package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
 import de.dental_clinic.g_43_praxis.domain.entity.DentalService;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.repository.DentalServiceRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
@@ -56,12 +58,11 @@ public class DentalServiceImpl implements DentalServiceService {
         validateDentalServiceDto(dentalServiceDto);
 
         if (dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn())) {
-            throw new DoctorAlreadyExistsException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
+            throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
         }
 
         DentalService dentalService = dentalServiceMappingService.mapDtoToEntity(dentalServiceDto);
         dentalService.setId(null);
-        dentalService.setIsActive(true);
         DentalService savedDentalService = dentalServiceRepository.save(dentalService);
         return dentalServiceMappingService.mapEntityToDto(savedDentalService);
     }
@@ -99,31 +100,31 @@ public class DentalServiceImpl implements DentalServiceService {
 
     private void validateId(Long id) {
         if (id == null || id <= 0) {
-            throw new IllegalArgumentException("Invalid ID: ID must be a positive number.");
+            throw new DentalServiceValidationException("Invalid ID: ID must be a positive number.");
         }
     }
 
     private void validateDentalServiceDto(DentalServiceDto dentalServiceDto) {
         if (dentalServiceDto == null) {
-            throw new IllegalArgumentException("Field for dentalServiceDto cannot be null.");
+            throw new DentalServiceValidationException("Field for dentalServiceDto cannot be null.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleEn())) {
-            throw new IllegalArgumentException("Field titleEn cannot be null or empty.");
+            throw new DentalServiceValidationException("Field titleEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleDe())) {
-            throw new IllegalArgumentException("Field titleDe cannot be null or empty.");
+            throw new DentalServiceValidationException("Field titleDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getTitleRu())) {
-            throw new IllegalArgumentException("Field titleRu cannot be null or empty.");
+            throw new DentalServiceValidationException("Field titleRu cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionEn())) {
-            throw new IllegalArgumentException("Field descriptionEn cannot be null or empty.");
+            throw new DentalServiceValidationException("Field descriptionEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionDe())) {
-            throw new IllegalArgumentException("Field descriptionDe cannot be null or empty.");
+            throw new DentalServiceValidationException("Field descriptionDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(dentalServiceDto.getDescriptionRu())) {
-            throw new IllegalArgumentException("Field descriptionRu cannot be null or empty.");
+            throw new DentalServiceValidationException("Field descriptionRu cannot be null or empty.");
         }
     }
 }

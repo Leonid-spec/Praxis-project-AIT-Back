@@ -2,7 +2,9 @@ package de.dental_clinic.g_43_praxis.controller;
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,13 +36,13 @@ public class DentalServiceController {
     }
 
     @PostMapping("/service")
-    public ResponseEntity<DentalServiceDto> addDentalService(@RequestBody DentalServiceDto dentalServiceDto) {
+    public ResponseEntity<DentalServiceDto> addDentalService(@Valid @RequestBody DentalServiceDto dentalServiceDto) {
         DentalServiceDto newDentalService = dentalServiceService.addDentalService(dentalServiceDto);
-        return ResponseEntity.ok(newDentalService);
+        return new ResponseEntity<>(newDentalService, HttpStatus.CREATED);
     }
 
     @PutMapping("/service")
-    public ResponseEntity<DentalServiceDto> updateDentalService(@RequestBody DentalServiceDto dentalServiceDto) {
+    public ResponseEntity<DentalServiceDto> updateDentalService(@Valid @RequestBody DentalServiceDto dentalServiceDto) {
         Long id = dentalServiceDto.getId();
 
         if (id == null) {
