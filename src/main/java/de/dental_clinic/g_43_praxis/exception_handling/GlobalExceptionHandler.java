@@ -1,5 +1,6 @@
 package de.dental_clinic.g_43_praxis.exception_handling;
 
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorNotFoundException;
@@ -52,9 +53,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<String> handleGenericException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An unexpected error occurred");
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body("Invalid request: " + ex.getMessage());
     }
 
     @ExceptionHandler(DoctorNotFoundException.class)
