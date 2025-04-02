@@ -49,7 +49,7 @@ public class DentalServiceController {
             throw new DentalServiceValidationException("ID must be provided in the request body");
         }
 
-        DentalServiceDto updatedDentalService = dentalServiceService.updateDentalService(id, dentalServiceDto);
+        DentalServiceDto updatedDentalService = dentalServiceService.updateDentalService(dentalServiceDto);
         return ResponseEntity.ok(updatedDentalService);
     }
 

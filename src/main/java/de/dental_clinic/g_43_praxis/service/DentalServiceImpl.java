@@ -69,11 +69,19 @@ public class DentalServiceImpl implements DentalServiceService {
 
     @Override
     @Transactional
-    public DentalServiceDto updateDentalService(Long id, @Valid DentalServiceDto dentalServiceDto) {
+    public DentalServiceDto updateDentalService(@Valid DentalServiceDto dentalServiceDto) {
+        Long id = dentalServiceDto.getId();
         validateId(id);
         validateDentalServiceDto(dentalServiceDto);
         DentalService dentalService = dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
+
+        if (!dentalService.getTitleEn().equalsIgnoreCase(dentalServiceDto.getTitleEn())) {
+            boolean nameExists = dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn());
+            if (nameExists) {
+                throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
+            }
+        }
 
         dentalService.setTitleDe(dentalServiceDto.getTitleDe());
         dentalService.setTitleEn(dentalServiceDto.getTitleEn());
@@ -85,6 +93,7 @@ public class DentalServiceImpl implements DentalServiceService {
         dentalService.setIsActive(dentalServiceDto.getIsActive());
 
         DentalService updatedDentalService = dentalServiceRepository.save(dentalService);
+
         return dentalServiceMappingService.mapEntityToDto(updatedDentalService);
     }
 
