@@ -1,9 +1,6 @@
 package de.dental_clinic.g_43_praxis.exception_handling;
 
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceAlreadyExistsException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorNotFoundException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -68,5 +65,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DoctorNotFoundException.class)
     public ResponseEntity<String> handleDoctorNotFound(DoctorNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DoctorAlreadyExistsException.class)
+    public ResponseEntity<String> handleDoctorAlreadyExistsException(DoctorAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
