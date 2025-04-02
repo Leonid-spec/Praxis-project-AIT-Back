@@ -63,6 +63,7 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
         Doctor doctor = doctorMappingService.mapDtoToEntity(doctorDto);
+        doctor.setId(null);
         Doctor savedDoctor = doctorRepository.save(doctor);
         return doctorMappingService.mapEntityToDto(savedDoctor);
     }
@@ -86,7 +87,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setSpecialisationEn(doctorDto.getSpecialisationEn());
         doctor.setSpecialisationRu(doctorDto.getSpecialisationRu());
         doctor.setTopImage(doctorDto.getTopImage());
-//        doctor.setActive(doctorDto.isActive());
+        doctor.setActive(doctorDto.getIsActive());
 
         Doctor updatedDoctor = doctorRepository.save(doctor);
         return doctorMappingService.mapEntityToDto(updatedDoctor);
