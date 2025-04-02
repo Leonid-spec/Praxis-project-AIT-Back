@@ -73,9 +73,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+
     @ExceptionHandler(DoctorValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleDoctorValidationException(DoctorValidationException ex) {
+    public ResponseEn(DoctorValidationException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+    @ExceptionHandler(DoctorAlreadyExistsException.class)
+    public ResponseEntity<String> handleDoctorAlreadyExistsException(DoctorAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+
     }
 }
