@@ -60,7 +60,7 @@ public class DoctorServiceImpl implements DoctorService {
     public DoctorDto addDoctor(DoctorDto doctorDto) {
         validateAppointmentDto(doctorDto);
         if (doctorRepository.existsByFullName(doctorDto.getFullName())) {
-            throw new DoctorValidationException("Doctor with name " + doctorDto.getFullName() + " already exists");
+            throw new DoctorAlreadyExistsException("Doctor with name " + doctorDto.getFullName() + " already exists");
         }
 
         Doctor doctor = doctorMappingService.mapDtoToEntity(doctorDto);
@@ -104,43 +104,43 @@ public class DoctorServiceImpl implements DoctorService {
 
     private void validateId(Long id) {
         if (id == null || id <= 0) {
-            throw new DoctorValidationException("Invalid ID: ID must be a positive number.");
+            throw new IllegalArgumentException("Invalid ID: ID must be a positive number.");
         }
     }
 
     private void validateAppointmentDto(DoctorDto doctorDto) {
         if (doctorDto == null) {
-            throw new DoctorValidationException("Field for doctorDto cannot be null.");
+            throw new IllegalArgumentException("Field for doctorDto cannot be null.");
         }
         if (!StringUtils.hasText(doctorDto.getFullName())) {
-            throw new DoctorValidationException("Field fullName cannot be null or empty.");
+            throw new IllegalArgumentException("Field fullName cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getTitleDe())) {
-            throw new DoctorValidationException("Field titleDe cannot be null or empty.");
+            throw new IllegalArgumentException("Field titleDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getTitleEn())) {
-            throw new DoctorValidationException("Field titleEn cannot be null or empty.");
+            throw new IllegalArgumentException("Field titleEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getTitleRu())) {
-            throw new DoctorValidationException("Field titleRu cannot be null or empty.");
+            throw new IllegalArgumentException("Field titleRu cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getBiographyDe())) {
-            throw new DoctorValidationException("Field biographyDe cannot be null or empty.");
+            throw new IllegalArgumentException("Field biographyDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getBiographyEn())) {
-            throw new DoctorValidationException("Field biographyEn cannot be null or empty.");
+            throw new IllegalArgumentException("Field biographyEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getBiographyRu())) {
-            throw new DoctorValidationException("Field biographyRu cannot be null or empty.");
+            throw new IllegalArgumentException("Field biographyRu cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getSpecialisationDe())) {
-            throw new DoctorValidationException("Field specialisationDe cannot be null or empty.");
+            throw new IllegalArgumentException("Field specialisationDe cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getSpecialisationEn())) {
-            throw new DoctorValidationException("Field specialisationEn cannot be null or empty.");
+            throw new IllegalArgumentException("Field specialisationEn cannot be null or empty.");
         }
         if (!StringUtils.hasText(doctorDto.getSpecialisationRu())) {
-            throw new DoctorValidationException("Field specialisationRu cannot be null or empty.");
+            throw new IllegalArgumentException("Field specialisationRu cannot be null or empty.");
         }
     }
 }
