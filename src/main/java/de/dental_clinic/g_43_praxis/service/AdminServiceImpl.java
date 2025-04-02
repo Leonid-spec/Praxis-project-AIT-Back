@@ -2,7 +2,6 @@ package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Admin;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AdminAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AdminNotFoundException;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
@@ -37,20 +36,19 @@ public class AdminServiceImpl implements AdminService {
     public void createAdmin(AdminDto dto) {
         validateAdminDto(dto);
         if (adminRepository.findByLogin(dto.getLogin()).isPresent()) {
-            throw new AdminAlreadyExistsException("Admin already exists");
+            throw new IllegalArgumentException("Admin already exists");
         }
         Admin admin = adminMappingService.mapDtoToEntity(dto);
         admin.setPassword(passwordEncoder.encode(dto.getPassword()));
         adminRepository.save(admin);
     }
 
-
     @Override
     public void changePassword(AdminDto dto) {
         validateAdminDto(dto);
         Optional<Admin> adminOptional = adminRepository.findByLogin(dto.getLogin());
         if (adminOptional.isEmpty()) {
-            throw new AdminNotFoundException("Admin with login '" + dto.getLogin() + "' does not exist");
+            throw new IllegalArgumentException("Admin with login '" + dto.getLogin() + "' does not exist");
         }
         Admin admin = adminOptional.get();
         admin.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -96,5 +94,4 @@ public class AdminServiceImpl implements AdminService {
             throw new IllegalArgumentException("Field password cannot be null or empty.");
         }
     }
-
 }

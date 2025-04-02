@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
     Optional<Admin> findByLogin(String login);
+    Optional<Admin> findByLoginIgnoreCase(String login);
     Optional<Admin> findById(Long id);
     long count();
 }
