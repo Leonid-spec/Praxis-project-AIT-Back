@@ -42,7 +42,7 @@ public class DoctorMappingService {
         doctor.setSpecialisationEn(dto.getSpecialisationEn());
         doctor.setSpecialisationRu(dto.getSpecialisationRu());
         doctor.setTopImage(dto.getTopImage());
-//        doctor.setActive(dto.isActive());
+        doctor.setActive(dto.getIsActive());
         doctor.setImages(dto.getImages().stream().map(this::toImageEntity).toList());
         return doctor;
     }

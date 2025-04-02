@@ -1,9 +1,6 @@
 package de.dental_clinic.g_43_praxis.exception_handling;
 
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceAlreadyExistsException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorNotFoundException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -52,12 +49,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleGenericException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("An unexpected error occurred");
-    }
+//    @ExceptionHandler(DentalServiceValidationException.class)
+//    public ResponseEntity<String> handleDentalServiceValidationException(AdminAlreadyExistsException ex) {
+//        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+//    }
+
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public ResponseEntity<String> handleGenericException(Exception ex) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body("An unexpected error occurred");
+//    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -66,7 +68,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DoctorNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> handleDoctorNotFound(DoctorNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DoctorValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleDoctorValidationException(DoctorValidationException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

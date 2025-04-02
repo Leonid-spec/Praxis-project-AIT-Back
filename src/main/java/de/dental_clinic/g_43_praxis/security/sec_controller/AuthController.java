@@ -27,14 +27,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponseDto> login(@RequestBody(required = false) AdminDto adminDto) {
-        if (adminDto == null || adminDto.getLogin() == null || adminDto.getPassword() == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-
         try {
             TokenResponseDto tokenResponse = authService.login(adminDto);
             return ResponseEntity.ok(tokenResponse);
-        } catch (AuthException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }

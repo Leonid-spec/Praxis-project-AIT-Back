@@ -1,14 +1,13 @@
 package de.dental_clinic.g_43_praxis.security.sec_service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
-import de.dental_clinic.g_43_praxis.domain.entity.Admin;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.AuthException;
 import de.dental_clinic.g_43_praxis.security.sec_dto.TokenResponseDto;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
-import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,39 +20,35 @@ public class AuthService {
     private final TokenService tokenService;
     private final Map<String, String> refreshStorage;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final AdminMappingService adminMappingService;
 
-    public AuthService(AdminService adminService, TokenService tokenService, BCryptPasswordEncoder passwordEncoder, AdminMappingService adminMappingService) {
+    public AuthService(AdminService adminService, TokenService tokenService, BCryptPasswordEncoder passwordEncoder) {
         this.adminService = adminService;
         this.tokenService = tokenService;
         this.passwordEncoder = passwordEncoder;
-        this.adminMappingService = adminMappingService;
         this.refreshStorage = new HashMap<>();
     }
 
     public TokenResponseDto login(AdminDto inboundUser) throws AuthException {
-        Admin admin = adminMappingService.mapDtoToEntity(inboundUser);
-        String requestedUsername = admin.getUsername();
-
-        Optional<AdminDto> foundUser = adminService.findByLogin(requestedUsername);
-
-        if (foundUser.isEmpty()) {
-            throw new AuthException("Admin not found");
+        if (inboundUser == null || !StringUtils.hasText(inboundUser.getLogin()) || !StringUtils.hasText(inboundUser.getPassword())) {
+            throw new AuthException("Login and password must not be empty.");
         }
 
-        AdminDto userFromDb = foundUser.get();
-        if (!userFromDb.getLogin().equals(requestedUsername)) {
-            throw new AuthException("Admin not found");
+        Optional<AdminDto> foundUserOptional = adminService.findByLogin(inboundUser.getLogin().toLowerCase());
+        if (foundUserOptional.isEmpty()) {
+            throw new AuthException("Invalid login or password.");
         }
 
-        if (passwordEncoder.matches(inboundUser.getPassword(), userFromDb.getPassword())) {
-            String accessToken = tokenService.generateAccessToken(Optional.of(userFromDb));
-            String refreshToken = tokenService.generateRefreshToken(Optional.of(userFromDb));
-            refreshStorage.put(userFromDb.getLogin(), refreshToken);
-            return new TokenResponseDto(userFromDb.getLogin(), accessToken, refreshToken);
-        } else {
-            throw new AuthException("Password is incorrect");
+        AdminDto foundUser = foundUserOptional.get();
+
+        if (!passwordEncoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
+            throw new AuthException("Invalid login or password.");
         }
+
+        String accessToken = tokenService.generateAccessToken(Optional.of(foundUser));
+        String refreshToken = tokenService.generateRefreshToken(Optional.of(foundUser));
+        refreshStorage.put(foundUser.getLogin(), refreshToken);
+
+        return new TokenResponseDto(foundUser.getLogin(), accessToken, refreshToken);
     }
 
     public TokenResponseDto getNewAccessToken(String inboundRefreshToken) {

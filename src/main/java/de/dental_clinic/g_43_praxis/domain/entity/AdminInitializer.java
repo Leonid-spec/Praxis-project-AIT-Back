@@ -55,8 +55,13 @@ public class AdminInitializer implements CommandLineRunner {
             return false;
         }
 
-        if (username.length() < 3 || password.length() > 32) {
-            logger.info("The username must be longer than 4 characters, the password must be shorter than 20 characters.");
+        if (username.length() < 4 || username.length() > 32) {
+            logger.info("The username must be between 4 and 32 characters long.");
+            return false;
+        }
+
+        if (password.length() < 4 || password.length() > 32) {
+            logger.info("The password must be between 4 and 32 characters long.");
             return false;
         }
 
