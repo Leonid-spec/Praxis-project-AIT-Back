@@ -49,7 +49,7 @@ public class DentalServiceImpl implements DentalServiceService {
     public DentalServiceDto getDentalServiceById(Long id) {
         validateId(id);
         DentalService dentalService = dentalServiceRepository.findById(id)
-                .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
+                .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found."));
         return dentalServiceMappingService.mapEntityToDto(dentalService);
     }
 
@@ -58,7 +58,7 @@ public class DentalServiceImpl implements DentalServiceService {
         validateDentalServiceDto(dentalServiceDto);
 
         if (dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn())) {
-            throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
+            throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists.");
         }
 
         DentalService dentalService = dentalServiceMappingService.mapDtoToEntity(dentalServiceDto);
@@ -74,12 +74,12 @@ public class DentalServiceImpl implements DentalServiceService {
         validateId(id);
         validateDentalServiceDto(dentalServiceDto);
         DentalService dentalService = dentalServiceRepository.findById(id)
-                .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found"));
+                .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found."));
 
         if (!dentalService.getTitleEn().equalsIgnoreCase(dentalServiceDto.getTitleEn())) {
             boolean nameExists = dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn());
             if (nameExists) {
-                throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists");
+                throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists.");
             }
         }
 

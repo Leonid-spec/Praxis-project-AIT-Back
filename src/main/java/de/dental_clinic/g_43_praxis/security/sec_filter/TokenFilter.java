@@ -35,6 +35,12 @@ public class TokenFilter extends GenericFilterBean {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+//        if (request.getServletPath().equals("/api/login") ||
+//                request.getServletPath().equals("/api/services/active") ||
+//                request.getServletPath().equals("/api/doctors/active")) {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//            return;
+//        }
 
         String token = getTokenFromRequest(request);
 
