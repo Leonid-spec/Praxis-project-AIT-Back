@@ -19,9 +19,8 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/admin")
-    public ResponseEntity<String> createAdmin(@RequestBody AdminDto adminDto) {
-        adminService.createAdmin(adminDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Admin created successfully");
+    public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(adminService.createAdmin(adminDto));
     }
 
     @PatchMapping("/mypassword")
@@ -34,6 +33,11 @@ public class AdminController {
     public ResponseEntity<List<AdminDto>> getAllAdmins() {
         List<AdminDto> admins = adminService.findAllAdmins();
         return ResponseEntity.ok(admins);
+    }
+
+    @DeleteMapping("/admin")
+    public ResponseEntity<AdminDto> deleteAdmin(@RequestBody AdminDto adminDto) {
+        return ResponseEntity.ok(adminService.deleteAdmin(adminDto));
     }
 
 //    For future

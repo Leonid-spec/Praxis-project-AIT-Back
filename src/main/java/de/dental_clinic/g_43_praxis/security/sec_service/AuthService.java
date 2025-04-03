@@ -29,16 +29,10 @@ public class AuthService {
     }
 
     public TokenResponseDto login(AdminDto inboundUser) throws AuthException {
-        if (inboundUser == null || !StringUtils.hasText(inboundUser.getLogin()) || !StringUtils.hasText(inboundUser.getPassword())) {
-            throw new AuthException("Login and password must not be empty.");
-        }
+        adminService.validateAdminDto(inboundUser);
 
-        Optional<AdminDto> foundUserOptional = adminService.findByLogin(inboundUser.getLogin().toLowerCase());
-        if (foundUserOptional.isEmpty()) {
-            throw new AuthException("Invalid login or password.");
-        }
-
-        AdminDto foundUser = foundUserOptional.get();
+        AdminDto foundUser = adminService.findByLogin(inboundUser.getLogin())
+                .orElseThrow(() ->new AuthException("Invalid login or password."));
 
         if (!passwordEncoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
             throw new AuthException("Invalid login or password.");

@@ -9,11 +9,9 @@ import lombok.*;
         "login",
         "password"
 })
-@Getter
-@Setter
-@EqualsAndHashCode
+
 @RequiredArgsConstructor
-@ToString
+@Data
 public class AdminDto {
     @JsonIgnore
     private Long id;

@@ -28,29 +28,28 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(readOnly = true)
     public Optional<AdminDto> findByLogin(String login) {
-        return adminRepository.findByLogin(login)
+        return adminRepository.findByLogin( validateLogin(login))
                 .map(adminMappingService::mapEntityToDto);
     }
 
+    @Transactional
     @Override
-    public void createAdmin(AdminDto dto) {
+    public AdminDto createAdmin(AdminDto dto) {
         validateAdminDto(dto);
         if (adminRepository.findByLogin(dto.getLogin()).isPresent()) {
             throw new IllegalArgumentException("Admin already exists");
         }
         Admin admin = adminMappingService.mapDtoToEntity(dto);
         admin.setPassword(passwordEncoder.encode(dto.getPassword()));
-        adminRepository.save(admin);
+        return adminMappingService.mapEntityToDto(adminRepository.save(admin));
     }
 
+    @Transactional
     @Override
     public void changePassword(AdminDto dto) {
         validateAdminDto(dto);
-        Optional<Admin> adminOptional = adminRepository.findByLogin(dto.getLogin());
-        if (adminOptional.isEmpty()) {
-            throw new IllegalArgumentException("Admin with login '" + dto.getLogin() + "' does not exist");
-        }
-        Admin admin = adminOptional.get();
+        Admin admin = adminRepository.findByLogin(dto.getLogin())
+                .orElseThrow(() -> new AdminNotFoundException("Admin with login " + dto.getLogin() + " not found"));
         admin.setPassword(passwordEncoder.encode(dto.getPassword()));
         adminRepository.save(admin);
     }
@@ -64,17 +63,32 @@ public class AdminServiceImpl implements AdminService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
-        public void deleteAdmin(Long id) {
-        validateId(id);
-        Optional<Admin> adminOptional = adminRepository.findById(id);
-        if (adminOptional.isEmpty()) {
-            throw new AdminNotFoundException("Admin with this ID does not exist");
-        }
-        Admin admin = adminOptional.get();
+        public AdminDto deleteAdmin(AdminDto adminDto) {
+        validateAdminDto(adminDto);
+        Admin admin = adminRepository.findByLogin(adminDto.getLogin())
+                .orElseThrow(() -> new AdminNotFoundException("Admin with login  not found"));
+        Long id = admin.getId();
+        adminDto = adminMappingService.mapEntityToDto(admin);
         admin.getRoles().clear();
-        adminRepository.save(admin);
-        adminRepository.deleteById(id);
+        adminRepository.saveAndFlush(admin);
+        adminRepository.delete(admin);
+        if(adminRepository.findById(id).isPresent()) {throw new AdminNotFoundException("Admin delete error"); }
+        return adminDto;
+    }
+
+    @Override
+    public void validateAdminDto(AdminDto adminDto) {
+        if (adminDto == null) {
+            throw new IllegalArgumentException("Field for adminDto cannot be null.");
+        }
+
+        adminDto.setLogin(validateLogin(adminDto.getLogin()));
+
+        if (!StringUtils.hasText(adminDto.getPassword())) {
+            throw new IllegalArgumentException("Field password cannot be null or empty.");
+        }
     }
 
     private void validateId(Long id) {
@@ -83,15 +97,8 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-    private void validateAdminDto(AdminDto adminDto) {
-        if (adminDto == null) {
-            throw new IllegalArgumentException("Field for adminDto cannot be null.");
-        }
-        if (!StringUtils.hasText(adminDto.getLogin())) {
-            throw new IllegalArgumentException("Field login cannot be null or empty.");
-        }
-        if (!StringUtils.hasText(adminDto.getPassword())) {
-            throw new IllegalArgumentException("Field password cannot be null or empty.");
-        }
+    private String validateLogin(String login) {
+        if (StringUtils.hasText(login)) { return login.toLowerCase(); }
+        else { throw new IllegalArgumentException("Field login cannot be null or empty."); }
     }
 }

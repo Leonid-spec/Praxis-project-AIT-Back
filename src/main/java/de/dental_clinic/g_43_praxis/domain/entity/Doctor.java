@@ -12,7 +12,7 @@ public class Doctor {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = false, unique = true)
     private String fullName;
 
     @Column(name = "title_de", nullable = true)

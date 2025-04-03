@@ -8,8 +8,9 @@ import java.util.Optional;
 
 public interface AdminService {
     Optional<AdminDto> findByLogin(String login);
-    void createAdmin(AdminDto dto);
+    AdminDto createAdmin(AdminDto dto);
     void changePassword(AdminDto dto);
     List<AdminDto> findAllAdmins();
-    void deleteAdmin(Long id);
+    AdminDto deleteAdmin(AdminDto adminDto);
+    public void validateAdminDto(AdminDto adminDto);
 }

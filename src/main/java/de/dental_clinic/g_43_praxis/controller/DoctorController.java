@@ -49,10 +49,16 @@ public class DoctorController {
     }
 
     // Обновить данные врача
-    @PutMapping("/doctor/{id}")
-    public ResponseEntity<DoctorDto> updateDoctor(@PathVariable Long id, @RequestBody DoctorDto doctorDto) {
-        DoctorDto updatedDoctor = doctorService.updateDoctor(id, doctorDto);
+    @PutMapping("/doctor")
+    public ResponseEntity<DoctorDto> updateDoctor(@RequestBody DoctorDto doctorDto) {
+        DoctorDto updatedDoctor = doctorService.updateDoctor(doctorDto);
         return ResponseEntity.ok(updatedDoctor);
+    }
+
+
+    @DeleteMapping("/doctor/{id}")
+    public ResponseEntity<DoctorDto> deleteDoctor(@PathVariable Long id) {
+        return ResponseEntity.ok(doctorService.deleteDoctor(id));
     }
 
     // Удалить врача по ID
