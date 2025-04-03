@@ -27,9 +27,11 @@ public class TokenFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if (request.getServletPath().equals("/api/login") ||
-                request.getServletPath().equals("/api/services/active") ||
-                request.getServletPath().equals("/api/doctors/active")) {
+        String requestURI = request.getRequestURI(); // Используем полный URI вместо ServletPath
+
+        if (requestURI.equals("/api/login") ||
+                requestURI.equals("/api/services/active") ||
+                requestURI.equals("/api/doctors/active")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
