@@ -25,24 +25,41 @@ public class TokenFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if (request.getServletPath().equals("/api/login")) {
+        String requestURI = request.getRequestURI(); // Используем полный URI вместо ServletPath
+
+        if (requestURI.equals("/api/login") ||
+                requestURI.equals("/api/services/active") ||
+                requestURI.equals("/api/doctors/active")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+//        if (request.getServletPath().equals("/api/login") ||
+//                request.getServletPath().equals("/api/services/active") ||
+//                request.getServletPath().equals("/api/doctors/active")) {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//            return;
+//        }
 
         String token = getTokenFromRequest(request);
-        if (token != null && service.validateAccessToken(token)) {
-            Claims claims = service.getAccessClaims(token);
-            AuthInfo authInfo = service.mapClaimsToAuthInfo(claims);
-            authInfo.setAuthenticated(true);
-            SecurityContextHolder.getContext().setAuthentication(authInfo);
-        } else if (token == null) {
-            HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        if (token == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Unauthorized: Token is missing.");
             return;
         }
+
+        if (!service.validateAccessToken(token)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Unauthorized: Invalid or expired token.");
+            return;
+        }
+
+        Claims claims = service.getAccessClaims(token);
+        AuthInfo authInfo = service.mapClaimsToAuthInfo(claims);
+        authInfo.setAuthenticated(true);
+        SecurityContextHolder.getContext().setAuthentication(authInfo);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
