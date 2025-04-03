@@ -1,6 +1,7 @@
 package de.dental_clinic.g_43_praxis.controller;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
+import de.dental_clinic.g_43_praxis.domain.dto.ChangePasswordDto;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class AdminController {
     }
 
     @PatchMapping("/mypassword")
-    public ResponseEntity<String> changePassword(@RequestBody AdminDto adminDto) {
-        adminService.changePassword(adminDto);
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+        adminService.changePassword(changePasswordDto);
         return ResponseEntity.ok("Password updated successfully");
     }
 

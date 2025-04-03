@@ -43,7 +43,7 @@ public class SecurityConfig {
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers(HttpMethod.POST, "/api/login", "/api/doctor").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/login", "/api/appointment").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/services/active", "/api/doctors/active").permitAll()
                         .anyRequest().authenticated()
                 )
