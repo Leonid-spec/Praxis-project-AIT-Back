@@ -25,6 +25,7 @@ public class TokenFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         if (request.getServletPath().equals("/api/login")) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -32,20 +33,27 @@ public class TokenFilter extends GenericFilterBean {
         }
 
         String token = getTokenFromRequest(request);
-        if (token != null && service.validateAccessToken(token)) {
-            Claims claims = service.getAccessClaims(token);
-            AuthInfo authInfo = service.mapClaimsToAuthInfo(claims);
-            authInfo.setAuthenticated(true);
-            SecurityContextHolder.getContext().setAuthentication(authInfo);
-        } else if (token == null) {
-            HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        if (token == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Unauthorized: Token is missing.");
             return;
         }
 
+        if (!service.validateAccessToken(token)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Unauthorized: Invalid or expired token.");
+            return;
+        }
+
+        Claims claims = service.getAccessClaims(token);
+        AuthInfo authInfo = service.mapClaimsToAuthInfo(claims);
+        authInfo.setAuthenticated(true);
+        SecurityContextHolder.getContext().setAuthentication(authInfo);
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
 
     private String getTokenFromRequest(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
