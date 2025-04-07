@@ -1,8 +1,6 @@
 spring:
   application:
     name: g-43-praxis
-#  profiles:
-#    active: dev
 
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -14,20 +12,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.MySQL8Dialect
 
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
-#  jackson:
-#    mapper:
-#      accept-case-insensitive-enums: true
-#    serialization:
-#      fail-on-empty-beans: false
+  cloudinary:
+    cloud-name: ${CLOUD_NAME}
+    api-key: ${API_KEY}
+    api-secret: ${API_SECRET}
 
 key:
   access: f7fbb88e4a5127872a273ab0ed17f1e0a338fa622c4fd39d1d58e9a87c1192e91d447b9f75805dcde723c9e74da4243c0793d89a9f26926bca0c835e5c1672b7ad19a1c619883a0acdfe24e554c93b5ed643573415382dd3fe546ce021c910fa84ce4cbc9b90ca0ad73ce5b47e2b2f51e2a5f83776531fcabbbc5b3b9d0e87b9b42e9d29df2f96ef70acf8a61124340651da299f91c4f4b5ecc481e31cc43d33b0447b3a823e351ae25e0b3395900d9ab06482a6763e9562273f346a01518d50da948eec8903b3d6754fdb96cd96efca66f0468bc7f857ad22e154d96da5457ae0b62ef7d3eed8ff7ba0af1fdf1bdfa704e435e618989769add80be179688edc
