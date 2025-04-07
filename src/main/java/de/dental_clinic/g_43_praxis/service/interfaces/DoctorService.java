@@ -14,7 +14,9 @@ public interface DoctorService {
 
     DoctorDto addDoctor(DoctorDto doctorDto);
 
-    DoctorDto updateDoctor(Long id, DoctorDto doctorDto);
+    DoctorDto updateDoctor(DoctorDto doctorDto);
+
+    DoctorDto deleteDoctor(Long id);
 
 //    void deleteDoctorById(Long id);
 }

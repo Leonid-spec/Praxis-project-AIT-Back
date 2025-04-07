@@ -43,7 +43,7 @@ public class DentalService {
     private String topImage;
 
     @Column(name = "is_active", nullable = false)
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @OneToMany(mappedBy = "dentalService", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Image> images;

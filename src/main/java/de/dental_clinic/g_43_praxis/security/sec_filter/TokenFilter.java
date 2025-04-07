@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -23,14 +24,37 @@ public class TokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if (token != null && service.validateAccessToken(token)) {
-            Claims claims = service.getAccessClaims(token);
-            AuthInfo authInfo = service.mapClaimsToAuthInfo(claims);
-            authInfo.setAuthenticated(true);
-            SecurityContextHolder.getContext().setAuthentication(authInfo);
+        String requestURI = request.getRequestURI(); // Используем полный URI вместо ServletPath
+
+        if (requestURI.equals("/api/login") ||
+                requestURI.equals("/api/services/active") ||
+                requestURI.equals("/api/doctors/active") ||
+                requestURI.equals("/api/appointment")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
         }
+
+        String token = getTokenFromRequest(request);
+
+        if (token == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Unauthorized: Token is missing.");
+            return;
+        }
+
+        if (!service.validateAccessToken(token)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Unauthorized: Invalid or expired token.");
+            return;
+        }
+
+        Claims claims = service.getAccessClaims(token);
+        AuthInfo authInfo = service.mapClaimsToAuthInfo(claims);
+        authInfo.setAuthenticated(true);
+        SecurityContextHolder.getContext().setAuthentication(authInfo);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

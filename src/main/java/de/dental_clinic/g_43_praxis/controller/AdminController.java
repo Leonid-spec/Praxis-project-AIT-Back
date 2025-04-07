@@ -1,6 +1,7 @@
 package de.dental_clinic.g_43_praxis.controller;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
+import de.dental_clinic.g_43_praxis.domain.dto.ChangePasswordDto;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +20,13 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/admin")
-    public ResponseEntity<String> createAdmin(@RequestBody AdminDto adminDto) {
-        adminService.createAdmin(adminDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Admin created successfully");
+    public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(adminService.createAdmin(adminDto));
     }
 
     @PatchMapping("/mypassword")
-    public ResponseEntity<String> changePassword(@RequestBody AdminDto adminDto) {
-        adminService.changePassword(adminDto);
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+        adminService.changePassword(changePasswordDto);
         return ResponseEntity.ok("Password updated successfully");
     }
 
@@ -34,6 +34,11 @@ public class AdminController {
     public ResponseEntity<List<AdminDto>> getAllAdmins() {
         List<AdminDto> admins = adminService.findAllAdmins();
         return ResponseEntity.ok(admins);
+    }
+
+    @DeleteMapping("/admin")
+    public ResponseEntity<AdminDto> deleteAdmin(@RequestBody AdminDto adminDto) {
+        return ResponseEntity.ok(adminService.deleteAdmin(adminDto));
     }
 
 //    For future

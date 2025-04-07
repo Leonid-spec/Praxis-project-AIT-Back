@@ -11,12 +11,9 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "admin")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class Admin implements UserDetails {
 
     @Id

@@ -73,17 +73,14 @@ public class ServiceConfiguration {
 
         /***************Image*************/
         // Создаем маппинг для Image -> ImageDto
-        /*
+
         modelMapper.addMappings(new PropertyMap<Image, ImageDto>() {
             @Override
             protected void configure() {
-                // маппинг полей с разными именами
-                ////////////////map(source.getProduct().getId(), destination.getProductid());
-                //map(source.getImage(), destination.getImage());
+                map(source.getDoctor().getId(), destination.getDoctorId());
+                map(source.getDentalService().getId(), destination.getDentalServiceId());
             }
         });
-
-         */
 
 
 

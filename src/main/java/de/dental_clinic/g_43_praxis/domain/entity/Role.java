@@ -8,11 +8,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "role")
-@Getter
-@Setter
+@Data
 @RequiredArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class Role implements GrantedAuthority {
 
     @Id

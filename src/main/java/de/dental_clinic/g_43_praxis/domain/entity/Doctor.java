@@ -12,7 +12,7 @@ public class Doctor {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = false, unique = true)
     private String fullName;
 
     @Column(name = "title_de", nullable = true)
@@ -43,7 +43,7 @@ public class Doctor {
     private String specialisationRu;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private Boolean isActive = true;
 
     @Column(name = "top_image", nullable = true)
     private String topImage;

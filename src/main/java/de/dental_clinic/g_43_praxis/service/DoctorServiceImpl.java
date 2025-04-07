@@ -3,13 +3,16 @@ package de.dental_clinic.g_43_praxis.service;
 import de.dental_clinic.g_43_praxis.domain.dto.AppointmentDto;
 import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Doctor;
+import de.dental_clinic.g_43_praxis.domain.entity.Image;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorNotFoundException;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorValidationException;
 import de.dental_clinic.g_43_praxis.repository.DoctorRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.DoctorService;
 import de.dental_clinic.g_43_praxis.service.mapping.DoctorMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -20,13 +23,16 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final DoctorMappingService doctorMappingService;
+    private final ImageServiceImpl imageServiceImpl;
 
     @Autowired
-    public DoctorServiceImpl(DoctorRepository doctorRepository, DoctorMappingService doctorMappingService) {
+    public DoctorServiceImpl(DoctorRepository doctorRepository, DoctorMappingService doctorMappingService, ImageServiceImpl imageServiceImpl) {
         this.doctorRepository = doctorRepository;
         this.doctorMappingService = doctorMappingService;
+        this.imageServiceImpl = imageServiceImpl;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<DoctorDto> getActiveDoctors() {
         List<Doctor> activeDoctors = doctorRepository.findAllByIsActiveTrue();
@@ -35,6 +41,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<DoctorDto> getAllDoctors() {
         return doctorRepository.findAll()
@@ -51,6 +58,7 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMappingService.mapEntityToDto(doctor);
     }
 
+    @Transactional
     @Override
     public DoctorDto addDoctor(DoctorDto doctorDto) {
         validateAppointmentDto(doctorDto);
@@ -59,16 +67,22 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
         Doctor doctor = doctorMappingService.mapDtoToEntity(doctorDto);
+        doctor.setId(null);
         Doctor savedDoctor = doctorRepository.save(doctor);
         return doctorMappingService.mapEntityToDto(savedDoctor);
     }
 
+    @Transactional
     @Override
-    public DoctorDto updateDoctor(Long id, DoctorDto doctorDto) {
-        validateId(id);
+    public DoctorDto updateDoctor(DoctorDto doctorDto) {
+        validateId(doctorDto.getId());
         validateAppointmentDto(doctorDto);
-        Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + id + " not found"));
+        Doctor doctor = doctorRepository.findById(doctorDto.getId())
+                .orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + doctorDto.getId() + " not found"));
+
+        if (doctorRepository.existsByFullName(doctorDto.getFullName())) {
+            throw new DoctorAlreadyExistsException("Doctor with name " + doctorDto.getFullName() + " already exists");
+        }
 
         doctor.setFullName(doctorDto.getFullName());
         doctor.setTitleDe(doctorDto.getTitleDe());
@@ -81,11 +95,28 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setSpecialisationEn(doctorDto.getSpecialisationEn());
         doctor.setSpecialisationRu(doctorDto.getSpecialisationRu());
         doctor.setTopImage(doctorDto.getTopImage());
-        doctor.setActive(doctorDto.isActive());
+        doctor.setActive(doctorDto.getIsActive());
 
         Doctor updatedDoctor = doctorRepository.save(doctor);
         return doctorMappingService.mapEntityToDto(updatedDoctor);
     }
+
+    @Transactional
+    @Override
+    public DoctorDto deleteDoctor(Long id){
+        validateId(id);
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + id + " not found"));
+        DoctorDto respondDto = doctorMappingService.mapEntityToDto(doctor);
+        imageServiceImpl.deleteImageFile(doctor.getTopImage());
+        for(Image image : doctor.getImages()) {
+            imageServiceImpl.deleteImage(image.getId());
+        }
+        doctor.getImages().clear();
+        doctorRepository.saveAndFlush(doctor);
+        doctorRepository.delete(doctor);
+        return respondDto;
+    };
+
 
 //    @Override
 //    public void deleteDoctorById(Long id) {

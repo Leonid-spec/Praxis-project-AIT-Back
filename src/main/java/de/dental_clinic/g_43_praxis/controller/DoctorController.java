@@ -3,13 +3,14 @@ package de.dental_clinic.g_43_praxis.controller;
 import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
 import de.dental_clinic.g_43_praxis.service.interfaces.DoctorService;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/doctors")
+@RequestMapping("/api")
 @Transactional
 public class DoctorController {
 
@@ -20,42 +21,48 @@ public class DoctorController {
     }
 
     // Получить список активных врачей
-    @GetMapping("/active")
+    @GetMapping("/doctors/active")
     public ResponseEntity<List<DoctorDto>> getActiveDoctors() {
         List<DoctorDto> activeDoctors = doctorService.getActiveDoctors();
         return ResponseEntity.ok(activeDoctors);
     }
 
     // Получить врача по ID
-    @GetMapping("/{id}")
+    @GetMapping("/doctor/{id}")
     public ResponseEntity<DoctorDto> getDoctorById(@PathVariable Long id) {
         DoctorDto doctor = doctorService.getDoctorById(id);
         return ResponseEntity.ok(doctor);
     }
 
     // Получить всех врачей (для админа)
-    @GetMapping
+    @GetMapping("/doctors")
     public ResponseEntity<List<DoctorDto>> getAllDoctors() {
         List<DoctorDto> doctors = doctorService.getAllDoctors();
         return ResponseEntity.ok(doctors);
     }
 
     // Создать нового врача
-    @PostMapping
+    @PostMapping("/doctor")
     public ResponseEntity<DoctorDto> addDoctor(@RequestBody DoctorDto doctorDto) {
         DoctorDto newDoctor = doctorService.addDoctor(doctorDto);
-        return ResponseEntity.ok(newDoctor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newDoctor);
     }
 
     // Обновить данные врача
-    @PutMapping("/{id}")
-    public ResponseEntity<DoctorDto> updateDoctor(@PathVariable Long id, @RequestBody DoctorDto doctorDto) {
-        DoctorDto updatedDoctor = doctorService.updateDoctor(id, doctorDto);
+    @PutMapping("/doctor")
+    public ResponseEntity<DoctorDto> updateDoctor(@RequestBody DoctorDto doctorDto) {
+        DoctorDto updatedDoctor = doctorService.updateDoctor(doctorDto);
         return ResponseEntity.ok(updatedDoctor);
     }
 
+
+    @DeleteMapping("/doctor/{id}")
+    public ResponseEntity<DoctorDto> deleteDoctor(@PathVariable Long id) {
+        return ResponseEntity.ok(doctorService.deleteDoctor(id));
+    }
+
     // Удалить врача по ID
-//    @DeleteMapping("/{id}")
+//    @DeleteMapping("/doctor/{id}")
 //    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
 //        doctorService.deleteDoctorById(id);
 //        return ResponseEntity.noContent().build();
