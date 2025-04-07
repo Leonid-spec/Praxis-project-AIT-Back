@@ -1,29 +1,29 @@
 spring:
   application:
     name: g-43-praxis
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
 
   datasource:
-    url: jdbc:mysql://localhost:3306/g_43_praxis
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    driver-class-name: org.postgresql.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect
 
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
-  jackson:
-    mapper:
-      accept-case-insensitive-enums: true
-    serialization:
-      fail-on-empty-beans: false
+#  jackson:
+#    mapper:
+#      accept-case-insensitive-enums: true
+#    serialization:
+#      fail-on-empty-beans: false
 
 key:
   access: $2a$10$yjJ8LqqnTP6Mvn8LxOTwT.3X40CFPH9wWWllTAo6eayxzs9EGfhGS
@@ -34,4 +34,6 @@ key:
 #    name: logs/log.log
 #  level:
 #    root: info
+messages:
+  hello: Hello from Digital Ocean!
 
