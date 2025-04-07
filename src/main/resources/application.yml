@@ -2,6 +2,11 @@ spring:
   application:
     name: g-43-praxis
 
+  security:
+    user:
+      name: admin
+      password: admin
+
   datasource:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
     driver-class-name: com.mysql.cj.jdbc.Driver
