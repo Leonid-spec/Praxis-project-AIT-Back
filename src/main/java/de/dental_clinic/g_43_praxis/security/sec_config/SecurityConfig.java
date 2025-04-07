@@ -45,6 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(x -> x
                         .requestMatchers(HttpMethod.POST, "/api/login", "/api/appointment").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/services/active", "/api/doctors/active").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/hello").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterAfter(tokenFilter, UsernamePasswordAuthenticationFilter.class)
