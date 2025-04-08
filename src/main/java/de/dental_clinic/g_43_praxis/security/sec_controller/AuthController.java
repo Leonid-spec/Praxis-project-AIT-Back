@@ -27,12 +27,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponseDto> login(@RequestBody(required = false) AdminDto adminDto) {
-        try {
-            TokenResponseDto tokenResponse = authService.login(adminDto);
-            return ResponseEntity.ok(tokenResponse);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+        TokenResponseDto tokenResponse = authService.login(adminDto);
+        return ResponseEntity.ok(tokenResponse);
     }
 
     @PostMapping("/refresh")
