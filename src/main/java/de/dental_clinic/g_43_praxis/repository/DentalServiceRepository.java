@@ -12,4 +12,7 @@ public interface DentalServiceRepository extends JpaRepository<DentalService, Lo
     List<DentalService> findByIsActiveTrue();
 
     boolean existsByTitleEnContainingIgnoreCase(String title);
+
+    boolean existsByTitleEnIgnoreCaseAndIdNot(String titleEn, Long id);
+
 }

@@ -31,16 +31,13 @@ public class TokenFilter extends GenericFilterBean {
 
         if (requestURI.equals("/api/login") ||
                 requestURI.equals("/api/services/active") ||
-                requestURI.equals("/api/doctors/active")) {
+                requestURI.equals("/api/doctors/active") ||
+                requestURI.startsWith("/swagger-ui") ||
+                requestURI.startsWith("/v3/api-docs") ||
+                requestURI.equals("/api/appointment")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-//        if (request.getServletPath().equals("/api/login") ||
-//                request.getServletPath().equals("/api/services/active") ||
-//                request.getServletPath().equals("/api/doctors/active")) {
-//            filterChain.doFilter(servletRequest, servletResponse);
-//            return;
-//        }
 
         String token = getTokenFromRequest(request);
 

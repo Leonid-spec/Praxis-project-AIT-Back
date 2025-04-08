@@ -73,14 +73,12 @@ public class DentalServiceImpl implements DentalServiceService {
         Long id = dentalServiceDto.getId();
         validateId(id);
         validateDentalServiceDto(dentalServiceDto);
+
         DentalService dentalService = dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new DentalServiceNotFoundException("DentalService with ID " + id + " not found."));
 
-        if (!dentalService.getTitleEn().equalsIgnoreCase(dentalServiceDto.getTitleEn())) {
-            boolean nameExists = dentalServiceRepository.existsByTitleEnContainingIgnoreCase(dentalServiceDto.getTitleEn());
-            if (nameExists) {
-                throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists.");
-            }
+        if (dentalServiceRepository.existsByTitleEnIgnoreCaseAndIdNot(dentalServiceDto.getTitleEn(), id)) {
+            throw new DentalServiceValidationException("DentalService with name " + dentalServiceDto.getTitleEn() + " already exists.");
         }
 
         dentalService.setTitleDe(dentalServiceDto.getTitleDe());
