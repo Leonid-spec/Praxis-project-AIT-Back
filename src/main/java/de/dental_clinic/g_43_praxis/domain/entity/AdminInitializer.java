@@ -1,6 +1,8 @@
 package de.dental_clinic.g_43_praxis.domain.entity;
 
+import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
+import de.dental_clinic.g_43_praxis.service.AdminServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ public class AdminInitializer implements CommandLineRunner {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AdminServiceImpl adminServiceImpl;
 
     @Value("${spring.security.user.name}")
     private String adminUsername;
@@ -24,9 +27,10 @@ public class AdminInitializer implements CommandLineRunner {
     private String adminPassword;
 
     @Autowired
-    public AdminInitializer(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
+    public AdminInitializer(AdminRepository adminRepository, PasswordEncoder passwordEncoder, AdminServiceImpl adminServiceImpl, AdminServiceImpl adminServiceImpl1) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
+        this.adminServiceImpl = adminServiceImpl1;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AdminInitializer.class);
@@ -39,10 +43,10 @@ public class AdminInitializer implements CommandLineRunner {
                 return;
             }
 
-            Admin admin = new Admin();
-            admin.setLogin(adminUsername);
-            admin.setPassword(passwordEncoder.encode(adminPassword));
-            adminRepository.save(admin);
+            AdminDto adminDto = new AdminDto();
+            adminDto.setLogin(adminUsername);
+            adminDto.setPassword(adminPassword);
+            adminServiceImpl.createAdmin(adminDto);
 
             logger.info("Administrator successfully created: username = {}", adminUsername);
         } else {

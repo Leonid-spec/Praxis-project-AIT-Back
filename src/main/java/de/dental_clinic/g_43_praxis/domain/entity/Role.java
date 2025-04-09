@@ -26,7 +26,6 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
-    // важно для корректного сравнения и работы с Set<Role>
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

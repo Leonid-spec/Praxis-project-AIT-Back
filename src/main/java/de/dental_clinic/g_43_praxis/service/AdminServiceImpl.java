@@ -3,7 +3,9 @@ package de.dental_clinic.g_43_praxis.service;
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
 import de.dental_clinic.g_43_praxis.domain.dto.ChangePasswordDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Admin;
+import de.dental_clinic.g_43_praxis.domain.entity.Role;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
+import de.dental_clinic.g_43_praxis.repository.RoleRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.AdminService;
 import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final AdminMappingService adminMappingService;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -40,6 +43,8 @@ public class AdminServiceImpl implements AdminService {
         }
         Admin admin = adminMappingService.mapDtoToEntity(dto);
         admin.setPassword(passwordEncoder.encode(dto.getPassword()));
+        admin.getRoles().add(roleRepository.findByName("ROLE_ADMIN" )
+                .orElseThrow(() -> new IllegalArgumentException("FATAL ERROR")));
         return adminMappingService.mapEntityToDto(adminRepository.save(admin));
     }
 
