@@ -43,6 +43,17 @@ public class SecurityConfig {
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/v3/api-docs.json"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/login", "/api/appointment").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/services/active", "/api/doctors/active").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hello").permitAll()

@@ -1,6 +1,8 @@
 spring:
   application:
     name: g-43-praxis
+  profiles:
+    active: dev
 
   security:
     user:
@@ -36,4 +38,3 @@ key:
 #    root: info
 messages:
   hello: Hello from Digital Ocean!
-

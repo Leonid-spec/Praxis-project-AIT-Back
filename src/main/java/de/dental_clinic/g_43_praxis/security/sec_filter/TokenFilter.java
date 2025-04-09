@@ -32,6 +32,8 @@ public class TokenFilter extends GenericFilterBean {
         if (requestURI.equals("/api/login") ||
                 requestURI.equals("/api/services/active") ||
                 requestURI.equals("/api/doctors/active") ||
+                requestURI.startsWith("/swagger-ui") ||
+                requestURI.startsWith("/v3/api-docs") ||
                 requestURI.equals("/api/appointment")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
