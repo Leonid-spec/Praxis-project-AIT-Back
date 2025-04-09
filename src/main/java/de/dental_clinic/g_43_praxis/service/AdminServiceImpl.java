@@ -36,6 +36,17 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional
     @Override
+    public boolean createRoot() {
+        Admin root = new Admin();
+        root.setLogin("root");
+        root.setPassword(passwordEncoder.encode("Root1234"));
+        root.getRoles().add(roleRepository.findByName("ROLE_ROOT" )
+                .orElseThrow(() -> new IllegalArgumentException("FATAL ERROR")));
+        return true;
+    }
+
+    @Transactional
+    @Override
     public AdminDto createAdmin(AdminDto dto) {
         validateAdminDto(dto);
         if (adminRepository.findByLogin(dto.getLogin()).isPresent()) {
@@ -70,10 +81,31 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional
     @Override
+    public AdminDto killAdmin(String login) {
+        Admin admin = adminRepository.findByLogin(login)
+                .orElseThrow(() -> new IllegalArgumentException("Admin with login  not found"));
+        if (admin.getRoles().contains(roleRepository.findByName("ROLE_ROOT").orElseThrow())  )
+        {throw new IllegalArgumentException("Admin delete error"); }
+
+        Long id = admin.getId();
+        AdminDto adminDto = adminMappingService.mapEntityToDto(admin);
+        admin.getRoles().clear();
+        adminRepository.saveAndFlush(admin);
+        adminRepository.delete(admin);
+        if(adminRepository.findById(id).isPresent()) {throw new IllegalArgumentException("Admin delete error"); }
+        return adminDto;
+    }
+
+    @Transactional
+    @Override
         public AdminDto deleteAdmin(AdminDto adminDto) {
         validateAdminDto(adminDto);
         Admin admin = adminRepository.findByLogin(adminDto.getLogin())
                 .orElseThrow(() -> new IllegalArgumentException("Admin with login  not found"));
+        if (!passwordEncoder.matches(adminDto.getPassword(), admin.getPassword()) ||
+                admin.getRoles().contains(roleRepository.findByName("ROLE_ROOT").orElseThrow())  )
+        {throw new IllegalArgumentException("Admin delete error"); }
+
         Long id = admin.getId();
         adminDto = adminMappingService.mapEntityToDto(admin);
         admin.getRoles().clear();

@@ -57,7 +57,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/login", "/api/appointment").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/services/active", "/api/doctors/active").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hello").permitAll()
-                        .anyRequest().authenticated()//.anyRequest().hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/adminbylogin/*").hasRole("ROOT")
+                        .anyRequest().hasRole("ADMIN")//anyRequest().authenticated()
                 )
                 .addFilterAfter(tokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

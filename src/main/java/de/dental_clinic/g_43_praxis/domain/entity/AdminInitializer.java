@@ -48,6 +48,8 @@ public class AdminInitializer implements CommandLineRunner {
             adminDto.setPassword(adminPassword);
             adminServiceImpl.createAdmin(adminDto);
 
+            adminServiceImpl.createRoot();
+
             logger.info("Administrator successfully created: username = {}", adminUsername);
         } else {
             logger.info("The administrator already exists. A new one is not created.");

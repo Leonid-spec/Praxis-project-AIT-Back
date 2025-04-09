@@ -37,7 +37,7 @@ public class Admin implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>(roles); // безопасный и чистый способ
+        return new ArrayList<>(roles);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Admin implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; // можно сделать поле, если нужна логика
+        return true;
     }
 
     @Override
