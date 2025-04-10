@@ -2,6 +2,7 @@ package de.dental_clinic.g_43_praxis.domain.entity;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
+import de.dental_clinic.g_43_praxis.repository.RoleRepository;
 import de.dental_clinic.g_43_praxis.service.AdminServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ public class AdminInitializer implements CommandLineRunner {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
     private final AdminServiceImpl adminServiceImpl;
+    private final RoleRepository roleRepository;
 
     @Value("${spring.security.user.name}")
     private String adminUsername;
@@ -27,16 +29,20 @@ public class AdminInitializer implements CommandLineRunner {
     private String adminPassword;
 
     @Autowired
-    public AdminInitializer(AdminRepository adminRepository, PasswordEncoder passwordEncoder, AdminServiceImpl adminServiceImpl, AdminServiceImpl adminServiceImpl1) {
+    public AdminInitializer(AdminRepository adminRepository, PasswordEncoder passwordEncoder, AdminServiceImpl adminServiceImpl, AdminServiceImpl adminServiceImpl1, RoleRepository roleRepository) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminServiceImpl = adminServiceImpl1;
+        this.roleRepository = roleRepository;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AdminInitializer.class);
 
     @Override
     public void run(String... args) {
+        if(adminRepository.findAll().stream().noneMatch(admin -> admin.getRoles().contains(roleRepository.findByName("ROLE_ROOT")))) {
+            adminServiceImpl.createRoot();
+        }
         if (adminRepository.count() == 0) {
             if (!isValidAdminInfo(adminUsername, adminPassword)) {
                 logger.warn("Administrator is not created. Incorrect configuration data.");
@@ -48,7 +54,6 @@ public class AdminInitializer implements CommandLineRunner {
             adminDto.setPassword(adminPassword);
             adminServiceImpl.createAdmin(adminDto);
 
-            adminServiceImpl.createRoot();
 
             logger.info("Administrator successfully created: username = {}", adminUsername);
         } else {

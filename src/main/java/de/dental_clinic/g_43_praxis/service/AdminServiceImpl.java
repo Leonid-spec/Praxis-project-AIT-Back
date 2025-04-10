@@ -42,6 +42,7 @@ public class AdminServiceImpl implements AdminService {
         root.setPassword(passwordEncoder.encode("Root1234"));
         root.getRoles().add(roleRepository.findByName("ROLE_ROOT" )
                 .orElseThrow(() -> new IllegalArgumentException("FATAL ERROR")));
+        adminRepository.save(root);
         return true;
     }
 
