@@ -2,12 +2,14 @@ package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.AppointmentDto;
 import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
+import de.dental_clinic.g_43_praxis.domain.dto.ImageDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Doctor;
 import de.dental_clinic.g_43_praxis.domain.entity.Image;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorAlreadyExistsException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorNotFoundException;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorValidationException;
 import de.dental_clinic.g_43_praxis.repository.DoctorRepository;
+import de.dental_clinic.g_43_praxis.repository.ImageRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.DoctorService;
 import de.dental_clinic.g_43_praxis.service.mapping.DoctorMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,14 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMappingService doctorMappingService;
     private final ImageServiceImpl imageServiceImpl;
+    private final ImageRepository imageRepository;
 
     @Autowired
-    public DoctorServiceImpl(DoctorRepository doctorRepository, DoctorMappingService doctorMappingService, ImageServiceImpl imageServiceImpl) {
+    public DoctorServiceImpl(DoctorRepository doctorRepository, DoctorMappingService doctorMappingService, ImageServiceImpl imageServiceImpl, ImageRepository imageRepository) {
         this.doctorRepository = doctorRepository;
         this.doctorMappingService = doctorMappingService;
         this.imageServiceImpl = imageServiceImpl;
+        this.imageRepository = imageRepository;
     }
 
     @Transactional(readOnly = true)
@@ -65,11 +69,11 @@ public class DoctorServiceImpl implements DoctorService {
         if (doctorRepository.existsByFullName(doctorDto.getFullName())) {
             throw new DoctorAlreadyExistsException("Doctor with name " + doctorDto.getFullName() + " already exists");
         }
-
         Doctor doctor = doctorMappingService.mapDtoToEntity(doctorDto);
         doctor.setId(null);
-        Doctor savedDoctor = doctorRepository.save(doctor);
-        return doctorMappingService.mapEntityToDto(savedDoctor);
+        doctorRepository.saveAndFlush(doctor);
+        updateImagesForDoctor(doctorDto, doctor);
+        return doctorMappingService.mapEntityToDto(doctor);
     }
 
     @Transactional
@@ -80,10 +84,12 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = doctorRepository.findById(doctorDto.getId())
                 .orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + doctorDto.getId() + " not found"));
 
-        if (doctorRepository.existsByFullName(doctorDto.getFullName())) {
-            throw new DoctorAlreadyExistsException("Doctor with name " + doctorDto.getFullName() + " already exists");
+        if (!doctor.getFullName().equals(doctorDto.getFullName())) {
+            if (doctorRepository.existsByFullName(doctorDto.getFullName())){
+                throw new DoctorAlreadyExistsException("Doctor with name " + doctorDto.getFullName() + " already exists");
+            }
         }
-
+        
         doctor.setFullName(doctorDto.getFullName());
         doctor.setTitleDe(doctorDto.getTitleDe());
         doctor.setTitleEn(doctorDto.getTitleEn());
@@ -96,9 +102,9 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setSpecialisationRu(doctorDto.getSpecialisationRu());
         doctor.setTopImage(doctorDto.getTopImage());
         doctor.setActive(doctorDto.getIsActive());
-
-        Doctor updatedDoctor = doctorRepository.save(doctor);
-        return doctorMappingService.mapEntityToDto(updatedDoctor);
+        doctorRepository.save(doctor);
+        updateImagesForDoctor(doctorDto, doctor);
+        return doctorMappingService.mapEntityToDto(doctor);
     }
 
     @Transactional
@@ -116,6 +122,22 @@ public class DoctorServiceImpl implements DoctorService {
         doctorRepository.delete(doctor);
         return respondDto;
     };
+
+
+    private void updateImagesForDoctor(DoctorDto doctorDto, Doctor doctor) {
+        for (ImageDto imageDto : doctorDto.getImages()) {
+            Image image = imageRepository.findImageById(imageDto.getId());
+            if(image != null) {
+                if( (image.getDoctor() == null) && (image.getDentalService() == null) )
+                {
+                    image.setDoctor(doctor);
+                    imageRepository.saveAndFlush(image);
+                    doctor.getImages().add(image);
+                }
+            }
+        }
+        doctorRepository.saveAndFlush(doctor);
+    }
 
 
 //    @Override

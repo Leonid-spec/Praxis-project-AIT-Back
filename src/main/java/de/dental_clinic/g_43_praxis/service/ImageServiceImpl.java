@@ -185,9 +185,9 @@ public class ImageServiceImpl implements ImageService {
             return false;
         }
 
-        if(temp.isEmpty() || temp.isBlank() ) {
+        if(!(temp.isEmpty() || temp.isBlank() )) {
             try {
-                return (cloudinaryService.deleteImage("")).equals("ok");
+                return (cloudinaryService.deleteImage(temp)).equals("ok");
             } catch (Exception e) {
                 System.out.println("Error deleting image: " + e.getMessage());//
                 return false;

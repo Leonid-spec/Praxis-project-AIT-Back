@@ -6,11 +6,13 @@ import de.dental_clinic.g_43_praxis.domain.entity.Image;
 import de.dental_clinic.g_43_praxis.domain.entity.DentalService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class DentalServiceMappingService {
 
     public DentalServiceDto mapEntityToDto(DentalService dentalService) {
-        return DentalServiceDto.builder()
+        DentalServiceDto dentalServiceDto =  DentalServiceDto.builder()
                 .id(dentalService.getId())
                 .titleDe(dentalService.getTitleDe())
                 .titleEn(dentalService.getTitleEn())
@@ -20,8 +22,17 @@ public class DentalServiceMappingService {
                 .descriptionRu(dentalService.getDescriptionRu())
                 .topImage(dentalService.getTopImage())
                 .isActive(dentalService.getIsActive())
-                .images(dentalService.getImages().stream().map(this::toImageDto).toList())
+                .images(new ArrayList<>())
                 .build();
+        if(  (dentalService.getImages() != null) )
+        {
+            for(Image image : dentalService.getImages()) {
+                if(image != null) {
+                    dentalServiceDto.getImages().add(this.toImageDto(image));
+                }
+            }
+        }
+        return dentalServiceDto;
     }
 
     public DentalService mapDtoToEntity(DentalServiceDto dto) {
@@ -35,7 +46,7 @@ public class DentalServiceMappingService {
         dentalService.setDescriptionRu(dto.getDescriptionRu());
         dentalService.setTopImage(dto.getTopImage());
         dentalService.setIsActive(dto.getIsActive());
-        dentalService.setImages(dto.getImages().stream().map(this::toImageEntity).toList());
+        dentalService.setImages(new ArrayList<>());
         return dentalService;
     }
     private ImageDto toImageDto(Image image) {
@@ -45,12 +56,5 @@ public class DentalServiceMappingService {
                 .dentalServiceId(image.getDentalService() != null ? image.getDentalService().getId() : null)
                 .doctorId(image.getDoctor() != null ? image.getDoctor().getId() : null)
                 .build();
-    }
-
-    private Image toImageEntity(ImageDto dto) {
-        Image image = new Image();
-        image.setId(dto.getId());
-        image.setPath(dto.getPath());
-        return image;
     }
 }
