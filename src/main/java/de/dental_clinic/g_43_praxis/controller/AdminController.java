@@ -41,6 +41,11 @@ public class AdminController {
         return ResponseEntity.ok(adminService.deleteAdmin(adminDto));
     }
 
+    @DeleteMapping("/adminbylogin/{login}")
+    public ResponseEntity<AdminDto> killAdmin(@PathVariable String login) {
+        return ResponseEntity.ok(adminService.killAdmin(login));
+    }
+
 //    For future
 //    /**
 //     * Delete an administrator by their ID.

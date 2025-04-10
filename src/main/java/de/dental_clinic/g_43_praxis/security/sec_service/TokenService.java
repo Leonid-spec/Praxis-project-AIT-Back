@@ -3,6 +3,7 @@ package de.dental_clinic.g_43_praxis.security.sec_service;
 import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Admin;
 import de.dental_clinic.g_43_praxis.domain.entity.Role;
+import de.dental_clinic.g_43_praxis.repository.AdminRepository;
 import de.dental_clinic.g_43_praxis.repository.RoleRepository;
 import de.dental_clinic.g_43_praxis.security.AuthInfo;
 import de.dental_clinic.g_43_praxis.service.mapping.AdminMappingService;
@@ -26,18 +27,20 @@ public class TokenService {
     private final SecretKey refreshKey;
     private final RoleRepository roleRepository;
     private final AdminMappingService adminMappingService;
+    private final AdminRepository adminRepository;
 
     @Autowired
     public TokenService(
             @Value("${key.access}") String accessPhrase,
             @Value("${key.refresh}") String refreshPhrase,
             RoleRepository roleRepository,
-            AdminMappingService adminMappingService
-    ) {
+            AdminMappingService adminMappingService,
+            AdminRepository adminRepository) {
         this.accessKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessPhrase));
         this.refreshKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(refreshPhrase));
         this.roleRepository = roleRepository;
         this.adminMappingService = adminMappingService;
+        this.adminRepository = adminRepository;
     }
 
     public String generateAccessToken(Optional<AdminDto> adminDtoOptional) {
@@ -112,9 +115,10 @@ public class TokenService {
 
     public AuthInfo mapClaimsToAuthInfo(Claims claims) {
         String username = claims.getSubject();
+        Set<Role> roles = adminRepository.findByLogin(username).orElseThrow(() -> new IllegalArgumentException("Unauthorized ")).getRoles() ;
+        /*
         String authoritiesStr = claims.get("authorities", String.class);
         Set<Role> roles = new HashSet<>();
-
         if (authoritiesStr != null && !authoritiesStr.isEmpty()) {
             for (String roleName : authoritiesStr.split(",")) {
                 Role role = roleRepository.findByName(roleName)
@@ -122,6 +126,7 @@ public class TokenService {
                 roles.add(role);
             }
         }
+        //*/
 
         return new AuthInfo(username, roles);
     }
