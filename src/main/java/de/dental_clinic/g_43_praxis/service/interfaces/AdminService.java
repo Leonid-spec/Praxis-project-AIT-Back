@@ -15,7 +15,8 @@ public interface AdminService {
     void changePassword(ChangePasswordDto dto);
     List<AdminDto> findAllAdmins();
     AdminDto deleteAdmin(AdminDto adminDto);
-    public void validateAdminDto(AdminDto adminDto);
-    public boolean createRoot();
+    void validateAdminDto(AdminDto adminDto);
+    boolean createRoot();
     AdminDto killAdmin(String login);
+    String validateLogin(String login);
 }

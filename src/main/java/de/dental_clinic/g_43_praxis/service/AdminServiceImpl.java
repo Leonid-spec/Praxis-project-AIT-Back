@@ -83,7 +83,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     @Override
     public AdminDto killAdmin(String login) {
-        Admin admin = adminRepository.findByLogin(login)
+        Admin admin = adminRepository.findByLogin(validateLogin(login))
                 .orElseThrow(() -> new IllegalArgumentException("Admin with login  not found"));
         if (admin.getRoles().contains(roleRepository.findByName("ROLE_ROOT").orElseThrow())  )
         {throw new IllegalArgumentException("Admin delete error"); }
@@ -129,8 +129,9 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-    private String validateLogin(String login) {
-        if (StringUtils.hasText(login)) { return login.toLowerCase(); }
+    @Override
+    public String validateLogin(String login) {
+        if (StringUtils.hasText(login)) { return login.toLowerCase().replaceAll("\\s+", ""); }
         else { throw new IllegalArgumentException("Field login cannot be null or empty."); }
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,7 +90,7 @@ public class DoctorServiceImpl implements DoctorService {
                 throw new DoctorAlreadyExistsException("Doctor with name " + doctorDto.getFullName() + " already exists");
             }
         }
-        
+
         doctor.setFullName(doctorDto.getFullName());
         doctor.setTitleDe(doctorDto.getTitleDe());
         doctor.setTitleEn(doctorDto.getTitleEn());
@@ -114,7 +115,8 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new DoctorNotFoundException("Doctor with ID " + id + " not found"));
         DoctorDto respondDto = doctorMappingService.mapEntityToDto(doctor);
         imageServiceImpl.deleteImageFile(doctor.getTopImage());
-        for(Image image : doctor.getImages()) {
+        List<Image> imagesCopy = new ArrayList<>(doctor.getImages());
+        for (Image image : imagesCopy) {
             imageServiceImpl.deleteImage(image.getId());
         }
         doctor.getImages().clear();

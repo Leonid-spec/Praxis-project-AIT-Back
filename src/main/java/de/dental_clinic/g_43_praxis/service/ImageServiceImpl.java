@@ -102,11 +102,12 @@ public class ImageServiceImpl implements ImageService {
     public ImageDto deleteImage(Long imageId) {
         Image image = imageRepository.findById(imageId).orElseThrow(() -> new ImageNotFoundException(   imageId   ));
         String temp = image.getPath();
+        ImageDto imageDto = modelMapper.map(image, ImageDto.class);
+        if(image.getDoctor() != null) { image.getDoctor().getImages().remove(image); doctorRepository.saveAndFlush(image.getDoctor()); }
+        if(image.getDentalService() != null) { image.getDentalService().getImages().remove(image); dentalServiceRepository.saveAndFlush(image.getDentalService()); }
         imageRepository.delete(image);
-        if(image.getDoctor() != null) { image.getDoctor().getImages().remove(image); }
-        if(image.getDentalService() != null) { image.getDentalService().getImages().remove(image);  }
         deleteImageFile(temp);
-        return modelMapper.map(image, ImageDto.class);
+        return imageDto;
     }
 
     @Transactional
