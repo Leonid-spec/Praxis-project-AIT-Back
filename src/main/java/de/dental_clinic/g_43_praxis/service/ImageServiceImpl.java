@@ -102,9 +102,12 @@ public class ImageServiceImpl implements ImageService {
     public ImageDto deleteImage(Long imageId) {
         Image image = imageRepository.findById(imageId).orElseThrow(() -> new ImageNotFoundException(   imageId   ));
         String temp = image.getPath();
+        ImageDto imageDto = modelMapper.map(image, ImageDto.class);
+        if(image.getDoctor() != null) { image.getDoctor().getImages().remove(image); doctorRepository.saveAndFlush(image.getDoctor()); }
+        if(image.getDentalService() != null) { image.getDentalService().getImages().remove(image); dentalServiceRepository.saveAndFlush(image.getDentalService()); }
         imageRepository.delete(image);
         deleteImageFile(temp);
-        return modelMapper.map(image, ImageDto.class);
+        return imageDto;
     }
 
     @Transactional
@@ -175,12 +178,23 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Boolean deleteImageFileCloudinary(String name) {
+        String temp;
         try {
-            return (cloudinaryService.deleteImage(name.substring(name.lastIndexOf('/') + 1, name.lastIndexOf('.')))).equals("ok");
-        } catch (IOException e) {
-            System.out.println( "Error deleting image: " + e.getMessage() );//
+            temp = name.substring(name.lastIndexOf('/') + 1, name.lastIndexOf('.'));
+        } catch (Exception e) {
+            System.out.println("Error deleting image: " + e.getMessage());//
             return false;
         }
+
+        if(!(temp.isEmpty() || temp.isBlank() )) {
+            try {
+                return (cloudinaryService.deleteImage(temp)).equals("ok");
+            } catch (Exception e) {
+                System.out.println("Error deleting image: " + e.getMessage());//
+                return false;
+            }
+        }
+        return true;
     }
 
     @Transactional

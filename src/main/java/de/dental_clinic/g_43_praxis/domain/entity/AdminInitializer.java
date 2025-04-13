@@ -1,6 +1,9 @@
 package de.dental_clinic.g_43_praxis.domain.entity;
 
+import de.dental_clinic.g_43_praxis.domain.dto.AdminDto;
 import de.dental_clinic.g_43_praxis.repository.AdminRepository;
+import de.dental_clinic.g_43_praxis.repository.RoleRepository;
+import de.dental_clinic.g_43_praxis.service.AdminServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-//@Profile("dev")
+@Profile("dev")
 public class AdminInitializer implements CommandLineRunner {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AdminServiceImpl adminServiceImpl;
+    private final RoleRepository roleRepository;
 
     @Value("${spring.security.user.name}")
     private String adminUsername;
@@ -24,25 +29,35 @@ public class AdminInitializer implements CommandLineRunner {
     private String adminPassword;
 
     @Autowired
-    public AdminInitializer(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
+    public AdminInitializer(AdminRepository adminRepository, PasswordEncoder passwordEncoder, AdminServiceImpl adminServiceImpl, AdminServiceImpl adminServiceImpl1, RoleRepository roleRepository) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
+        this.adminServiceImpl = adminServiceImpl1;
+        this.roleRepository = roleRepository;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AdminInitializer.class);
 
     @Override
     public void run(String... args) {
-        if (adminRepository.count() == 0) {
+        if(adminRepository.findAll().stream().noneMatch(admin -> admin.getRoles()
+                .stream().anyMatch(role -> role.getName().equals("ROLE_ROOT"))) ) {
+            adminServiceImpl.createRoot();
+        }
+
+        if(adminRepository.findAll().stream().noneMatch(admin ->
+                (admin.getRoles().stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN")))
+                && (admin.getRoles().stream().noneMatch(role -> role.getName().equals("ROLE_ROOT")))   ) ){
             if (!isValidAdminInfo(adminUsername, adminPassword)) {
                 logger.warn("Administrator is not created. Incorrect configuration data.");
                 return;
             }
 
-            Admin admin = new Admin();
-            admin.setLogin(adminUsername);
-            admin.setPassword(passwordEncoder.encode(adminPassword));
-            adminRepository.save(admin);
+            AdminDto adminDto = new AdminDto();
+            adminDto.setLogin(adminUsername);
+            adminDto.setPassword(adminPassword);
+            adminServiceImpl.createAdmin(adminDto);
+
 
             logger.info("Administrator successfully created: username = {}", adminUsername);
         } else {

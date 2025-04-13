@@ -16,7 +16,7 @@ public class AdminMappingService {
 
         AdminDto dto = new AdminDto();
         dto.setId(entity.getId());
-        dto.setLogin(entity.getLogin());
+        dto.setLogin(entity.getLogin().toLowerCase().replaceAll("\\s+", ""));
         dto.setPassword(entity.getPassword());
         return dto;
     }

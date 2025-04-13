@@ -38,15 +38,27 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
-                .sessionManagement(x -> x
+                .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/v3/api-docs.json"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/login", "/api/appointment").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/services/active", "/api/doctors/active").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hello").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/adminbylogin/*").hasRole("ROOT")
+                        .anyRequest().hasRole("ADMIN")//anyRequest().authenticated()
                 )
                 .addFilterAfter(tokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
