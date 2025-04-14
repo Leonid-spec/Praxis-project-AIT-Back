@@ -4,13 +4,22 @@ import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
 import de.dental_clinic.g_43_praxis.domain.dto.ImageDto;
 import de.dental_clinic.g_43_praxis.domain.entity.Doctor;
 import de.dental_clinic.g_43_praxis.domain.entity.Image;
+import de.dental_clinic.g_43_praxis.repository.ImageRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class DoctorMappingService {
 
+    private final ImageRepository imageRepository;
+
+    public DoctorMappingService(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
+
     public DoctorDto mapEntityToDto(Doctor doctor) {
-        return DoctorDto.builder()
+        DoctorDto doctorDto = DoctorDto.builder()
                 .id(doctor.getId())
                 .fullName(doctor.getFullName())
                 .titleDe(doctor.getTitleDe())
@@ -24,8 +33,17 @@ public class DoctorMappingService {
                 .specialisationRu(doctor.getSpecialisationRu())
                 .topImage(doctor.getTopImage())
                 .isActive(doctor.isActive())
-                .images(doctor.getImages().stream().map(this::toImageDto).toList())
+                .images(new ArrayList<>())
                 .build();
+        if(  (doctor.getImages() != null) )
+        {
+            for(Image image : doctor.getImages()) {
+                if(image != null) {
+                    doctorDto.getImages().add(this.toImageDto(image));
+                }
+            }
+        }
+        return doctorDto;
     }
 
     public Doctor mapDtoToEntity(DoctorDto dto) {
@@ -43,7 +61,7 @@ public class DoctorMappingService {
         doctor.setSpecialisationRu(dto.getSpecialisationRu());
         doctor.setTopImage(dto.getTopImage());
         doctor.setActive(dto.getIsActive());
-        doctor.setImages(dto.getImages().stream().map(this::toImageEntity).toList());
+        doctor.setImages(new ArrayList<>());
         return doctor;
     }
 
@@ -55,12 +73,4 @@ public class DoctorMappingService {
                 .doctorId(image.getDoctor() != null ? image.getDoctor().getId() : null)
                 .build();
     }
-
-    private Image toImageEntity(ImageDto dto) {
-        Image image = new Image();
-        image.setId(dto.getId());
-        image.setPath(dto.getPath());
-        return image;
-    }
-
 }
