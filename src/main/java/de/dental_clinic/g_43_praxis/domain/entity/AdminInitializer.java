@@ -40,10 +40,14 @@ public class AdminInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if(adminRepository.findAll().stream().noneMatch(admin -> admin.getRoles().contains(roleRepository.findByName("ROLE_ROOT")))) {
+        if(adminRepository.findAll().stream().noneMatch(admin -> admin.getRoles()
+                .stream().anyMatch(role -> role.getName().equals("ROLE_ROOT"))) ) {
             adminServiceImpl.createRoot();
         }
-        if (adminRepository.count() == 0) {
+
+        if(adminRepository.findAll().stream().noneMatch(admin ->
+                (admin.getRoles().stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN")))
+                && (admin.getRoles().stream().noneMatch(role -> role.getName().equals("ROLE_ROOT")))   ) ){
             if (!isValidAdminInfo(adminUsername, adminPassword)) {
                 logger.warn("Administrator is not created. Incorrect configuration data.");
                 return;

@@ -62,16 +62,4 @@ public class AuthService {
             throw new AuthException("Invalid refresh token.");
         }
     }
-
-    private void validateAdminDto(AdminDto adminDto) {
-        if (adminDto == null) {
-            throw new IllegalArgumentException("Field for adminDto cannot be null.");
-        }
-        if (!StringUtils.hasText(adminDto.getLogin())) {
-            throw new IllegalArgumentException("Field login cannot be null or empty.");
-        }
-        if (!StringUtils.hasText(adminDto.getPassword())) {
-            throw new IllegalArgumentException("Field password cannot be null or empty.");
-        }
-    }
 }
