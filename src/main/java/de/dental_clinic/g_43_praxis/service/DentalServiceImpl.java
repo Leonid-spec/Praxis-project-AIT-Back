@@ -1,11 +1,11 @@
 package de.dental_clinic.g_43_praxis.service;
 
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
+import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
 import de.dental_clinic.g_43_praxis.domain.entity.DentalService;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceAlreadyExistsException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceNotFoundException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
-import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DoctorAlreadyExistsException;
+import de.dental_clinic.g_43_praxis.domain.entity.Doctor;
+import de.dental_clinic.g_43_praxis.domain.entity.Image;
+import de.dental_clinic.g_43_praxis.exception_handling.exceptions.*;
 import de.dental_clinic.g_43_praxis.repository.DentalServiceRepository;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
 import de.dental_clinic.g_43_praxis.service.mapping.DentalServiceMappingService;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ public class DentalServiceImpl implements DentalServiceService {
 
     private final DentalServiceRepository dentalServiceRepository;
     private final DentalServiceMappingService dentalServiceMappingService;
+    private final ImageServiceImpl imageServiceImpl;
 
     @Override
     @Transactional(readOnly = true)
@@ -99,15 +101,22 @@ public class DentalServiceImpl implements DentalServiceService {
         return dentalServiceMappingService.mapEntityToDto(updatedDentalService);
     }
 
-//    @Override
-//    @Transactional
-//    public void deleteDentalServiceById(Long id) {
-//        validateId(id);
-//        if (!dentalServiceRepository.existsById(id)) {
-//            throw new DentalServiceNotFoundException("DentalService with ID " + id + " not found");
-//        }
-//        dentalServiceRepository.deleteById(id);
-//    }
+    @Override
+    @Transactional
+    public DentalServiceDto deleteDentalServiceById(Long id){
+        validateId(id);
+        DentalService dentalService = dentalServiceRepository.findById(id).orElseThrow(() -> new DoctorNotFoundException("DentalService with ID " + id + " not found"));
+        DentalServiceDto respondDto = dentalServiceMappingService.mapEntityToDto(dentalService);
+        imageServiceImpl.deleteImageFile(dentalService.getTopImage());
+        List<Image> imagesCopy = new ArrayList<>(dentalService.getImages());
+        for (Image image : imagesCopy) {
+            imageServiceImpl.deleteImage(image.getId());
+        }
+        dentalService.getImages().clear();
+        dentalServiceRepository.saveAndFlush(dentalService);
+        dentalServiceRepository.delete(dentalService);
+        return respondDto;
+    };
 
     private void validateId(Long id) {
         if (id == null || id <= 0) {

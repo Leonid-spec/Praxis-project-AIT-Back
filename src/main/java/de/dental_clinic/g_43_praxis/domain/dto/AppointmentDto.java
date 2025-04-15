@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ import javax.validation.constraints.Size;
         "availableTime",
         "comment",
         "language",
+        "createdTime",
         "isNew"
 })
 @Getter
@@ -62,6 +64,9 @@ public class AppointmentDto {
 
     @JsonProperty("language")
     private String language;
+
+    @JsonProperty("createdTime")
+    private Long createdTime;
 
     @JsonProperty("isNew")
     private Boolean isNew = true;

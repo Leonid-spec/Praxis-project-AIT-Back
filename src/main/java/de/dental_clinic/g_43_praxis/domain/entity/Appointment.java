@@ -46,6 +46,9 @@ public class Appointment {
     @Column(name = "language")
     private String language;
 
+    @Column(name = "created_time")
+    private Long createdTime;
+
     @Column(name = "is_new", nullable = false)
     private Boolean isNew = true;
 
