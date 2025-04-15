@@ -6,7 +6,7 @@ spring:
     password: ${DB_PASSWORD}
 
 #server:
-  #port: 8100
+#  port: 8100
 
   jpa:
     properties:
