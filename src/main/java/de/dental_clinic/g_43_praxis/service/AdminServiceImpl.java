@@ -71,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
             admin.setPassword(passwordEncoder.encode(dto.getNewPassword()));
             adminRepository.save(admin);
         }
+        else{throw new IllegalArgumentException("Admin with login " + dto.getLogin() + " not found."); }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package de.dental_clinic.g_43_praxis.controller;
 import de.dental_clinic.g_43_praxis.domain.dto.DentalServiceDto;
+import de.dental_clinic.g_43_praxis.domain.dto.DoctorDto;
 import de.dental_clinic.g_43_praxis.exception_handling.exceptions.DentalServiceValidationException;
 import de.dental_clinic.g_43_praxis.service.interfaces.DentalServiceService;
 import jakarta.validation.Valid;
@@ -51,6 +52,11 @@ public class DentalServiceController {
 
         DentalServiceDto updatedDentalService = dentalServiceService.updateDentalService(dentalServiceDto);
         return ResponseEntity.ok(updatedDentalService);
+    }
+
+    @DeleteMapping("/service/{id}")
+    public ResponseEntity<DentalServiceDto> deleteDentalServiceById(@PathVariable Long id) {
+        return ResponseEntity.ok(dentalServiceService.deleteDentalServiceById(id));
     }
 
 //    @DeleteMapping("service/{id}")
