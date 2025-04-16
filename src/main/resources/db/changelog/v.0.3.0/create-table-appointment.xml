@@ -24,7 +24,7 @@
             <column name="language" type="varchar(10)" />
             <column name="comment" type="text" />
             <column name="available_time" type="text" />
-            <column name="created_time" type="bigint" />
+            <column name="created_time" type="varchar(100)" />
             <column name="is_new" type="boolean" defaultValueBoolean="true">
                 <constraints nullable="false"/>
             </column>
