@@ -66,7 +66,8 @@ public class AppointmentDto {
     private String language;
 
     @JsonProperty("createdTime")
-    private Long createdTime;
+//    private Long createdTime;
+    private String createdTime;
 
     @JsonProperty("isNew")
     private Boolean isNew = true;
