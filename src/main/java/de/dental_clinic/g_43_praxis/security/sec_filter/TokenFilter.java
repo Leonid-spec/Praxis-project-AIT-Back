@@ -28,6 +28,7 @@ public class TokenFilter extends GenericFilterBean {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String requestURI = request.getRequestURI(); // Используем полный URI вместо ServletPath
+        System.out.println("Request URI: " + requestURI);
 
         if (requestURI.equals("/api/login") ||
                 requestURI.equals("/api/services/active") ||
