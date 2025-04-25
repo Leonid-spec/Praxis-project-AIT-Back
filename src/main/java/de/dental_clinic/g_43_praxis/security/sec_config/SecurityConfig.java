@@ -55,7 +55,7 @@ public class SecurityConfig {
                                 "/v3/api-docs.json"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/login", "/api/appointment").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/services/active", "/api/doctors/active").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/services/active", "/api/doctors/active", "/api/settings").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hello").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/adminbylogin/*").hasRole("ROOT")
                         .anyRequest().hasRole("ADMIN")//anyRequest().authenticated()
