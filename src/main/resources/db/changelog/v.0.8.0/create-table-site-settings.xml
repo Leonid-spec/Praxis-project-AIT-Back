@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-site-settings-table" author="IgorSv">
+
+        <createTable tableName="site_settings">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="clinic_name" type="VARCHAR(255)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="zip_code" type="VARCHAR(20)"/>
+            <column name="gps" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(100)"/>
+
+            <column name="monday" type="VARCHAR(50)"/>
+            <column name="tuesday" type="VARCHAR(50)"/>
+            <column name="wednesday" type="VARCHAR(50)"/>
+            <column name="thursday" type="VARCHAR(50)"/>
+            <column name="friday" type="VARCHAR(50)"/>
+
+            <column name="running_text" type="VARCHAR(1000)"/>
+        </createTable>
+
+        <insert tableName="site_settings">
+            <column name="clinic_name" value="Zahnarztpraxis Sofia Abramian"/>
+            <column name="street" value="Breslauer Str. 17"/>
+            <column name="city" value="Konstanz"/>
+            <column name="zip_code" value="78467"/>
+            <column name="gps" value="47.68549067995246, 9.151141373012225"/>
+            <column name="phone" value="+49 75 31 7 72 73"/>
+            <column name="email" value="praxis.sofia.abramian@gmail.com"/>
+
+            <column name="monday" value="09:00–18:00"/>
+            <column name="tuesday" value="09:00–18:00"/>
+            <column name="wednesday" value="09:00–18:00"/>
+            <column name="thursday" value="09:00–18:00"/>
+            <column name="friday" value="09:00–18:00"/>
+
+            <column name="running_text" value="Herzlich Willkommen in unserer Klinik!"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
