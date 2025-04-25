@@ -28,13 +28,14 @@ public class TokenFilter extends GenericFilterBean {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String requestURI = request.getRequestURI(); // Используем полный URI вместо ServletPath
-        System.out.println("Request URI: " + requestURI);
+//        System.out.println("Request URI: " + requestURI);
 
         if (requestURI.equals("/api/login") ||
                 requestURI.equals("/api/services/active") ||
                 requestURI.equals("/api/doctors/active") ||
                 requestURI.startsWith("/swagger-ui") ||
                 requestURI.startsWith("/v3/api-docs") ||
+                requestURI.equals("/api/settings") ||
                 requestURI.equals("/api/appointment")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
