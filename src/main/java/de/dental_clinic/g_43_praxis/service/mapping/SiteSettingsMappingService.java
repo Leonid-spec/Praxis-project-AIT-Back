@@ -24,7 +24,9 @@ public class SiteSettingsMappingService {
         dto.setThursday(entity.getThursday());
         dto.setFriday(entity.getFriday());
 
-        dto.setRunningText(entity.getRunningText());
+        dto.setRunningTextDe(entity.getRunningTextDe());
+        dto.setRunningTextEn(entity.getRunningTextEn());
+        dto.setRunningTextRu(entity.getRunningTextRu());
 
         return dto;
     }
@@ -44,6 +46,8 @@ public class SiteSettingsMappingService {
         entity.setThursday(dto.getThursday());
         entity.setFriday(dto.getFriday());
 
-        entity.setRunningText(dto.getRunningText());
+        entity.setRunningTextDe(dto.getRunningTextDe());
+        entity.setRunningTextEn(dto.getRunningTextEn());
+        entity.setRunningTextRu(dto.getRunningTextRu());
     }
 }
