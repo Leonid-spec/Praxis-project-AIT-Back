@@ -21,5 +21,7 @@ public class SiteSettingsDto {
     private String thursday;
     private String friday;
 
-    private String runningText;
+    private String runningTextDe;
+    private String runningTextEn;
+    private String runningTextRu;
 }
