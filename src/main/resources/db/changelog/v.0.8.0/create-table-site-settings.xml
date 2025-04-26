@@ -25,7 +25,9 @@
             <column name="thursday" type="VARCHAR(50)"/>
             <column name="friday" type="VARCHAR(50)"/>
 
-            <column name="running_text" type="VARCHAR(1000)"/>
+            <column name="running_text_de" type="VARCHAR(1000)"/>
+            <column name="running_text_en" type="VARCHAR(1000)"/>
+            <column name="running_text_ru" type="VARCHAR(1000)"/>
         </createTable>
 
         <insert tableName="site_settings">
@@ -37,13 +39,15 @@
             <column name="phone" value="+49 75 31 7 72 73"/>
             <column name="email" value="praxis.sofia.abramian@gmail.com"/>
 
-            <column name="monday" value="09:00–18:00"/>
-            <column name="tuesday" value="09:00–18:00"/>
-            <column name="wednesday" value="09:00–18:00"/>
-            <column name="thursday" value="09:00–18:00"/>
-            <column name="friday" value="09:00–18:00"/>
+            <column name="monday" value="08:30–15:00"/>
+            <column name="tuesday" value="08:30–15:00"/>
+            <column name="wednesday" value="08:30–19:00"/>
+            <column name="thursday" value="08:30–19:00"/>
+            <column name="friday" value="08:30–12:00"/>
 
-            <column name="running_text" value="Herzlich Willkommen in unserer Klinik!"/>
+            <column name="running_text_de" value="Herzlich Willkommen in unserer Klinik!"/>
+            <column name="running_text_en" value="Welcome to our clinic!"/>
+            <column name="running_text_ru" value="Добро пожаловать в нашу клинику!"/>
         </insert>
 
     </changeSet>
