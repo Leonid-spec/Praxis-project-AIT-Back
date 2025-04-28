@@ -18,6 +18,3 @@ spring:
 key:
   access: wNhl08SeojphfFnpUI8I5jsqFpUSFrCB9nFOdAWUpLw=
   refresh: SxlKdkim9UR0Bd6CGJLFDI6R4HcnnDmaxV1AvBZhZ6A=
-
-messages:
-  hello: Hello from local application!
