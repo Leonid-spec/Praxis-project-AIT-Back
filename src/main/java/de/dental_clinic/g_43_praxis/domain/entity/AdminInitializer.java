@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("dev")
+
 public class AdminInitializer implements CommandLineRunner {
 
     private final AdminRepository adminRepository;
