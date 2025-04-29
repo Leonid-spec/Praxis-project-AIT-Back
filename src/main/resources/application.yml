@@ -1,8 +1,8 @@
 spring:
   application:
     name: g-43-praxis
-#  profiles:
-#    active: dev
+  profiles:
+    active: dev
 
   security:
     user:
